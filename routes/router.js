@@ -299,6 +299,7 @@ const {
   actualizaDescarga,
   createPdfSolicitudCancelacion,
   createPdfSolicitudAnulacion,
+  createPdfFormatoReesctructura,
 } = require("../controllers/PdfSolicitudes.js");
 const {
   createPreguntaFrecuente,
@@ -1612,6 +1613,15 @@ router.post(
     createPdfAcuseCancelacion(req, res);
   }
 );
+router.post(
+  "/create-pdf-provisional-reestructura",
+  verifyToken.verifyJWT,
+  (req, res) => {
+    createPdfFormatoReesctructura(req, res);
+  }
+);
+
+
 router.post("/actualiza-descarga", verifyToken.verifyJWT, (req, res) => {
   actualizaDescarga(req, res);
 });
