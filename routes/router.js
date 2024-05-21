@@ -1,7 +1,7 @@
 const express = require("express");
 const verifyToken = require("../controllers/auth/verifyToken.js");
 const router = express.Router();
-
+// holas 
 const {
   createClaveDeInscripcion,
   getClavesDeInscripcion,
