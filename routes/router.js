@@ -760,6 +760,10 @@ router.post("/create-solicitud", verifyToken.verifyJWT, (req, res) => {
   createSolicitud(req, res);
 });
 
+router.get("/lista-usuarios", verifyToken.verifyJWT, (req, res) => {
+  getUsuarios(req, res);
+});
+
 router.get("/get-solicitudes", verifyToken.verifyJWT, (req, res) => {
   getSolicitudes(req, res);
 });
