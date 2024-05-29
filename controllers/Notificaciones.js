@@ -4,8 +4,8 @@ const { sendEmail } = require("./mail/sendMail.js");
 module.exports = {
   //Crear
   createNotificacion: (req, res) => {
-    const IdSolicitud = req.body.IdSolicitud;
-    const ControlInterno = req.body.ControlInterno;
+    // const IdSolicitud = req.body.IdSolicitud;
+    // const ControlInterno = req.body.ControlInterno;
     const Titulo = req.body.Titulo;
     const Mensaje = req.body.Mensaje;
     const IdUsuarioCreador = req.body.IdUsuarioCreador;
@@ -32,21 +32,21 @@ module.exports = {
       });
     }
 
-    if (IdSolicitud === null) {
-      return res.status(409).send({
-        error: "Ingrese IdSolicitud",
-      });
-    }
+    // if (IdSolicitud === null) {
+    //   return res.status(409).send({
+    //     error: "Ingrese IdSolicitud",
+    //   });
+    // }
 
-    if (ControlInterno === null) {
-      return res.status(409).send({
-        error: "Ingrese ControlInterno",
-      });
-    }
+    // if (ControlInterno === null) {
+    //   return res.status(409).send({
+    //     error: "Ingrese ControlInterno",
+    //   });
+    // }
     const Usuarios = JSON.stringify({ Usuarios: ListadoUsuarios });
-
+// '${IdSolicitud}','${ControlInterno}',
     db.query(
-      `CALL sp_AgregarNotificacion('${IdSolicitud}','${ControlInterno}','${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}')`,
+      `CALL sp_AgregarNotificacion('${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}')`,
       (err, result) => {
 
         if (err) {
