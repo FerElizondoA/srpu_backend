@@ -311,7 +311,7 @@ const {
 } = require("../controllers/TrazabilidadSolicitud.js");
 
 const {
-  createSolicitudReestructura,
+  createSolicitudReestructura, getRestructuras,
 } = require("../controllers/Reestructura.js");
 
 //#region Instituciones Financieras
@@ -1648,6 +1648,10 @@ router.post("/create-SolicitudReestructura", verifyToken.verifyJWT, (req, res) =
     createSolicitudReestructura(req, res);
   }
 );
+
+router.get("/listaRestructura", verifyToken.verifyJWT, (req, res) => {
+  getRestructuras(req, res);
+});
 
 // #endregion
 
