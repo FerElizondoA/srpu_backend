@@ -313,6 +313,7 @@ const {
 const {
   createSolicitudReestructura,
   getSolicitudReestructuraFirma,
+  getRestructuras,
 } = require("../controllers/Reestructura.js");
 
 //#region Instituciones Financieras
@@ -828,9 +829,9 @@ router.post("/delete-comentario", verifyToken.verifyJWT, (req, res) => {
 //#endregion
 
 //#region  Usuarios
-router.post("/create-usuario", verifyToken.verifyJWT, (req, res) => {
-  createUsuario(req, res);
-});
+// router.post("/create-usuario", verifyToken.verifyJWT, (req, res) => {
+//   createUsuario(req, res);
+// });
 
 router.post("/create-notificacion", verifyToken.verifyJWT, (req, res) => {
   createNotificacion(req, res);
@@ -1651,7 +1652,10 @@ router.post("/create-SolicitudReestructura", verifyToken.verifyJWT, (req, res) =
 );
 
 router.get("/get-SolicitudReestructuraFirma", verifyToken.verifyJWT, (req, res) => {
-  getSolicitudReestructuraFirma(req, res);
+  getSolicitudReestructuraFirma(req, res)})
+  
+router.get("/listaRestructura", verifyToken.verifyJWT, (req, res) => {
+  getRestructuras(req, res);
 });
 
 // #endregion
