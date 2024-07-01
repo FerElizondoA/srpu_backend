@@ -23,6 +23,9 @@ const templateConstanciaReestructura =
   "controllers/templates/template_constancia_reestructuracion.html";
 const templateContestacionReestructura =
   "controllers/templates/template_contestacion_reestructura.html";
+const templateInscripcionReestructura =
+  "controllers/templates/template_inscripcion_reestructura";
+
 
 //#region HEADER
 
@@ -88,6 +91,132 @@ footerImg("controllers/stylessheet/images/logoLeon.png");
 //#endregion
 
 module.exports = {
+
+  createPdfSolicitudInscripcionReestructura: async (req, res) => {
+    callHeader();
+    const htmlTemplate = fs.readFileSync(templateInscripcionReestructura, "utf8");
+
+    const {
+      oficioNum, //YA
+      directorGeneral,//YA
+      cargoDirectorGeneral,//YA
+      servidorPublico,//YA
+      cargoServidorPublico,//YA
+      organismoServidorPublico,//YA
+      claveInscripcion,//YA
+      institucionFinanciera,//YA
+      fechaContratacionSolicitud,//YA
+      fechaContratacionReestructura,//YA
+      montoOriginalContratado,//YA
+      obligadoSolidarioAval,//YA
+      destino,//YA
+      plazo,//YA
+      PeriodoFinanciamiento,//YA
+      periodoAdministracion,//YA
+      saldoVigente,//YA
+      tasaInteres,//YA
+      comisiones,
+      gastosAdicionales,//YA
+      tasaEfectiva,//YA
+      fuentePago,//YA
+      anexoOriginal,//YA
+      anexoModificada,//YA
+      modificacion,//YA
+      reglas,
+      documentos,
+    } = req.body;
+
+    const declaratorias =
+      '<p style=" font-family: Arial; font-size: 12px; font-weight: 100; text-align: justify; letter-spacing: 1px; ">' +
+      JSON.parse(reglas).map((val) => {
+        return "<br />" + val;
+      }) +
+      "</p>";
+
+    const docs =
+      '<p style=" font-family: Arial; font-size: 12px; font-weight: 100; text-align: justify; letter-spacing: 1px; ">' +
+      JSON.parse(documentos).map((val) => {
+        return " " + val.descripcionTipo;
+      }) +
+      "</p>";
+
+    const html = htmlTemplate
+      .replaceAll("{{oficioNum}}", oficioNum)
+      .replaceAll("{{directorGeneral}}", directorGeneral)
+      .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral)
+      .replaceAll("{{servidorPublico}}", servidorPublico)
+      .replaceAll("{{cargoServidorPublico}}", cargoServidorPublico)
+      .replaceAll("{{organismoServidorPublico}}", organismoServidorPublico)
+      .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
+      .replaceAll("{{fechaContratacion}}", fechaContratacion)
+      .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
+      .replaceAll("{{fechaContratacion}}", fechaContratacion)
+      .replaceAll("{{destino}}", destino)
+      .replaceAll("{{plazo}}", plazo)
+      .replaceAll("{{tasaInteres}}", tasaInteres)
+      .replaceAll("{{comisiones}}", comisiones || "")
+      .replaceAll("{{gastosAdicionales}}", gastosAdicionales)
+      .replaceAll("{{tasaEfectiva}}", tasaEfectiva)
+      .replaceAll("{{mecanismoVehiculoDePago}}", mecanismoVehiculoDePago)
+      .replaceAll("{{fuentePago}}", fuentePago)
+      .replaceAll("{{garantiaDePago}}", garantiaDePago)
+      .replaceAll("{{reglas}}", declaratorias)
+      .replaceAll("{{documentos}}", docs);
+
+    const watermarkText = `DDPYPF-${oficioNum}/${fechaContratacion}`;
+
+    const browser = await puppeteer.launch({
+      headless: "false",
+      args: ["--no-sandbox"],
+    });
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+
+    await page.evaluate((watermarkText) => {
+      const div = document.createElement("div");
+      div.style.position = "fixed";
+      div.style.opacity = 0.2;
+      div.style.top = 300;
+      div.style.bottom = 0;
+      div.style.left = 300;
+      div.style.width = "100%";
+      div.style.height = "100%";
+      div.style.textAlign = "center";
+      div.style.fontSize = "48px";
+      div.style.color = "k";
+      div.style.transform = "rotate(-45deg)";
+      div.style.transformOrigin = "50% 50%";
+      div.textContent = `${watermarkText}`;
+      document.body.appendChild(div);
+    }, watermarkText);
+
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      displayHeaderFooter: true,
+      headerTemplate: header,
+      footerTemplate: footer,
+      margin: {
+        top: "1in",
+        bottom: "1in",
+        right: "0.50in",
+        left: "0.50in",
+      },
+      l: true,
+    });
+
+    await browser.close();
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`
+    );
+    res.send(pdfBuffer);
+  },
+
+
   createPdfSolicitudCorto: async (req, res) => {
     callHeader();
     const htmlTemplate = fs.readFileSync(templateSolicitudCorto, "utf8");

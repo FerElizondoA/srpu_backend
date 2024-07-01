@@ -1,0 +1,645 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<h4
+  style="
+    text-align: right;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 100;
+    font-weight: 100;
+    letter-spacing: 1px;
+  "
+  class="header"
+>
+  Oficio No. DDPYPF-{{oficioNum}}/2023
+  <div id="current_date">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+    <script>
+      moment.locale("es");
+      const formattedDate = moment().format("LL");
+      document.getElementById("current_date").innerHTML =
+        "Monterrey, N.L,  a " + formattedDate;
+    </script>
+  </div>
+</h4>
+
+<!-- SERVIDOR PÚBLICO -->
+<h3
+  style="
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: justify;
+    letter-spacing: 1px;
+  "
+>
+  {{directorGeneral}} <br />
+  {{cargoDirectorGeneral}} <br />
+</h3>
+
+<h3
+  style="
+    font-family: Arial;
+    font-size: 12px;
+    text-align: justify;
+    font-weight: 100;
+    letter-spacing: 5px;
+  "
+>
+  PRESENTE
+</h3>
+
+<!-- SOLICITUD -->
+
+<p
+  style="
+    font-family: Arial;
+    font-size: 12px;
+    text-align: justify;
+    font-weight: 100;
+    letter-spacing: 1px;
+  "
+>
+
+El/La suscrito(a) {{servidorPublico}} en mi carácter de {{cargoServidorPublico}} del
+{{organismoServidorPublico}}, mismo que acredito mediante la presentación de copia certificada de (la) nombramiento y
+pasaporte emitido(a) por el(la) Secretaría de Relaciones Exteriores, por medio de la presente solicito la inscripción de la
+reestructura de un Crédito Simple, en el Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas
+y Municipios (Registro Público Único), de conformidad con lo dispuesto en el artículos 49 y 50 de la Ley de Disciplina
+Financiera de las Entidades Federativas y los Municipios (Ley), y en el artículo 46 del Reglamento del Registro Público Único
+de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglamento).
+  <br />
+  <br />
+  Las caracteristicas de la Obligación son las siguientes:
+</p>
+
+<!-- INFORMACIÓN DE LA OBLIGACIÓN -->
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+
+      margin-bottom: 0;
+    "
+  >
+  INFORMACIÓN DEL FINANCIAMIENTO A REESTRUCTURAR
+  </h3>
+  <table
+    id="data-table"
+    style="width: 100%; border: 1px solid black; border-collapse: collapse"
+  >
+    <tbody
+      style="
+        letter-spacing: 1px;
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: 100;
+      "
+    >
+    <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Clave de inscripción
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{claveInscripcion}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Ente Público Obligado
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{organismoServidorPublico}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 30%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          OBLIGADO SOLIDARIO/AVAL
+        </td>
+        <td
+          style="
+            width: 70%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{obligadoSolidarioAval}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 30%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          INSTITUCIÓN FINANCIERA
+        </td>
+        <td
+          style="
+            width: 70%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{institucionFinanciera}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Monto Original Contratado
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{montoOriginalContratado}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Fecha De Contratación
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{fechaContratacion}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- CARACTERÍSTICAS DE LA OBLIGACIÓN -->
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+
+      margin-bottom: 0;
+    "
+  >
+  CARACTERÍSTICAS DEL FINANCIAMIENTO A REESTRUCTURAR
+  </h3>
+  <table
+    id="data-table"
+    style="width: 100%; border: 1px solid black; border-collapse: collapse"
+  >
+    <tbody
+      style="
+        letter-spacing: 1px;
+
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: 100;
+      "
+    >
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Destino
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{destino}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Plazo
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{plazo}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Duración (Periodo de Administación)
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{periodoAdministracion}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Duración (Periodo de Financiamiento)
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{PeriodoFinanciamiento}}
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Saldo Vigente
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{saldoVigente}}
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Gastos Adicionales
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{gastosAdicionales}}
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="
+            width: 40%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          Fuente de Pago
+        </td>
+        <td
+          style="
+            width: 60%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{fuentePago}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+      margin-bottom: 0;
+    "
+  >
+  INFORMACIÓN DE LA REESTRUCTURA
+  </h3>
+  <table
+    id="data-table"
+    style="width: 100%; border: 1px solid black; border-collapse: collapse"
+  >
+    <thead>
+      <tr>
+        <th style="border: 1px solid black; text-align: center;">FECHA DE CONTRATACION</th>
+        <th style="border: 1px solid black; text-align: center;">PLAZO</th>
+        <th style="border: 1px solid black; text-align: center;" colspan="2">DURACIÓN</th>
+        <th style="border: 1px solid black; text-align: center;">TASA DE INTERES</th>
+        <th style="border: 1px solid black; text-align: center;">TASA EFECTIVA</th>
+      </tr>
+      <tr>
+        <th style="border: 1px solid black;"></th>
+        <th style="border: 1px solid black;"></th>
+        <th style="border: 1px solid black; text-align: center;">PERIODO DE ADMINISTRACION</th>
+        <th style="border: 1px solid black; text-align: center;">PERIODO DE FINANCIAMIENTO</th>
+        <th style="border: 1px solid black;"></th>
+        <th style="border: 1px solid black;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="border: 1px solid black; text-align: center;">{{fechaContratacion}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{plazo}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{periodoAdministracion}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{PeriodoFinanciamiento}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{tasaInteres}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{tasaEfectiva}}</td>
+      </tr>
+      <!-- <tr>
+        <td style="border: 1px solid black; text-align: center;">15/02/2023</td>
+        <td style="border: 1px solid black; text-align: center;">24 meses</td>
+        <td style="border: 1px solid black; text-align: center;">12 meses</td>
+        <td style="border: 1px solid black; text-align: center;">12 meses</td>
+        <td style="border: 1px solid black; text-align: center;">4.5%</td>
+        <td style="border: 1px solid black; text-align: center;">4.75%</td>
+      </tr> -->
+    </tbody>
+  </table>
+</div>
+
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+
+      margin-bottom: 0;
+    "
+  >
+  MODIFICACIONES EFECTUADAS
+  </h3>
+  <table
+  id="data-table"
+  style="width: 100%; border: 1px solid black; border-collapse: collapse"
+>
+  <thead>
+    <tr>
+      <th style="border: 1px solid black; text-align: center;">ANEXO Ó CLÁUSULA ORIGINAL</th>
+      <th style="border: 1px solid black; text-align: center;">ANEXO Ó CLÁUSULA MODIFICADA</th>
+      <th style="border: 1px solid black; text-align: center;">MODIFICACIÓN</th>
+    </tr>
+
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid black; text-align: center;">{{anexoOriginal}}</td>
+      <td style="border: 1px solid black; text-align: center;">{{anexoModificada}}</td>
+      <td style="border: 1px solid black; text-align: center;">{{modificacion}}</td>
+    </tr>
+    <!-- <tr>
+      <td style="border: 1px solid black; text-align: center;">15/02/2023</td>
+      <td style="border: 1px solid black; text-align: center;">24 meses</td>
+      <td style="border: 1px solid black; text-align: center;">12 meses</td>
+      <td style="border: 1px solid black; text-align: center;">12 meses</td>
+      <td style="border: 1px solid black; text-align: center;">4.5%</td>
+      <td style="border: 1px solid black; text-align: center;">4.75%</td>
+    </tr> -->
+  </tbody>
+</table>
+</div>
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+  Con fundamento en lo dispuesto por el artículo 30 de la LDF, artículos 25 y 28
+  del Regñamento RPU, declaro bajo protesta decir la verdad que:
+</p>
+
+<div
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 10px;
+  "
+>
+  {{reglas}}
+</div>
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+  En virtud de lo anterior, se adjuntan los siguientes documentos:
+</p>
+
+<div
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 10px;
+  "
+>
+  {{documentos}}
+</div>
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+  Por lo antes expuesto, atentamente solicito a la Secretaría sirva:
+
+  <br />
+  <br />
+  <strong>PRIMERO:</strong> Tenerme por presentado en términos del presente
+  escrito con la personalidad que ostento. <br /><strong>SEGUNDO:</strong>
+  Recibir y dar cuenta con los documentos que se exhiben y relacionan en
+  apartado especial de esta solicitud. <br /><strong>TERCERO:</strong> Proceder
+  a la inscripción del Contrato de Crédito Simple Sin Garantía celebrado entre
+  el {{organismoServidorPublico}} como acreditado y(e)
+  {{institucionFinanciera}}, como acreditante, con fecha {{fechaContratacion}}.
+
+  <br />
+  <br />
+
+  Sin más por el momento, aprovecho para enviarle un cordial saludo.
+</p>
+
+<h3
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+  "
+  class="atte"
+>
+  ATENTAMENTE <br />
+  {{cargoServidorPublico}} <br />
+  <br />
+  {{servidorPublico}} <br />
+</h3>
