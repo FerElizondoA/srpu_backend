@@ -133,6 +133,7 @@ const {
   getDetailPathDocMandato,
   addPathDocInstruccion,
   getDetailPathDocInstruccion,
+  getListadoPAathDoc,
 } = require("../controllers/PathDocSol.js");
 const {
   getAutorizaciones,
@@ -315,6 +316,7 @@ const {
   getSolicitudReestructuraFirma,
   getRestructuras,
 } = require("../controllers/Reestructura.js");
+const { createGarantiaDePago, getGarantiaDePago, deleteGarantiaDePago, modifyGarantiaDePago } = require("../controllers/GarantiaDePago.js");
 
 //#region Instituciones Financieras
 router.post(
@@ -828,30 +830,30 @@ router.post("/delete-comentario", verifyToken.verifyJWT, (req, res) => {
 
 //#endregion
 
-//#region  Usuarios
+//#region  Usuarios / Notificaciones
 // router.post("/create-usuario", verifyToken.verifyJWT, (req, res) => {
 //   createUsuario(req, res);
 // });
 
-router.post("/create-notificacion", verifyToken.verifyJWT, (req, res) => {
-  createNotificacion(req, res);
-});
+// router.post("/create-notificacion", verifyToken.verifyJWT, (req, res) => {
+//   createNotificacion(req, res);
+// });
 
-router.post("/leer-notificacion", verifyToken.verifyJWT, (req, res) => {
-  leerNotificacion(req, res);
-});
+// router.post("/leer-notificacion", verifyToken.verifyJWT, (req, res) => {
+//   leerNotificacion(req, res);
+// });
 
-router.get("/get-notificaciones", verifyToken.verifyJWT, (req, res) => {
-  getNotificaciones(req, res);
-});
+// router.get("/get-notificaciones", verifyToken.verifyJWT, (req, res) => {
+//   getNotificaciones(req, res);
+// });
 
-router.get("/get-notificaciones-creadas", verifyToken.verifyJWT, (req, res) => {
-  getNotificacionesCreadas(req, res);
-});
+// router.get("/get-notificaciones-creadas", verifyToken.verifyJWT, (req, res) => {
+//   getNotificacionesCreadas(req, res);
+// });
 
-router.get("/get-info-notificacion", verifyToken.verifyJWT, (req, res) => {
-  getInfoNotificacion(req, res);
-});
+// router.get("/get-info-notificacion", verifyToken.verifyJWT, (req, res) => {
+//   getInfoNotificacion(req, res);
+// });
 //#endregion
 
 //#region PathDoc
@@ -910,6 +912,10 @@ router.get(
     getDetailPathDocInstruccion(req, res);
   }
 );
+
+router.get("/get-ListadoPathDoc", verifyToken.verifyJWT, (req, res) => {
+  getListadoPAathDoc(req, res);
+});
 //#endregion
 
 //#region Autorizacion
@@ -1647,17 +1653,40 @@ router.get("/get-TrazabilidadSolicitud", verifyToken.verifyJWT, (req, res) => {
 
 // #region Reestructura
 router.post("/create-SolicitudReestructura", verifyToken.verifyJWT, (req, res) => {
-    createSolicitudReestructura(req, res);
-  }
+  createSolicitudReestructura(req, res);
+}
 );
 
 router.get("/get-SolicitudReestructuraFirma", verifyToken.verifyJWT, (req, res) => {
-  getSolicitudReestructuraFirma(req, res)})
-  
+  getSolicitudReestructuraFirma(req, res)
+})
+
 router.get("/listaRestructura", verifyToken.verifyJWT, (req, res) => {
   getRestructuras(req, res);
 });
 
 // #endregion
 
+// #region Garantia de Pago
+
+router.post("/create-GarantiaDePago", verifyToken.verifyJWT, (req, res) => {
+  createGarantiaDePago(req, res);
+}
+);
+
+router.get("/get-GarantiaDePago", verifyToken.verifyJWT, (req, res) => {
+  getGarantiaDePago(req, res)
+})
+
+router.delete("/delete-GarantiaDePago", verifyToken.verifyJWT, (req, res) => {
+  deleteGarantiaDePago(req, res);
+});
+
+router.put("/modify-GarantiaDePago", verifyToken.verifyJWT, (req, res) => {
+  modifyGarantiaDePago(req, res);
+}
+);
+
+
+// #endregion
 module.exports = router;

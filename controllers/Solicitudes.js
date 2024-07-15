@@ -2,6 +2,7 @@ const db = require("../config/db.js");
 
 module.exports = {
   createSolicitud: (req, res) => {
+    const IdSolicitud = req.body.IdSolicitud
     const IdEntePublico = req.body.IdEntePublico;
     const IdTipoEntePublico = req.body.IdTipoEntePublico;
     const TipoSolicitud = req.body.TipoSolicitud;
@@ -13,6 +14,16 @@ module.exports = {
     const Solicitud = req.body.Solicitud;
     const IdEditor = req.body.IdEditor;
     const CreadoPor = req.body.CreadoPor;
+
+    console.log("IdSolicitud: ",IdSolicitud);
+    console.log("IdInstitucionFinanciera: ",IdInstitucionFinanciera);
+    console.log("IdEditor: ",IdEditor);
+
+    if (IdSolicitud == null || /^[\s]*$/.test(IdSolicitud)) {
+      return res.status(409).send({
+        error: "Ingrese IdSolicitud",
+      });
+    }
 
     if (IdEntePublico == null || /^[\s]*$/.test(IdEntePublico)) {
       return res.status(409).send({
@@ -81,7 +92,7 @@ module.exports = {
     }
 
     db.query(
-      `CALL sp_AgregarSolicitud( '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}','${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}' )`,
+      `CALL sp_AgregarSolicitud(  '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}','${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}','${IdSolicitud}' )`,
       (err, result) => {
         console.log("err", err)
         console.log("result", result)

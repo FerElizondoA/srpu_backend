@@ -7,9 +7,11 @@ module.exports = {
     const Ruta = req.body.Ruta;
     const NombreIdentificador = req.body.NombreIdentificador;
     const NombreArchivo = req.body.NombreArchivo;
-
+    const TipoDocId = req.body.TipoDocId
+    const Index = req.body.Index
+    console.log("Entre aqui Index: ", Index);
     db.query(
-      `CALL sp_AddPathDocSol('${IdSolicitud}', '${Ruta}', '${NombreIdentificador}' , '${NombreArchivo}' )`,
+      `CALL sp_AddPathDocSol('${IdSolicitud}', '${Ruta}', '${NombreIdentificador}' , '${NombreArchivo}' , '${TipoDocId}', '${Index}' )`,
       (err, result) => {
         if (err) {
           return res.status(500).send({
@@ -37,6 +39,7 @@ module.exports = {
   // DETALLE POR ID
   getDetailPathDocSol: (req, res) => {
     const IdSolicitud = req.query.IdSolicitud;
+
     if (IdSolicitud == null || /^[\s]*$/.test(IdSolicitud)) {
       return res.status(409).send({
         error: "Ingrese IdSol.",
@@ -329,6 +332,40 @@ module.exports = {
               result: data,
             });
           }
+          return res.status(200).send({
+            data,
+          });
+        } else {
+          return res.status(409).send({
+            error: "¡Sin Información!",
+          });
+        }
+      }
+    );
+  },
+
+  //Lis addPathDocSol
+
+  getListadoPAathDoc: (req, res) => {
+    const { IdSolicitud, } = req.query;
+
+    if (IdSolicitud == null || /^[\s]*$/.test(IdSolicitud)) {
+      return res.status(409).send({
+        error: "Ingrese IdSolicitud",
+      });
+    }
+
+    db.query(
+      `CALL sp_ListadoDocsSolicitud('${IdSolicitud}', )`,
+      (err, result) => {
+        if (err) {
+          return res.status(500).send({
+            error: "Error",
+          });
+        }
+
+        if (result.length) {
+          const data = result[0];
           return res.status(200).send({
             data,
           });
