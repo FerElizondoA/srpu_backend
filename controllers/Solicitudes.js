@@ -83,8 +83,8 @@ module.exports = {
     db.query(
       `CALL sp_AgregarSolicitud( '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}','${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}' )`,
       (err, result) => {
-        console.log("err", err)
-        console.log("result", result)
+        // console.log("err", err)
+        // console.log("result", result)
         if (err) {
           return res.status(500).send({
             error: err,
@@ -93,10 +93,12 @@ module.exports = {
         if (result.length) {
           const data = result[0][0];
           if (data.error) {
+            console.log("data.error: ",data.error);
             return res.status(409).send({
               result: data,
             });
           }
+          console.log("data: ",data);
           return res.status(200).send({
             data,
           });

@@ -85,6 +85,7 @@ module.exports = {
     db.query(
       `CALL sp_ListadoNotificacionesUsuario('${IdUsuario}')`,
       (err, result) => {
+      //  console.log("result: ",result);
         if (err) {
           return res.status(500).send({
             error: err,
