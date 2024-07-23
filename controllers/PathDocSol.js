@@ -1,19 +1,16 @@
 const db = require("../config/db.js");
+const promiseDb = db.promise();
 
 module.exports = {
   //CREAR
   addPathDocSol: (req, res) => {
-    const IdSolicitud = req.body.IdSolicitud;
-    const Ruta = req.body.Ruta;
-    const NombreIdentificador = req.body.NombreIdentificador;
-    const NombreArchivo = req.body.NombreArchivo;
-
+    const { IdSolicitud, Ruta, NombreIdentificador, NombreArchivo, TpoDoc } = req.body;
     db.query(
-      `CALL sp_AddPathDocSol('${IdSolicitud}', '${Ruta}', '${NombreIdentificador}' , '${NombreArchivo}' )`,
+      `CALL sp_AddPathDocSol(?,?,?,?,?)`, [IdSolicitud, Ruta, NombreIdentificador, NombreArchivo, TpoDoc],
       (err, result) => {
         if (err) {
           return res.status(500).send({
-            error: "Error",
+            error: err,
           });
         }
         if (result.length) {
@@ -340,4 +337,45 @@ module.exports = {
       }
     );
   },
+
+  deletePathDocSol: async (req, res) => {
+    const { IdSolicitud, jsonDocsDel } = req.body;
+  
+    // Validación de entrada
+    if (!IdSolicitud || !Array.isArray(jsonDocsDel) || jsonDocsDel.length === 0) {
+      return res.status(400).send({
+        error: 'Ingrese IdSolicitud y al menos un documento a eliminar',
+      });
+    }
+  
+    try {
+      for (const doc of jsonDocsDel) {
+        const { NombreDoc, TpoDoc } = doc;
+        console.log( `DELETE FROM SRPU.PathDocSol
+          WHERE IdSolicitud = ?
+          AND TipoDocId = ?
+          AND (NombreArchivo = ? OR NombreIdentificador = ?)`,
+         [IdSolicitud, TpoDoc, NombreDoc, NombreDoc]);
+        
+        const [results] = await promiseDb.query(
+          `DELETE FROM SRPU.PathDocSol
+           WHERE IdSolicitud = ?
+           AND TipoDocId = ?
+           AND (NombreArchivo = ? OR NombreIdentificador = ?)`,
+          [IdSolicitud, TpoDoc, NombreDoc, NombreDoc]
+        );
+  
+        if (results.affectedRows === 0) {
+          throw new Error(`No se pudo eliminar el documento ${NombreDoc} de tipo ${TpoDoc}`);
+        }
+      }
+  
+      //db.release();
+      return res.status(200).send({ message: 'Documentos eliminados correctamente' });
+    } catch (error) {
+      console.error(error); // Registra el error para depuración
+      return res.status(500).send({ error: 'Error al eliminar documentos' });
+    }
+  },
+
 };
