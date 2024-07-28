@@ -829,10 +829,6 @@ router.post("/delete-comentario", verifyToken.verifyJWT, (req, res) => {
 
 //#endregion
 
-//#region  Usuarios
-// router.post("/create-usuario", verifyToken.verifyJWT, (req, res) => {
-//   createUsuario(req, res);
-// });
 
 router.post("/create-notificacion", verifyToken.verifyJWT, (req, res) => {
   createNotificacion(req, res);

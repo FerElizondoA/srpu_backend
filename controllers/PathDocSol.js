@@ -340,42 +340,54 @@ module.exports = {
 
   deletePathDocSol: async (req, res) => {
     const { IdSolicitud, jsonDocsDel } = req.body;
-  
-    // Validación de entrada
-    if (!IdSolicitud || !Array.isArray(jsonDocsDel) || jsonDocsDel.length === 0) {
-      return res.status(400).send({
-        error: 'Ingrese IdSolicitud y al menos un documento a eliminar',
-      });
-    }
-  
-    try {
-      for (const doc of jsonDocsDel) {
-        const { NombreDoc, TpoDoc } = doc;
-        console.log( `DELETE FROM SRPU.PathDocSol
-          WHERE IdSolicitud = ?
-          AND TipoDocId = ?
-          AND (NombreArchivo = ? OR NombreIdentificador = ?)`,
-         [IdSolicitud, TpoDoc, NombreDoc, NombreDoc]);
         
-        const [results] = await promiseDb.query(
-          `DELETE FROM SRPU.PathDocSol
-           WHERE IdSolicitud = ?
-           AND TipoDocId = ?
-           AND (NombreArchivo = ? OR NombreIdentificador = ?)`,
-          [IdSolicitud, TpoDoc, NombreDoc, NombreDoc]
-        );
-  
-        if (results.affectedRows === 0) {
-          throw new Error(`No se pudo eliminar el documento ${NombreDoc} de tipo ${TpoDoc}`);
-        }
-      }
-  
-      //db.release();
-      return res.status(200).send({ message: 'Documentos eliminados correctamente' });
-    } catch (error) {
-      console.error(error); // Registra el error para depuración
-      return res.status(500).send({ error: 'Error al eliminar documentos' });
+    let contError=0;
+    let error = "Ingrese:";
+        if (!IdSolicitud || (/^[\s]*$/.test(IdSolicitud)))
+        {
+            error += " IdSolicitud,";
+            contError++;
+        } 
+        if (!jsonDocsDel || (/^[\s]*$/.test(jsonDocsDel)))
+        {
+            error += " jsonDocsDel,";
+            contError++;
+        } 
+       
+        // Elimina la última coma si existe
+        error = error.endsWith(',') ? error.slice(0, -1) : error;
+        //Remplaza la ultima coma por un " y "
+        error = error.replace(/,([^,]*)$/, ' y$1');
+
+    if (contError!=0) {
+        return res.status(400).send({
+            error: error,
+        });
     }
+      db.query(
+        `CALL sp_EliminaPathDocs(?,?)`,[IdSolicitud, JSON.stringify(jsonDocsDel)],
+        (err, result) => {
+          console.log('err',err);
+          console.log('result',result);
+          if (err) {
+            return res.status(500).send({
+              error: err.sqlMessage,
+            });
+          }
+          if (result.length) {
+            const data = result[0];
+
+            return res.status(200).send({
+              data 
+            });
+          } else {
+            return res.status(409).send({
+              error: "¡Sin Información!",
+            });
+          }
+        }
+      );
+    
   },
 
 };
