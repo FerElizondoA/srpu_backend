@@ -1,19 +1,16 @@
 const db = require("../config/db.js");
+const promiseDb = db.promise();
 
 module.exports = {
   //CREAR
   addPathDocSol: (req, res) => {
-    const IdSolicitud = req.body.IdSolicitud;
-    const Ruta = req.body.Ruta;
-    const NombreIdentificador = req.body.NombreIdentificador;
-    const NombreArchivo = req.body.NombreArchivo;
-
+    const { IdSolicitud, Ruta, NombreIdentificador, NombreArchivo, TpoDoc } = req.body;
     db.query(
-      `CALL sp_AddPathDocSol('${IdSolicitud}', '${Ruta}', '${NombreIdentificador}' , '${NombreArchivo}' )`,
+      `CALL sp_AddPathDocSol(?,?,?,?,?)`, [IdSolicitud, Ruta, NombreIdentificador, NombreArchivo, TpoDoc],
       (err, result) => {
         if (err) {
           return res.status(500).send({
-            error: "Error",
+            error: err,
           });
         }
         if (result.length) {
@@ -340,4 +337,57 @@ module.exports = {
       }
     );
   },
+
+  deletePathDocSol: async (req, res) => {
+    const { IdSolicitud, jsonDocsDel } = req.body;
+        
+    let contError=0;
+    let error = "Ingrese:";
+        if (!IdSolicitud || (/^[\s]*$/.test(IdSolicitud)))
+        {
+            error += " IdSolicitud,";
+            contError++;
+        } 
+        if (!jsonDocsDel || (/^[\s]*$/.test(jsonDocsDel)))
+        {
+            error += " jsonDocsDel,";
+            contError++;
+        } 
+       
+        // Elimina la última coma si existe
+        error = error.endsWith(',') ? error.slice(0, -1) : error;
+        //Remplaza la ultima coma por un " y "
+        error = error.replace(/,([^,]*)$/, ' y$1');
+
+    if (contError!=0) {
+        return res.status(400).send({
+            error: error,
+        });
+    }
+      db.query(
+        `CALL sp_EliminaPathDocs(?,?)`,[IdSolicitud, JSON.stringify(jsonDocsDel)],
+        (err, result) => {
+          console.log('err',err);
+          console.log('result',result);
+          if (err) {
+            return res.status(500).send({
+              error: err.sqlMessage,
+            });
+          }
+          if (result.length) {
+            const data = result[0];
+
+            return res.status(200).send({
+              data 
+            });
+          } else {
+            return res.status(409).send({
+              error: "¡Sin Información!",
+            });
+          }
+        }
+      );
+    
+  },
+
 };

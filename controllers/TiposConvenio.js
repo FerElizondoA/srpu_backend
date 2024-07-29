@@ -1,21 +1,20 @@
 
 const db = require("../config/db.js");
 
-
-
 module.exports = {
   //CREAR
-  createEstatus: (req, res) => {
+  createTiposConvenio: (req, res) => {
     const Descripcion = req.body.Descripcion;
     const IdUsuarioCreador = req.body.IdUsuario;
 
     if (Descripcion == null || /^[\s]*$/.test(Descripcion)) {
       return res.status(409).send({
-        error: "Ingrese Estatus",
+        error: "Ingrese Tipo de Convenio",
       });
     } else {
-      db.query(`CALL sp_AgregarEstatus('${IdUsuarioCreador}', '${Descripcion}' )`, (err, result) => {
+      db.query(`CALL sp_AgregarTiposConvenio('${IdUsuarioCreador}', '${Descripcion}' )`, (err, result) => {
         if (err) {
+            console.log(err)
           return res.status(500).send({
             error: "Error",
           });
@@ -40,9 +39,10 @@ module.exports = {
   },
 
   //LISTADO COMPLETO
-  getEstatus: (req, res) => {
-    db.query(`CALL sp_ListadoEstatus()`, (err, result) => {
+  getTiposConvenio: (req, res) => {
+    db.query(`CALL sp_ListadoTiposConvenio()`, (err, result) => {
       if (err) {
+        console.log(err)
         return res.status(500).send({
           error: "Error",
         });
@@ -62,9 +62,9 @@ module.exports = {
   },
 
   // DETALLE POR ID
-  getDetailEstatus: (req, res) => {
-    const IdDescripcion = req.body.IdEstatus;
-    db.query(`CALL sp_DetalleEstatus('${IdDescripcion}')`, (err, result) => {
+  getDetailTiposConvenio: (req, res) => {
+    const IdDescripcion = req.body.IdDescripcion;
+    db.query(`CALL sp_DetalleTiposConvenio('${IdDescripcion}')`, (err, result) => {
       if (err) {
         return res.status(500).send({
           error: "Error",
@@ -89,26 +89,30 @@ module.exports = {
   },
 
   //MODIFICA POR ID
-  modifyEstatus: (req, res) => {
+  modifyTiposConvenio: (req, res) => {
     const IdDescripcion = req.body.IdDescripcion;
-    const NuevaState = req.body.Descripcion;
+    const NuevaTipoConvenio = req.body.Descripcion;
     const IdUsuarioModificador = req.body.IdUsuario;
 
+
     if (IdDescripcion == null || /^[\s]*$/.test(IdDescripcion)) {
+        console.log(err)
       return res.status(409).send({
         error: "Ingrese Id",
       });
     }
     
-    if (NuevaState == null || /^[\s]*$/.test(NuevaState)) {
+    if (NuevaTipoConvenio == null || /^[\s]*$/.test(NuevaTipoConvenio)) {
       return res.status(409).send({
-        error: "Ingrese Nuevo Estatus",
+        error: "Ingrese Nuevo Ente Publico Obligado",
       });
     } else {
       db.query(
-        `CALL sp_ModificaEstatus('${IdDescripcion}','${NuevaState}','${IdUsuarioModificador}')`,
+        `CALL sp_ModificaTiposConvenio('${IdDescripcion}','${NuevaTipoConvenio}','${IdUsuarioModificador}')`,
         (err, result) => {
           if (err) {
+
+            console.log(err)
             return res.status(500).send({
               error: "Error",
             });
@@ -134,13 +138,14 @@ module.exports = {
   },
 
   //BORRADO LOGICO
-  deleteEstatus: (req, res) => {
+  deleteTiposConvenio: (req, res) => {
     const IdDescripcion = req.query.IdDescripcion;
     const IdUsuarioModificador = req.query.IdUsuario;
     db.query(
-      `CALL sp_BajaLogicaEstatus('${IdDescripcion}', '${IdUsuarioModificador}')`,
+      `CALL sp_BajaLogicaTiposConvenio('${IdDescripcion}', '${IdUsuarioModificador}')`,
       (err, result) => {
         if (err) {
+            console.log(err)
           return res.status(500).send({
             error: "Error",
           });

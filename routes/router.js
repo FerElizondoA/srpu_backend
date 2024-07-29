@@ -3,13 +3,6 @@ const verifyToken = require("../controllers/auth/verifyToken.js");
 const router = express.Router();
 
 const {
-  createClaveDeInscripcion,
-  getClavesDeInscripcion,
-  getDetailClaveDeInscripcion,
-  modifyClaveDeInscripcion,
-  deleteClaveDeInscripcion,
-} = require("../controllers/ClaveDeInscripcion.js");
-const {
   createDestino,
   getDestinos,
   getDetailDestino,
@@ -30,13 +23,6 @@ const {
   modifyEntePublicoObligado,
   deleteEntePublicoObligado,
 } = require("../controllers/EntesPublicosObligados.js");
-const {
-  createEstatus,
-  getDetailEstatus,
-  modifyEstatus,
-  deleteEstatus,
-  getEstatus,
-} = require("../controllers/Estatus.js");
 const {
   deleteFuenteAlternaDePago,
   createFuenteAlternaDePago,
@@ -81,13 +67,6 @@ const {
   deleteReglaDeFinanciamiento,
 } = require("../controllers/ReglaDeFinanciamiento.js");
 const {
-  createRol,
-  getRoles,
-  getDetailRol,
-  modifyRol,
-  deleteRol,
-} = require("../controllers/Roles.js");
-const {
   createTasaDeReferencia,
   getTasasDeReferencia,
   getDetailTasaDeReferencia,
@@ -108,6 +87,13 @@ const {
   getTiposEntePublico,
   getDetailTipoEntePublico,
 } = require("../controllers/TipoEntePublico.js");
+const {
+  createTiposConvenio,
+  modifyTiposConvenio,
+  deleteTiposConvenio,
+  getTiposConvenio,
+  getDetailTiposConvenio,
+} = require("../controllers/TiposConvenio.js");
 const {
   createSolicitud,
   getSolicitudes,
@@ -130,12 +116,6 @@ const {
   modifyTipoDocumento,
 } = require("../controllers/TipoDeDocumentos.js");
 const {
-  getDetailUsuario,
-  getUsuarios,
-  createUsuario,
-  getUsuariosAsignables,
-} = require("../controllers/Usuarios.js");
-const {
   createNotificacion,
   getNotificaciones,
   leerNotificacion,
@@ -153,6 +133,7 @@ const {
   getDetailPathDocMandato,
   addPathDocInstruccion,
   getDetailPathDocInstruccion,
+  deletePathDocSol,
 } = require("../controllers/PathDocSol.js");
 const {
   getAutorizaciones,
@@ -299,7 +280,9 @@ const {
   actualizaDescarga,
   createPdfSolicitudCancelacion,
   createPdfSolicitudAnulacion,
-  createPdfFormatoReesctructura,
+  createPdfConstanciaReestructura,
+  createPdfContestacionReestructura,
+  createPdfAcuse,
 } = require("../controllers/PdfSolicitudes.js");
 const {
   createPreguntaFrecuente,
@@ -323,6 +306,16 @@ const {
   sumaPorcentajeAcumulado,
   listaMecanismosDePago,
 } = require("../controllers/Consultas.js");
+const { getDetailUsuario, getUsuarios } = require("../controllers/Usuarios.js");
+const {
+  getTrazabilidadSolicitud,
+} = require("../controllers/TrazabilidadSolicitud.js");
+
+const {
+  createSolicitudReestructura,
+  getSolicitudReestructuraFirma,
+  getRestructuras,
+} = require("../controllers/Reestructura.js");
 
 //#region Instituciones Financieras
 router.post(
@@ -364,28 +357,6 @@ router.delete(
     deleteInstitucionFinanciera(req, res);
   }
 );
-//#endregion
-
-//#region Estatus
-router.post("/create-estatus", verifyToken.verifyJWT, (req, res, express) => {
-  createEstatus(req, res);
-});
-
-router.get("/get-estatus", verifyToken.verifyJWT, (req, res) => {
-  getEstatus(req, res);
-});
-
-router.get("/detail-estatus", verifyToken.verifyJWT, (req, res) => {
-  getDetailEstatus(req, res);
-});
-
-router.put("/modify-estatus", verifyToken.verifyJWT, (req, res) => {
-  modifyEstatus(req, res);
-});
-
-router.delete("/delete-estatus", verifyToken.verifyJWT, (req, res) => {
-  deleteEstatus(req, res);
-});
 //#endregion
 
 //#region EntePublicoObligado
@@ -439,6 +410,37 @@ router.delete("/delete-tiposEntePublico", verifyToken.verifyJWT, (req, res) => {
   deleteTipoEntePublico(req, res);
 });
 //#endregion
+
+//#region TiposConvenio
+router.post("/create-tiposConvenio", verifyToken.verifyJWT, (req, res) => {
+  createTiposConvenio(req, res);
+});
+
+router.get("/get-tiposConvenio", verifyToken.verifyJWT, (req, res) => {
+  getTiposConvenio(req, res);
+});
+
+router.get("/detail-tiposConvenio", verifyToken.verifyJWT, (req, res) => {
+  getDetailTiposConvenio(req, res);
+});
+
+router.put("/modify-tiposConvenio", verifyToken.verifyJWT, (req, res) => {
+  modifyTiposConvenio(req, res);
+});
+
+router.delete("/delete-tiposConvenio", verifyToken.verifyJWT, (req, res) => {
+  deleteTiposConvenio(req, res);
+});
+//#endregion
+
+
+
+
+
+
+
+
+
 
 //#region ObligadoSolidarioAval
 router.post(
@@ -533,37 +535,6 @@ router.delete(
   }
 );
 
-//Clave de Inscripcion
-router.post(
-  "/create-claveDeInscripcion",
-  verifyToken.verifyJWT,
-  (req, res, express) => {
-    createClaveDeInscripcion(req, res);
-  }
-);
-
-router.get("/get-claveDeInscripcion", verifyToken.verifyJWT, (req, res) => {
-  getClavesDeInscripcion(req, res);
-});
-
-router.get("/detail-claveDeInscripcion", verifyToken.verifyJWT, (req, res) => {
-  getDetailClaveDeInscripcion(req, res);
-});
-
-router.put("/modify-claveDeInscripcion", verifyToken.verifyJWT, (req, res) => {
-  modifyClaveDeInscripcion(req, res);
-});
-
-router.delete(
-  "/delete-claveDeInscripcion",
-  verifyToken.verifyJWT,
-  (req, res) => {
-    deleteClaveDeInscripcion(req, res);
-  }
-);
-
-//#endregion
-
 //#region Destinos
 router.post("/create-destinos", verifyToken.verifyJWT, (req, res, express) => {
   createDestino(req, res);
@@ -605,28 +576,6 @@ router.put("/modify-tipoBeneficiario", verifyToken.verifyJWT, (req, res) => {
 
 router.delete("/delete-tipoBeneficiario", verifyToken.verifyJWT, (req, res) => {
   deleteTipoBeneficiario(req, res);
-});
-//#endregion
-
-//#region Roles
-router.post("/create-roles", verifyToken.verifyJWT, (req, res, express) => {
-  createRol(req, res);
-});
-
-router.get("/get-roles", verifyToken.verifyJWT, (req, res) => {
-  getRoles(req, res);
-});
-
-router.get("/detail-roles", verifyToken.verifyJWT, (req, res) => {
-  getDetailRol(req, res);
-});
-
-router.put("/modify-roles", verifyToken.verifyJWT, (req, res) => {
-  modifyRol(req, res);
-});
-
-router.delete("/delete-roles", verifyToken.verifyJWT, (req, res) => {
-  deleteRol(req, res);
 });
 //#endregion
 
@@ -840,10 +789,13 @@ router.get(
   }
 );
 
-router.get("/get-solicitudes-reestructura",verifyToken.verifyJWT,(req, res) => {
-  getSolicitudesReestructura(req, res);}
+router.get(
+  "/get-solicitudes-reestructura",
+  verifyToken.verifyJWT,
+  (req, res) => {
+    getSolicitudesReestructura(req, res);
+  }
 );
-
 
 router.put("/modify-solicitud", verifyToken.verifyJWT, (req, res) => {
   modifySolicitud(req, res);
@@ -877,10 +829,6 @@ router.post("/delete-comentario", verifyToken.verifyJWT, (req, res) => {
 
 //#endregion
 
-//#region  Usuarios
-router.post("/create-usuario", verifyToken.verifyJWT, (req, res) => {
-  createUsuario(req, res);
-});
 
 router.post("/create-notificacion", verifyToken.verifyJWT, (req, res) => {
   createNotificacion(req, res);
@@ -901,13 +849,13 @@ router.get("/get-notificaciones-creadas", verifyToken.verifyJWT, (req, res) => {
 router.get("/get-info-notificacion", verifyToken.verifyJWT, (req, res) => {
   getInfoNotificacion(req, res);
 });
-
-router.get("/get-usuarios-asignables", verifyToken.verifyJWT, (req, res) => {
-  getUsuariosAsignables(req, res);
-});
 //#endregion
 
 //#region PathDoc
+router.delete("/delete-PathDocSol", (req, res) => {
+  deletePathDocSol(req, res);
+});
+
 router.post("/create-addPathDocSol", verifyToken.verifyJWT, (req, res) => {
   addPathDocSol(req, res);
 });
@@ -1569,17 +1517,6 @@ router.get("/get-instruccion", verifyToken.verifyJWT, (req, res, express) => {
   getInstrucciones(req, res);
 });
 
-// router.get("/get-tiposDeGarantiaDePago", (req, res) => {
-//   getTiposDeGarantiaDePago(req, res);
-// });
-
-// router.put("/modify-mandato", (req, res) => {
-//   modifyMandato(req, res);
-// });
-
-// router.delete("/delete-tiposDeGarantiaDePago", (req, res) => {
-//   deleteTipoDeGarantiaDePago(req, res);
-// });
 //#endregion
 
 //#region Mandatos
@@ -1613,14 +1550,9 @@ router.post(
     createPdfAcuseCancelacion(req, res);
   }
 );
-router.post(
-  "/create-pdf-provisional-reestructura",
-  verifyToken.verifyJWT,
-  (req, res) => {
-    createPdfFormatoReesctructura(req, res);
-  }
-);
-
+router.post("/create-pdf-acuse", verifyToken.verifyJWT, (req, res) => {
+  createPdfAcuse(req, res);
+});
 
 router.post("/actualiza-descarga", verifyToken.verifyJWT, (req, res) => {
   actualizaDescarga(req, res);
@@ -1663,6 +1595,20 @@ router.post(
     createPdfSolicitudAnulacion(req, res);
   }
 );
+router.post(
+  "/create-pdf-constancia-reestructura",
+  verifyToken.verifyJWT,
+  (req, res) => {
+    createPdfConstanciaReestructura(req, res);
+  }
+);
+router.post(
+  "/create-pdf-contestacion-reestructura",
+  verifyToken.verifyJWT,
+  (req, res) => {
+    createPdfContestacionReestructura(req, res);
+  }
+);
 //#endregion
 
 // #region Ayudas
@@ -1694,6 +1640,25 @@ router.get("/sumaPorcentajeAcumulado", verifyToken.verifyJWT, (req, res) => {
 router.get("/listaMecanismosDePago", verifyToken.verifyJWT, (req, res) => {
   listaMecanismosDePago(req, res);
 });
+// #endregion
+
+router.get("/get-TrazabilidadSolicitud", verifyToken.verifyJWT, (req, res) => {
+  getTrazabilidadSolicitud(req, res);
+});
+
+// #region Reestructura
+router.post("/create-SolicitudReestructura", verifyToken.verifyJWT, (req, res) => {
+    createSolicitudReestructura(req, res);
+  }
+);
+
+router.get("/get-SolicitudReestructuraFirma", verifyToken.verifyJWT, (req, res) => {
+  getSolicitudReestructuraFirma(req, res)})
+  
+router.get("/listaRestructura", verifyToken.verifyJWT, (req, res) => {
+  getRestructuras(req, res);
+});
+
 // #endregion
 
 module.exports = router;
