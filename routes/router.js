@@ -133,6 +133,7 @@ const {
   getDetailPathDocMandato,
   addPathDocInstruccion,
   getDetailPathDocInstruccion,
+  deletePathDocSol,
 } = require("../controllers/PathDocSol.js");
 const {
   getAutorizaciones,
@@ -829,10 +830,6 @@ router.post("/delete-comentario", verifyToken.verifyJWT, (req, res) => {
 
 //#endregion
 
-//#region  Usuarios
-// router.post("/create-usuario", verifyToken.verifyJWT, (req, res) => {
-//   createUsuario(req, res);
-// });
 
 router.post("/create-notificacion", verifyToken.verifyJWT, (req, res) => {
   createNotificacion(req, res);
@@ -856,6 +853,10 @@ router.get("/get-info-notificacion", verifyToken.verifyJWT, (req, res) => {
 //#endregion
 
 //#region PathDoc
+router.delete("/delete-PathDocSol", (req, res) => {
+  deletePathDocSol(req, res);
+});
+
 router.post("/create-addPathDocSol", verifyToken.verifyJWT, (req, res) => {
   addPathDocSol(req, res);
 });
