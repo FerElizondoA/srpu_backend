@@ -271,6 +271,7 @@ const {
 } = require("../controllers/Respecto");
 const {
   createPdfRequerimientos,
+  createPdfSolicitudInscripcionReestructura,
   createPdfConstancia,
   createPdfSolicitudCorto,
   createPdfAcuseEnviado,
@@ -1526,6 +1527,9 @@ router.post(
     createPdfSolicitudCorto(req, res);
   }
 );
+router.post("/create-pdf-solicitud-reestructura", verifyToken.verifyJWT, (req, res) => {
+  createPdfSolicitudInscripcionReestructura(req, res);
+});
 router.post("/create-pdf-requerimientos", verifyToken.verifyJWT, (req, res) => {
   createPdfRequerimientos(req, res);
 });

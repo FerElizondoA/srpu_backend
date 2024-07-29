@@ -8,6 +8,7 @@ module.exports = {
         const IdEditor = req.body.IdEditor;
         const Estatus = req.body.Estatus
         const NumeroRegistro = req.body.NumeroRegistro 
+        const IdClaveInscripcion = req.body.IdClaveInscripcion
     
         if (
           (IdEditor == null || /^[\s]*$/.test(IdEditor)) &&
@@ -18,7 +19,7 @@ module.exports = {
           });
         } else {
           db.query(
-            `CALL sp_AgregarSolicitudReestructura('${IdSolicitud}', '${SolicitudReestructura}', '${IdEditor}','${Estatus}', '${NumeroRegistro}')`,
+            `CALL sp_AgregarSolicitudReestructura('${IdSolicitud}', '${SolicitudReestructura}', '${IdEditor}','${Estatus}', '${NumeroRegistro}', '${IdClaveInscripcion}')`,
             (err, result) => {
               console.log(err)
               console.log(result)

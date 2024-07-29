@@ -149,7 +149,7 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
             border-collapse: collapse;
           "
         >
-          {{organismoServidorPublico}}
+          {{entePublicoObligado}}
         </td>
       </tr>
 
@@ -241,7 +241,7 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
             border-collapse: collapse;
           "
         >
-          {{fechaContratacion}}
+          {{fechaContratacionSolicitud}}
         </td>
       </tr>
     </tbody>
@@ -337,7 +337,7 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
             border-collapse: collapse;
           "
         >
-          Duración (Periodo de Administación)
+          Duración (Periodo de Administración)
         </td>
         <td
           style="
@@ -370,7 +370,7 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
             border-collapse: collapse;
           "
         >
-          {{PeriodoFinanciamiento}}
+          {{periodoFinanciamiento}}
         </td>
       </tr>
       <tr>
@@ -485,10 +485,10 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
     </thead>
     <tbody>
       <tr>
-        <td style="border: 1px solid black; text-align: center;">{{fechaContratacion}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{fechaContratacionSolicitud}}</td>
         <td style="border: 1px solid black; text-align: center;">{{plazo}}</td>
         <td style="border: 1px solid black; text-align: center;">{{periodoAdministracion}}</td>
-        <td style="border: 1px solid black; text-align: center;">{{PeriodoFinanciamiento}}</td>
+        <td style="border: 1px solid black; text-align: center;">{{periodoFinanciamiento}}</td>
         <td style="border: 1px solid black; text-align: center;">{{tasaInteres}}</td>
         <td style="border: 1px solid black; text-align: center;">{{tasaEfectiva}}</td>
       </tr>
@@ -537,11 +537,12 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
 
   </thead>
   <tbody>
-    <tr>
+    {{anexosClausulas}}
+    <!-- <tr>
       <td style="border: 1px solid black; text-align: center;">{{anexoOriginal}}</td>
       <td style="border: 1px solid black; text-align: center;">{{anexoModificada}}</td>
       <td style="border: 1px solid black; text-align: center;">{{modificacion}}</td>
-    </tr>
+    </tr> -->
     <!-- <tr>
       <td style="border: 1px solid black; text-align: center;">15/02/2023</td>
       <td style="border: 1px solid black; text-align: center;">24 meses</td>
@@ -611,13 +612,21 @@ de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglame
 
   <br />
   <br />
+
   <strong>PRIMERO:</strong> Tenerme por presentado en términos del presente
+  escrito con la personalidad que ostento. <br /><strong>SEGUNDO:</strong>
+  Tener por presentados los documentos que se ponen a su consideración, de 
+  conformidad con lo dispuesto en los artículos aplicables del Reglamento. 
+  <br /><strong>TERCERO:</strong> Inscribir la reestructura antes mencionada 
+  en el Registro Público Único
+
+  <!-- <strong>PRIMERO:</strong> Tenerme por presentado en términos del presente
   escrito con la personalidad que ostento. <br /><strong>SEGUNDO:</strong>
   Recibir y dar cuenta con los documentos que se exhiben y relacionan en
   apartado especial de esta solicitud. <br /><strong>TERCERO:</strong> Proceder
   a la inscripción del Contrato de Crédito Simple Sin Garantía celebrado entre
   el {{organismoServidorPublico}} como acreditado y(e)
-  {{institucionFinanciera}}, como acreditante, con fecha {{fechaContratacion}}.
+  {{institucionFinanciera}}, como acreditante, con fecha {{fechaContratacion}}. -->
 
   <br />
   <br />
