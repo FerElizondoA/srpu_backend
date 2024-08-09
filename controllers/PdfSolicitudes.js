@@ -963,42 +963,46 @@ module.exports = {
     );
 
     const {
-      oficioNum, //CONSTANCIA
-      servidorPublico,
-      cargo,
-      organismo,
-      oficioSolicitud, 
-      fechaSolicitud,
-      tipoDocumento,
-      fechaContratacion,
-      claveInscripcion,
-      fechaClave,
-      fechaReestructuracion,
-      entePublicoObligado,
+      oficioNum, //CONSTANCIA YA
+      servidorPublico,//YA
+
+      cargo,//YA
+      organismo,//YA
+      oficioSolicitud,//YA 
+      fechaSolicitud,//YA
+
+      tipoDocumento, //YA
+      fechaContratacion,//YA
+      claveInscripcion,//YA
+      fechaClave,//YA
+      
+      fechaReestructuracion,//YA
+      entePublicoObligado, //YA
+      institucionFinanciera, //YA
       obligadoSolidarioAval,
-      institucionFinanciera,
-      montoOriginalContratado,
-      saldoVigente,
-      mecanismoVehiculoDePago,
-      fuentePago,
-      directorGeneral,
-      cargoDirectorGeneral,
+      
+      montoOriginalContratado,//YA
+      saldoVigente,//ya
+      mecanismoVehiculoDePago,//ya
+      fuentePago,//ya
+      directorGeneral,//ya
+      cargoDirectorGeneral,//ya
       modificaciones,
     } = req.body;
 
-    // const tablaModificaciones = modificaciones
-    //   ? '<table id="data-table" style=" border-collapse: collapse; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100; letter-spacing: 1px;"><tbody>' +
-    //     Object.keys(JSON.parse(modificaciones)).map((val) => {
-    //       return (
-    //         '<tr> <td style="width: 15%; vertical-align: -webkit-baseline-middle">' +
-    //         val +
-    //         '</td> <td style="width: 5%; vertical-align: -webkit-baseline-middle"></td><td style="width: 40%; vertical-align: -webkit-baseline-middle">' +
-    //         JSON.parse(modificaciones)[val] +
-    //         "</td> </tr>"
-    //       );
-    //     }) +
-    //     "</tbody> </table>"
-    //   : "";
+    const tablaModificaciones = modificaciones
+      ? '<table id="data-table" style=" border-collapse: collapse; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100; letter-spacing: 1px;"><tbody>' +
+        Object.keys(JSON.parse(modificaciones)).map((val) => {
+          return (
+            '<tr> <td style="width: 15%; vertical-align: -webkit-baseline-middle">' +
+            val +
+            '</td> <td style="width: 5%; vertical-align: -webkit-baseline-middle"></td><td style="width: 40%; vertical-align: -webkit-baseline-middle">' +
+            JSON.parse(modificaciones)[val] +
+            "</td> </tr>"
+          );
+        }) +
+        "</tbody> </table>"
+      : "";
 
     const html = htmlTemplate
       .replaceAll("{{oficioNum}}", oficioNum || "")
@@ -1021,7 +1025,7 @@ module.exports = {
       .replaceAll("{{fuentePago}}", fuentePago || "")
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "")
-      //.replaceAll("{{tablaModificaciones}}", tablaModificaciones || "");
+      .replaceAll("{{tablaModificaciones}}", tablaModificaciones || "");
 
     const browser = await puppeteer.launch({
       headless: "false",
