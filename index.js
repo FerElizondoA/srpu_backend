@@ -17,3 +17,4 @@ app.use("/api/srpu", router);
 
 // run server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+

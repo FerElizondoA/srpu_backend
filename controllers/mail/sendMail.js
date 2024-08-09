@@ -14,7 +14,9 @@ module.exports = {
         user: process.env.SRPU_B_APP_EMAIL_USERNAME, // enter your email address
         pass: process.env.SRPU_B_APP_EMAIL_PASSWORD, // enter your visible/encripted password
       },
-      tls: { rejectUnauthorized: false },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
     function getCorreo() {
@@ -24,6 +26,10 @@ module.exports = {
         db.query(
           `CALL sp_DetalleCorreos('${usuarios}', '${plantilla}')`,
           (err, result) => {
+            console.log('err',err);
+            console.log('result',result);
+            
+            
             mock = result[1][0].body;
             result[0].map(({ CorreoElectronico }) => {
               if (emails !== "") {

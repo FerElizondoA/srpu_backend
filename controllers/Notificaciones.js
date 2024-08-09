@@ -48,7 +48,8 @@ module.exports = {
     db.query(
       `CALL sp_AgregarNotificacion('${IdSolicitud}','${ControlInterno}','${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}')`,
       (err, result) => {
-
+ console.log('error',err);
+ console.log('result',result);
         if (err) {
           return res.status(500).send({
             error: err,
