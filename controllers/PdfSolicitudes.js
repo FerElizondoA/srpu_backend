@@ -132,9 +132,9 @@ module.exports = {
 
     const rowsAnexosClausulas = JSON.parse(anexosClausulas).map(record => `
       <tr>
-        <td>${record.ClausulaOriginal.Descripcion}</td>
-        <td>${record.ClausulaModificada.Descripcion}</td>
-        <td>${record.Modificacion}</td>
+        <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaOriginal.Descripcion}</th>
+        <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaModificada.Descripcion}</th>
+        <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.Modificacion}</th>
       </tr>
     `).join('');
 
@@ -996,7 +996,7 @@ module.exports = {
           return (
             '<tr> <td style="width: 15%; vertical-align: -webkit-baseline-middle">' +
             val +
-            '</td> <td style="width: 5%; vertical-align: -webkit-baseline-middle"></td><td style="width: 40%; vertical-align: -webkit-baseline-middle">' +
+            '</td> <td style=" font-family: Arial; width: 5%; vertical-align: -webkit-baseline-middle"></td><td style="width: 40%; vertical-align: -webkit-baseline-middle">' +
             JSON.parse(modificaciones)[val] +
             "</td> </tr>"
           );
@@ -1077,24 +1077,19 @@ module.exports = {
       acreditado,
       acreditante,
       monto,
-      modificaciones,
+      // modificaciones,
       directorGeneral,
       cargoDirectorGeneral,
+      anexosClausulas,
     } = req.body;
 
-    const tablaModificaciones = modificaciones
-      ? '<table id="data-table" style=" border-collapse: collapse; font-family: Arial; font-size: 10px; text-align: justify; font-weight: 100; letter-spacing: 1px;"><tbody>' +
-        Object.keys(JSON.parse(modificaciones)).map((val) => {
-          return (
-            '<tr> <td style="width: 15%; vertical-align: -webkit-baseline-middle">' +
-            val +
-            '</td> <td style="width: 5%; vertical-align: -webkit-baseline-middle"></td><td style="width: 40%; vertical-align: -webkit-baseline-middle">' +
-            JSON.parse(modificaciones)[val] +
-            "</td> </tr>"
-          );
-        }) +
-        "</tbody> </table>"
-      : "";
+    const rowsAnexosClausulas = JSON.parse(anexosClausulas).map(record => `
+      <tr>
+        <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaOriginal.Descripcion}</th>
+        <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaModificada.Descripcion}</th>
+        <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.Modificacion}</th>
+      </tr>
+    `).join('');
 
     const html = htmlTemplate
       .replaceAll("{{servidorPublico}}", servidorPublico || "")
@@ -1109,7 +1104,8 @@ module.exports = {
       .replaceAll("{{monto}}", monto || "")
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "")
-      .replaceAll("{{tablaModificaciones}}", tablaModificaciones || "");
+      .replaceAll("{{anexosClausulas}}", rowsAnexosClausulas || "");
+
 
     const browser = await puppeteer.launch({
       headless: "false",

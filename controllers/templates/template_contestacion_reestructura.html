@@ -127,47 +127,47 @@
     style="width: 100%; border: 1px solid black; border-collapse: collapse"
   >
     <tbody
-      style="
-        letter-spacing: 1px;
-        font-family: Arial;
-        font-size: 12px;
-        font-weight: 100;
-      "
+    style="
+      letter-spacing: 1px;
+      font-family: Arial;
+      font-size: 12px;
+      font-weight: 100;
+    "
     >
       <tr>
         <td
-          style="width: 60%; border: 1px solid black; border-collapse: collapse"
+          style="width: 30%; border: 1px solid black; border-collapse: collapse; background-color: #8c8c8c;"
         >
           CLASE DE TITULO
         </td>
         <td
-          style="width: 40%; border: 1px solid black; border-collapse: collapse"
+          style="width: 70%; border: 1px solid black; border-collapse: collapse;"
         >
           {{claseTitulo}}
         </td>
       </tr>
       <tr>
         <td
-          style="width: 60%; border: 1px solid black; border-collapse: collapse"
+          style="width: 30%; border: 1px solid black; border-collapse: collapse; background-color: #d3d3d3;"
         >
           FECHA DE SUSCRIPCION
         </td>
         <td
-          style="width: 40%; border: 1px solid black; border-collapse: collapse"
+          style="width: 70%; border: 1px solid black; border-collapse: collapse;"
         >
           {{fechaContratacion}}
         </td>
       </tr>
       <tr>
         <td
-          style="width: 60%; border: 1px solid black; border-collapse: collapse"
+          style="width: 30%; border: 1px solid black; border-collapse: collapse; background-color: #d3d3d3;"
         >
           No. INSCRIPCIÓN ESTATAL
         </td>
         <td
-          style="width: 40%; border: 1px solid black; border-collapse: collapse"
+          style="width: 70%; border: 1px solid black; border-collapse: collapse;"
         >
-          {{noInscripcionEstatal}}
+          {{noInscripcionEstatal}} MODIFICATORIO
         </td>
       </tr>
     </tbody>
@@ -245,7 +245,7 @@
         </td>
       </tr>
 
-      <tr>
+      <!-- <tr>
         <td
           style="width: 30%; border: 1px solid black; border-collapse: collapse"
         >
@@ -256,9 +256,45 @@
         >
           {{tablaModificaciones}}
         </td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
+</div>
+
+<div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+      margin-bottom: 0;
+    "
+  >
+  MODIFICACIONES EFECTUADAS
+  </h3>
+  <table
+  id="data-table"
+  style="width: 100%; border: 1px solid black; border-collapse: collapse"
+>
+  <thead>
+    <tr>
+      <th style="width: 20%; font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">ANEXO Ó CLÁUSULA ORIGINAL</th>
+      <th style="width: 20%; font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">ANEXO Ó CLÁUSULA MODIFICADA</th>
+      <th style="width: 60%; font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">MODIFICACIÓN</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{anexosClausulas}}
+  </tbody>
+</table>
 </div>
 
 <h3

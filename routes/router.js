@@ -318,6 +318,14 @@ const {
   getRestructuras,
 } = require("../controllers/Reestructura.js");
 
+const {
+  createClaseTitulo,
+  getClaseTitulo,
+  modifyClaseTitulo,
+  deleteClaseTitulo,
+} = require("../controllers/ClaseTitulo.js");
+
+
 //#region Instituciones Financieras
 router.post(
   "/create-institucionesFinancieras",
@@ -1663,6 +1671,26 @@ router.get("/listaRestructura", verifyToken.verifyJWT, (req, res) => {
   getRestructuras(req, res);
 });
 
+// #endregion
+
+
+// #region ClaseTitulo
+router.post("/create-ClaseTitulo", verifyToken.verifyJWT, (req, res, express) => {
+  createClaseTitulo(req, res);
+  }
+);
+
+router.get("/get-ClaseTitulo", verifyToken.verifyJWT, (req, res) => {
+  getClaseTitulo(req, res);
+});
+
+router.put("/modify-ClaseTitulo", verifyToken.verifyJWT, (req, res) => {
+  modifyClaseTitulo(req, res);
+});
+
+router.delete("/delete-ClaseTitulo", verifyToken.verifyJWT, (req, res) => {
+  deleteClaseTitulo(req, res);
+});
 // #endregion
 
 module.exports = router;
