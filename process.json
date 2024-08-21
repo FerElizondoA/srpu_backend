@@ -15,10 +15,10 @@
         "SRPU_B_APP_TOKEN_HEADER_KEY": "authorization",
         "SRPU_B_APP_REFRESH_TOKEN_KEY": "4ebd020883285d698c44ec50939c8567",
         "SRPU_B_APP_EMAIL_HOST": "smtp.gmail.com",
-        "SRPU_B_APP_EMAIL_PORT": "587",
+        "SRPU_B_APP_EMAIL_PORT": "465",
         "SRPU_B_APP_EMAIL_MAILER": "correo.nl.gob.mx",
         "SRPU_B_APP_EMAIL_USERNAME": "noreply.cecapmex@gmail.com",
-        "SRPU_B_APP_EMAIL_PASSWORD": "hpffapcifkvkfuey",
+        "SRPU_B_APP_EMAIL_PASSWORD": "tfcfrudxwcbmupaa",
         "SRPU_B_APP_EMAIL_ADDRESS": "noreply.cecapmex@gmail.com"
       },
       "env_qa": {
@@ -31,10 +31,10 @@
         "SRPU_B_APP_JWT_SECRET_KEY": "2A95F5CCD11DE255FEE9451BDE568",
         "SRPU_B_APP_TOKEN_HEADER_KEY": "authorization",
         "SRPU_B_APP_EMAIL_HOST": "smtp.gmail.com",
-        "SRPU_B_APP_EMAIL_PORT": "587",
+        "SRPU_B_APP_EMAIL_PORT": "465",
         "SRPU_B_APP_EMAIL_MAILER": "correo.nl.gob.mx",
         "SRPU_B_APP_EMAIL_USERNAME": "noreply.cecapmex@gmail.com",
-        "SRPU_B_APP_EMAIL_PASSWORD": "hpffapcifkvkfuey",
+        "SRPU_B_APP_EMAIL_PASSWORD": "tfcfrudxwcbmupaa",
         "SRPU_B_APP_EMAIL_ADDRESS": "noreply.cecapmex@gmail.com"
       },
       "env_prod": {
