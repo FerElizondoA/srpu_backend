@@ -18,8 +18,79 @@
   CONSTANCIA DE REESTRUCTURACIÓN O MODIFICACIÓN
 </h4>
 
+<!-- SERVIDOR PÚBLICO -->
+<h3
+  style="
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: justify;
+    letter-spacing: 1px;
+  "
+>
+  <u>{{servidorPublico}}</u> <br />
+  {{cargo}} <br />
+  {{organismo}}
+</h3>
+
+
+<p
+  style="
+    font-family: Arial;
+    font-size: 12px;
+    text-align: justify;
+    font-weight: 100;
+    letter-spacing: 1px;
+  "
+>
+
+  Me refiero su oficio {{oficioSolicitud}} de fecha {{fechaSolicitud}},
+  recibido a través del Sistema de Gestión de Créditos a Municipios de
+  Financiamientos y Obligaciones de Entidades Federativas y Municipios, el
+  {{fechaSolicitud}}, mediante el cual solicita la inscripción en el Registro
+  Público Único de Financiamientos y Obligaciones de Entidades Federativas y
+  Municipios de un Crédito simple celebrado entre el(la)
+  {{entePublicoObligado}} y(e) {{institucionFinanciera}} el
+  {{fechaContratacion}}, hasta por la cantidad de {{montoOriginalContratado}}.
+
+  <!-- El/La suscrito(a) {{servidorPublico}} en mi carácter de {{cargoServidorPublico}} del
+  {{organismoServidorPublico}}, mismo que acredito mediante la presentación de copia certificada de (la) nombramiento y
+  pasaporte emitido(a) por el(la) Secretaría de Relaciones Exteriores, por medio de la presente solicito la inscripción de la
+  reestructura de un Crédito Simple, en el Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas
+  y Municipios (Registro Público Único), de conformidad con lo dispuesto en el artículos 49 y 50 de la Ley de Disciplina
+  Financiera de las Entidades Federativas y los Municipios (Ley), y en el artículo 46 del Reglamento del Registro Público Único
+  de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglamento). -->
+    <br />
+    <br />
+  Sobre el particular, me permito informarle que para la inscripción de Obligaciones a Corto Plazo el artículo 28 del Reglamento
+  del Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas y Municipios (Reglamento), establece 
+  que además de lo ahí señalado, el Ente Público deberá cumplir con lo establecido en el artículo 25, con excepción de las 
+  fracciones l, inciso c) y f), ll, lll, lV y lX del Reglamento. 
+  <br /><br />
+  En virtud de lo anterior, una vez realizado el análisis al oficio de mérito
+  y a la documentación anexa al mismo, se detectaron las siguientes omisiones
+  y/o inconsistencias:   
+  <!-- Las caracteristicas de la Obligación son las siguientes: -->
+</p>
+
+<h3
+  style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+      letter-spacing: 1px;
+  "
+  >
+    Reglamento del Registro Público Único de Financiamientos y Obligaciones de
+    Entidades Federativas y Municipios
+</h3>
+
+{{comentarios}}
+
+
 <!-- CONSTANCIA DE REESTRUCTURACIÓN O MODIFICACIÓN -->
-<div
+<!-- <div
   style="
     display: flex;
     flex-direction: column;
@@ -27,8 +98,8 @@
     width: 100%;
     align-items: center;
   "
->
-  <table id="data-table" style="width: 70%; border: 1px solid black">
+> -->
+  <!-- <table id="data-table" style="width: 70%; border: 1px solid black">
     <tbody
       style="
         letter-spacing: 1px;
@@ -76,25 +147,11 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
-<!-- SERVIDOR PÚBLICO -->
-<h3
-  style="
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: 900;
-    text-align: justify;
-    letter-spacing: 1px;
-  "
->
-  {{servidorPublico}} <br />
-  {{cargo}} <br />
-  {{organismo}}
-</h3>
 
 <!-- SOLICITUD -->
-<div
+<!-- <div
   style="
     display: flex;
     flex-direction: column;
@@ -114,45 +171,58 @@
     SOLICITUD
   </h3>
   <table
-    id="data-table"
-    style="width: 100%; border: 1px solid black; border-collapse: collapse"
+  id="data-table"
+  
+  style="width: 100%; border: 1px solid black; border-collapse: collapse"
+>
+  <tbody
+    style="
+      letter-spacing: 1px;
+      font-family: Arial;
+      font-size: 12px;
+      font-weight: 100;
+    "
   >
-    <tbody
-      style="
-        letter-spacing: 1px;
-        font-family: Arial;
-        font-size: 12px;
-        font-weight: 100;
-      "
-    >
-      <tr>
-        <td
-          style="width: 30%; border: 1px solid black; border-collapse: collapse"
-        >
-          OFICIO DE SOLICITUD
-        </td>
-        <td
-          style="width: 25%; border: 1px solid black; border-collapse: collapse"
-        >
-          {{oficioSolicitud}}
-        </td>
-        <td
-          style="width: 25%; border: 1px solid black; border-collapse: collapse"
-        >
-          FECHA DE SOLICITUD
-        </td>
-        <td
-          style="width: 20%; border: 1px solid black; border-collapse: collapse"
-        >
-          {{fechaSolicitud}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+    <tr>
+      <td
+        style="
+          background-color: #817b7b !important;  /* Gris claro */
+          width: 25%;
+          border: 1px solid black;
+          border-collapse: collapse;
+          
+        "
+      >
+        FECHA DE LA SOLICITUD
+      </td>
+      <td
+        style="width: 25%; border: 1px solid black; border-collapse: collapse"
+      >
+        {{fechaSolicitud}}
+      </td>
+      <td
+        style="
+          width: 25%;
+          border: 1px solid black;
+          border-collapse: collapse;
+          background-color: #817b7b !important; /* Gris claro */
+        "
+      >
+        FECHA DE RECEPCIÓN
+      </td>
+      <td
+        style="width: 25%; border: 1px solid black; border-collapse: collapse"
+      >
+        {{fechaSolicitud}}
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+</div> -->
 
 <!-- DOCUMENTACIÓN REGISTRADA -->
-<div
+<!-- <div
   style="
     display: flex;
     flex-direction: column;
@@ -187,7 +257,20 @@
         <td
           style="width: 60%; border: 1px solid black; border-collapse: collapse"
         >
-          TIPO DE DOCUMENTO
+          CLASE DE TITULO:
+        </td>
+        <td
+          style="width: 40%; border: 1px solid black; border-collapse: collapse"
+        >
+          {{claseTitulo}}
+        </td>
+      </tr>
+
+      <tr>
+        <td
+          style="width: 60%; border: 1px solid black; border-collapse: collapse"
+        >
+          TIPO DE DOCUMENTO:
         </td>
         <td
           style="width: 40%; border: 1px solid black; border-collapse: collapse"
@@ -199,7 +282,7 @@
         <td
           style="width: 60%; border: 1px solid black; border-collapse: collapse"
         >
-          FECHA DE CONTRATACIÓN
+          FECHA DE CONTRATACIÓN:
         </td>
         <td
           style="
@@ -278,10 +361,10 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
 <!-- INFORMACIÓN DEL NUEVO FINANCIAMIENTO -->
-<div
+<!-- <div
   style="
     display: flex;
     flex-direction: column;
@@ -398,10 +481,11 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
-<!-- MODIFICACIONES EFECTUADAS -->
-<div
+
+<!-- Condiciones Financieras -->
+ <!-- <div
   style="
     display: flex;
     flex-direction: column;
@@ -418,28 +502,170 @@
       margin-bottom: 0;
     "
   >
-    MODIFICACIONES EFECTUADAS
+    CONDICIONES FINANCIERAS
   </h3>
-  <div style="border: 1px solid black; border-collapse: collapse">
-    {{tablaModificaciones}}
-  </div>
-</div>
+  <table
+    id="data-table"
+    style="width: 100%; border: 1px solid black; border-collapse: collapse"
+  >
+    <tbody
+      style="
+        letter-spacing: 1px;
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: 100;
+      "
+    >
+      <tr>
+        <td
+          style="width: 30%; border: 1px solid black; border-collapse: collapse"
+        >
+          PLAZO: 
+        </td>
+        <td
+          style="width: 70%; border: 1px solid black; border-collapse: collapse"
+        >
+          {{plazo}}
+        </td>
+      </tr>
+      <tr>
+        <td
+          style="width: 30%; border: 1px solid black; border-collapse: collapse"
+        >
+          AMORTIZACIÓN: 
+        </td>
+        <td
+          style="
+            width: 70%;
+
+            border: 1px solid black;
+            border-collapse: collapse;
+          "
+        >
+          {{periodicidad}}
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+
+
+<!-- Autorizaciones -->
+<!-- <div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+      margin-bottom: 0;
+    "
+  >
+    AUTORIZACIONES: 
+  </h3>
+  <table
+    id="data-table"
+    style="width: 100%; border: 1px solid black; border-collapse: collapse"
+  >
+    <tbody
+      style="
+        letter-spacing: 1px;
+        font-family: Arial;
+        font-size: 12px;
+        font-weight: 100;
+      "
+    >
+      <tr>
+        <td
+          style="width: 30%; border: 1px solid black; border-collapse: collapse"
+        >
+          DEUDOR: 
+        </td>
+        <td
+          style="width: 70%; border: 1px solid black; border-collapse: collapse"
+        >
+          {{autoriazcionReestructura}}
+        </td>
+      </tr>
+    </tbody>
+  </table> -->
+
+
+<!-- MODIFICACIONES EFECTUADAS -->
+
+<!-- <div
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  "
+>
+  <h3
+    style="
+      font-family: Arial;
+      font-size: 12px;
+      text-align: justify;
+      font-weight: 900;
+      margin-bottom: 0;
+    "
+  >
+  MODIFICACIONES EFECTUADAS
+  </h3>
+  <table
+  id="data-table"
+  style="width: 100%; border: 1px solid black; border-collapse: collapse"
+>
+  <thead>
+    <tr>
+      <th style="width: 20%; font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">ANEXO Ó CLÁUSULA ORIGINAL</th>
+      <th style="width: 20%; font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">ANEXO Ó CLÁUSULA MODIFICADA</th>
+      <th style="width: 60%; font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">MODIFICACIÓN</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{anexosClausulas}}
+  </tbody>
+</table>
+</div> -->
+
 
 <p
   style="
+ font-family: Arial;
+    font-size: 12px;
     text-align: justify;
-    font-family: Arial;
+    font-weight: 100;
     letter-spacing: 1px;
-    font-size: 10px;
   "
 >
-El presente fue inscrito en el Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas y
+
+En virtud de los argumentos precedentes y de conformidad con lo establecido en los artículos 30, 31, 49, 50 y 51 fracciones
+l, V, IX y XI de la Ley de Disciplina Financiera de las Entidades Federativas y los Municipios; 3, 7, 16 fracciones ll, III
+y IV, y 28 del Reglamento del Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas y 
+Municipios; y, 11 D, fracción III, del Reglamento Interior de la Secretaría de Hacienda y Crédito Público, publicado en 
+el Diario Oficial de la Federación el 6 de marzo de 2023, se le previene para que subsanen las omisiones y/o 
+inconsistencias señaladas, en un término no mayor a 10 días hábiles contados a partir del día siguiente a la notificación 
+del presente oficio. 
+<br />
+Cabe señalar, que si lo anterior no es subsanado en el plazo señalado, no podrá continuarse con el 
+proceso de inscripción.
+
+
+<!-- El presente fue inscrito en el Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas y
 Municipios, de conformidad con lo establecido en los artículos 49 y 50 de la Ley de Disciplina Financiera de las Entidades
 Federativas y los Municipios; 9º de la Ley de Coordinación Fiscal; y, 3, 23, 30 y 46 del Reglamento del Registro Público Único
 de Financiamientos y Obligaciones de Entidades Federativas y Municipios. Los pagos de los Financiamientos contraídos se
 efectuarán de acuerdo con los mecanismos y sistemas de registro establecidos en su Ley Estatal de Deuda.
 Lo anterior, con fundamento en el artículo 11 D, fracción III, del Reglamento Interior de la Secretaría de Hacienda y Crédito
-Público, publicado en el Diario Oficial de la Federación el 6 de marzo de 2023.
+Público, publicado en el Diario Oficial de la Federación el 6 de marzo de 2023. -->
 
   <!-- El presente Tercer Convenio Modificatorio se inscribe a la par de su Addendum
   de fecha 18 de abril de 2022. El presente fue inscrito en el Registro Público

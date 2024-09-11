@@ -20,7 +20,7 @@ const templateAcuseCancelacion =
   "controllers/templates/template_acuse_envio_respuesta.html";
 const templateAcuse = "controllers/templates/template_acuse.html";
 const templateConstanciaReestructura =
-  "controllers/templates/template_constancia_reestructuracion.html";
+  "controllers/templates/template_constancia_reestructuracion.html"; //#requerimiento reestructura
 const templateContestacionReestructura =
   "controllers/templates/template_contestacion_reestructura.html";
 const templateInscripcionReestructura = 
@@ -112,18 +112,15 @@ module.exports = {
       entePublicoObligado,
       destino,// YAA
       plazo,// YAA
-      periodoFinanciamiento,// YAA
-      periodoAdministracion,// YAA
-      saldoVigente,// YAA
+      periodoFinanciamiento,// YAA res
+      periodoAdministracion,// YAA res
+      saldoVigente,// YAA res
       tasaInteres,// YAA
       comisiones,// YAA
       gastosAdicionales,// YAA
       tasaEfectiva,// YAA
       fuentePago,// YAA
-      anexosClausulas, //YAA
-      // anexoOriginal,// SE UNIRAN
-      // anexoModificada,// SE UNIRAN
-      // modificacion,// UNIRAN
+      anexosClausulas, //YAA res
       reglas,
       documentos,
     } = req.body;
@@ -965,7 +962,7 @@ module.exports = {
     const {
       oficioNum, //CONSTANCIA YA
       servidorPublico,//YA
-
+      claseTitulo,
       cargo,//YA
       organismo,//YA
       oficioSolicitud,//YA 
@@ -985,6 +982,10 @@ module.exports = {
       saldoVigente,//ya
       mecanismoVehiculoDePago,//ya
       fuentePago,//ya
+      plazo,
+      autoriazcionReestructura,
+      periodicidad,
+      comentarios,
       directorGeneral,//ya
       cargoDirectorGeneral,//ya
       modificaciones,
@@ -1007,6 +1008,9 @@ module.exports = {
     const html = htmlTemplate
       .replaceAll("{{oficioNum}}", oficioNum || "")
       .replaceAll("{{servidorPublico}}", servidorPublico || "")
+
+      .replaceAll("{{claseTitulo}}", claseTitulo || "")
+
       .replaceAll("{{cargo}}", cargo || "")
       .replaceAll("{{organismo}}", organismo || "")
       .replaceAll("{{oficioSolicitud}}", oficioSolicitud || "")
@@ -1023,6 +1027,13 @@ module.exports = {
       .replaceAll("{{saldoVigente}}", saldoVigente || "")
       .replaceAll("{{mecanismoVehiculoDePago}}", mecanismoVehiculoDePago || "")
       .replaceAll("{{fuentePago}}", fuentePago || "")
+
+      .replaceAll("{{plazo}}", plazo || "")
+      .replaceAll("{{autoriazcionReestructura}}", autoriazcionReestructura || "")
+      .replaceAll("{{periodicidad}}", periodicidad || "")
+
+      .replaceAll("{{comentarios}}", comentarios || "")
+      
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "")
       .replaceAll("{{tablaModificaciones}}", tablaModificaciones || "");
@@ -1080,6 +1091,8 @@ module.exports = {
       // modificaciones,
       directorGeneral,
       cargoDirectorGeneral,
+      mecanismoVehiculoDePago,
+      fuentePago,
       anexosClausulas,
     } = req.body;
 
@@ -1104,6 +1117,8 @@ module.exports = {
       .replaceAll("{{monto}}", monto || "")
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "")
+      .replaceAll("{{mecanismoVehiculoDePago}}", mecanismoVehiculoDePago || "")
+      .replaceAll("{{fuentePago}}", fuentePago || "")
       .replaceAll("{{anexosClausulas}}", rowsAnexosClausulas || "");
 
 
