@@ -325,6 +325,14 @@ const {
   deleteClaseTitulo,
 } = require("../controllers/ClaseTitulo.js");
 
+const {
+  createTiposSolicitudes,
+  getTiposSolicitudes,
+  //getDetailDestino,
+  modifyTiposSolicitudes,
+  deleteTiposSolicitudes,
+} = require("../controllers/TiposSolicitudes.js");
+
 
 //#region Instituciones Financieras
 router.post(
@@ -1692,5 +1700,27 @@ router.delete("/delete-ClaseTitulo", verifyToken.verifyJWT, (req, res) => {
   deleteClaseTitulo(req, res);
 });
 // #endregion
+
+
+//#region Destinos
+router.post("/create-TiposSolicitudes", verifyToken.verifyJWT, (req, res, express) => {
+  createTiposSolicitudes(req, res);
+});
+
+router.get("/get-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  getTiposSolicitudes(req, res);
+});
+
+// router.get("/detail-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+//   getDetailTiposSolicitudes(req, res);
+// });
+
+router.put("/modify-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  modifyTiposSolicitudes(req, res);
+});
+
+router.delete("/delete-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  deleteTiposSolicitudes(req, res);
+});
 
 module.exports = router;

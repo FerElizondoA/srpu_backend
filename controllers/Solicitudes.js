@@ -5,6 +5,7 @@ module.exports = {
     const IdEntePublico = req.body.IdEntePublico;
     const IdTipoEntePublico = req.body.IdTipoEntePublico;
     const TipoSolicitud = req.body.TipoSolicitud;
+    const TipoCredito = req.body.TipoCredito;
     const IdInstitucionFinanciera = req.body.IdInstitucionFinanciera;
     const Estatus = req.body.Estatus;
     const IdClaveInscripcion = req.body.IdClaveInscripcion;
@@ -36,6 +37,13 @@ module.exports = {
         error: "Ingrese TipoSolicitud",
       });
     }
+
+    if (TipoCredito == null || /^[\s]*$/.test(TipoCredito)) {
+      return res.status(409).send({
+        error: "Ingrese TipoSolicitud",
+      });
+    }
+
 
     if (
       IdInstitucionFinanciera == null ||
@@ -81,8 +89,9 @@ module.exports = {
     }
 
     db.query(
-      `CALL sp_AgregarSolicitud( '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}','${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}' )`,
+      `CALL sp_AgregarSolicitud( '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}', '${TipoCredito}', '${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}' )`,
       (err, result) => {
+        console.log(err)
         // console.log("err", err)
         // console.log("result", result)
         if (err) {
