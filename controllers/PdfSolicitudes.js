@@ -750,12 +750,14 @@ module.exports = {
 
     await browser.close();
 
+    const safeFilename = encodeURIComponent(
+      `${oficio}-${new Date().toLocaleDateString("es-MX")}.pdf`
+    );
+
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficio}-${
-        new Date().toLocaleString("es-MX").split(" ")[0]
-      }.pdf`
+      `attachment; filename="${safeFilename}"`
     );
     res.send(pdfBuffer);
   },

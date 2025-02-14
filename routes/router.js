@@ -125,6 +125,7 @@ const {
 const {
   addPathDocSol,
   getDetailPathDocSol,
+  getDetailPathDocAcuses,
   addPathDocAut,
   getDetailPathDocAut,
   addPathDocFideicomiso,
@@ -879,6 +880,10 @@ router.post("/create-addPathDocSol", verifyToken.verifyJWT, (req, res) => {
 
 router.get("/get-DetailPathDocSol", verifyToken.verifyJWT, (req, res) => {
   getDetailPathDocSol(req, res);
+});
+
+router.get("/get-DetailPathDocAcuses", verifyToken.verifyJWT, (req, res) => {
+  getDetailPathDocAcuses(req, res);
 });
 
 router.post("/create-addPathDocAut", verifyToken.verifyJWT, (req, res) => {
