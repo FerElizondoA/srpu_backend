@@ -124,6 +124,7 @@ const {
 } = require("../controllers/Notificaciones.js");
 const {
   addPathDocSol,
+  addPathDocCancelacion,
   getDetailPathDocSol,
   getDetailPathDocAcuses,
   addPathDocAut,
@@ -877,6 +878,11 @@ router.delete("/delete-PathDocSol", (req, res) => {
 router.post("/create-addPathDocSol", verifyToken.verifyJWT, (req, res) => {
   addPathDocSol(req, res);
 });
+
+router.post("/create-addPathDocCancelacion", verifyToken.verifyJWT, (req, res) => {
+  addPathDocCancelacion(req, res);
+});
+
 
 router.get("/get-DetailPathDocSol", verifyToken.verifyJWT, (req, res) => {
   getDetailPathDocSol(req, res);

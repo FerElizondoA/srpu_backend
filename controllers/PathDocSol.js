@@ -31,6 +31,37 @@ module.exports = {
       }
     );
   },
+
+  addPathDocCancelacion: (req, res) => {
+    const { IdSolicitud, Ruta, NombreArchivo, TipoArchivoJustificacion} = req.body;
+    db.query(
+      `CALL sp_AddPathDocSol(?,?,?,?)`, [IdSolicitud, Ruta, NombreArchivo, TipoArchivoJustificacion],
+      (err, result) => {
+        console.log('err',err);
+        if (err) {
+          return res.status(500).send({
+            error: err,
+          });
+        }
+        if (result.length) {
+          const data = result[0][0];
+          if (data.error) {
+            return res.status(409).send({
+              result: data,
+            });
+          }
+          return res.status(200).send({
+            data,
+          });
+        } else {
+          return res.status(409).send({
+            error: "¡Sin Información!",
+          });
+        }
+      }
+    );
+  },
+
   // DETALLE POR ID
   getDetailPathDocSol: (req, res) => {
     const IdSolicitud = req.query.IdSolicitud;
