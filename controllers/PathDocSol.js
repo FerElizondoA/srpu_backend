@@ -33,9 +33,9 @@ module.exports = {
   },
 
   addPathDocCancelacion: (req, res) => {
-    const { IdSolicitud, Ruta, NombreArchivo, TipoArchivoJustificacion} = req.body;
+    const { IdSolicitud, Ruta, NombreArchivo, NombreIdentificador, TipoArchivoJustificacion, Justificacion} = req.body;
     db.query(
-      `CALL sp_AddPathDocSol(?,?,?,?)`, [IdSolicitud, Ruta, NombreArchivo, TipoArchivoJustificacion],
+      `CALL sp_addPathDocCancelacion(?,?,?,?,?,?)`, [IdSolicitud, Ruta, NombreArchivo, NombreIdentificador, TipoArchivoJustificacion, Justificacion],
       (err, result) => {
         console.log('err',err);
         if (err) {
