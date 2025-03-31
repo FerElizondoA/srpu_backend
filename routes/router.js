@@ -136,6 +136,7 @@ const {
   addPathDocInstruccion,
   getDetailPathDocInstruccion,
   deletePathDocSol,
+  getDetailPathDocCancelacion,
 } = require("../controllers/PathDocSol.js");
 const {
   getAutorizaciones,
@@ -887,6 +888,11 @@ router.post("/create-addPathDocCancelacion", verifyToken.verifyJWT, (req, res) =
 router.get("/get-DetailPathDocSol", verifyToken.verifyJWT, (req, res) => {
   getDetailPathDocSol(req, res);
 });
+
+router.get("/get-DetailPathDocCancelacion", verifyToken.verifyJWT, (req, res) => {
+  getDetailPathDocCancelacion(req, res);
+});
+
 
 router.get("/get-DetailPathDocAcuses", verifyToken.verifyJWT, (req, res) => {
   getDetailPathDocAcuses(req, res);
