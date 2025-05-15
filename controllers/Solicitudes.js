@@ -5,6 +5,7 @@ module.exports = {
     const IdEntePublico = req.body.IdEntePublico;
     const IdTipoEntePublico = req.body.IdTipoEntePublico;
     const TipoSolicitud = req.body.TipoSolicitud;
+    const TipoCredito = req.body.TipoCredito;
     const IdInstitucionFinanciera = req.body.IdInstitucionFinanciera;
     const Estatus = req.body.Estatus;
     const IdClaveInscripcion = req.body.IdClaveInscripcion;
@@ -36,6 +37,14 @@ module.exports = {
         error: "Ingrese TipoSolicitud",
       });
     }
+
+    if (TipoCredito == null || /^[\s]*$/.test(TipoCredito)) {
+      return res.status(409).send({
+        error: "Ingrese TipoSolicitud",
+      });
+    }
+
+
 
     if (
       IdInstitucionFinanciera == null ||
@@ -81,7 +90,7 @@ module.exports = {
     }
 
     db.query(
-      `CALL sp_AgregarSolicitud( '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}','${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}' )`,
+      `CALL sp_AgregarSolicitud( '${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}', '${TipoCredito}', '${IdInstitucionFinanciera}','${Estatus}', '${IdClaveInscripcion}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${CreadoPor}' )`,
       (err, result) => {
         // console.log("err", err)
         // console.log("result", result)
@@ -93,12 +102,10 @@ module.exports = {
         if (result.length) {
           const data = result[0][0];
           if (data.error) {
-            console.log("data.error: ",data.error);
             return res.status(409).send({
               result: data,
             });
           }
-          console.log("data: ",data);
           return res.status(200).send({
             data,
           });
@@ -254,6 +261,7 @@ module.exports = {
     const IdEntePublico = req.body.IdEntePublico;
     const IdTipoEntePublico = req.body.IdTipoEntePublico;
     const TipoSolicitud = req.body.TipoSolicitud;
+    const TipoCredito = req.body.TipoCredito;
     const IdInstitucionFinanciera = req.body.IdInstitucionFinanciera;
     const Estatus = req.body.Estatus;
     const MontoOriginalContratado = req.body.MontoOriginalContratado;
@@ -288,6 +296,12 @@ module.exports = {
     if (TipoSolicitud == null || /^[\s]*$/.test(TipoSolicitud)) {
       return res.status(409).send({
         error: "Ingrese TipoSolicitud",
+      });
+    }
+
+    if (TipoCredito == null || /^[\s]*$/.test(TipoCredito)) {
+      return res.status(409).send({
+        error: "Ingrese TipoCredito",
       });
     }
 
@@ -330,7 +344,7 @@ module.exports = {
     }
 
     db.query(
-      `CALL sp_ModificaSolicitud( '${IdSolicitud}','${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}','${IdInstitucionFinanciera}','${Estatus}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${IdUsuario}' )`,
+      `CALL sp_ModificaSolicitud( '${IdSolicitud}','${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}', '${TipoCredito}','${IdInstitucionFinanciera}','${Estatus}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${IdUsuario}' )`,
       (err, result) => {
         if (err) {
           return res.status(500).send({
@@ -369,39 +383,31 @@ module.exports = {
       });
     }
 
-    if (Comentario == null || /^[\s]*$/.test(Comentario)) {
-      return res.status(409).send({
-        error: "Ingrese Comentario",
-      });
-    }
+    // if (Comentario == null || /^[\s]*$/.test(Comentario)) {
+    //   return res.status(409).send({
+    //     error: "Ingrese Comentario",
+    //   });
+    // }
     if (IdUsuario == null || /^[\s]*$/.test(IdUsuario)) {
       return res.status(409).send({
         error: "Ingrese IdUsuario",
       });
     }
-
     db.query(
-      `CALL sp_AgregarComentario( '${IdSolicitud}','${Comentario}','${Tipo}','${IdUsuario}','${IdComentario}')`,
+      `CALL sp_AgregarComentario(?, ?, ?, ?, ?)`,
+      [IdSolicitud, Comentario, Tipo, IdUsuario, IdComentario],
       (err, result) => {
         if (err) {
-          return res.status(500).send({
-            error: "Error de servidor",
-          });
+          return res.status(500).send({ error: "Error de servidor" });
         }
         if (result.length) {
           const data = result[0][0];
           if (data.error) {
-            return res.status(409).send({
-              result: data,
-            });
+            return res.status(409).send({ result: data });
           }
-          return res.status(200).send({
-            data,
-          });
+          return res.status(200).send({ data });
         } else {
-          return res.status(409).send({
-            error: "¡Sin Información!",
-          });
+          return res.status(409).send({ error: "¡Sin Información!" });
         }
       }
     );

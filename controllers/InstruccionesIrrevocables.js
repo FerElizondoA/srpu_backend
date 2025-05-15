@@ -11,11 +11,11 @@ module.exports = {
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
-      AcumuladoEstado,
-      AcumuladoMunicipios,
-      AcumuladoOrganismos,
+
+      SumAfectadoTotalIngreso,
+      SumEquivalenciaCorrespondienteMunicipios,
       SoporteDocumental,
-      CreadoPor,
+      CreadoPor, 
     } = req.body;
 
     if (
@@ -35,7 +35,8 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${AcumuladoEstado}', '${AcumuladoMunicipios}', '${AcumuladoOrganismos}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
+       '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
@@ -71,9 +72,11 @@ module.exports = {
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
-      AcumuladoEstado,
-      AcumuladoMunicipios,
-      AcumuladoOrganismos,
+      SumAfectadoTotalIngreso,
+      SumEquivalenciaCorrespondienteMunicipios,
+      // AcumuladoEstado,
+      // AcumuladoMunicipios,
+      // AcumuladoOrganismos,
       SoporteDocumental,
       CreadoPor,
     } = req.body;
@@ -84,7 +87,8 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${AcumuladoEstado}', '${AcumuladoMunicipios}', '${AcumuladoOrganismos}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
+        '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({

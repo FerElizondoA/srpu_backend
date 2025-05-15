@@ -10,9 +10,13 @@ module.exports = {
     const TipoEntePublicoObligado = req.body.TipoEntePublicoObligado;
     const MecanismoPago = req.body.MecanismoPago;
     const TipoMovimiento = req.body.TipoMovimiento;
-    const AcumuladoEstado = req.body.AcumuladoEstado;
-    const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
-    const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
+    const SumAfectadoTotalIngreso = req.body.SumAfectadoTotalIngreso;
+    const SumEquivalenciaCorrespondienteMunicipios = req.body.SumEquivalenciaCorrespondienteMunicipios;
+   
+    // const AcumuladoEstado = req.body.AcumuladoEstado;
+    // const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
+    // const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
+    
     const SoporteDocumental = req.body.SoporteDocumental;
     const CreadoPor = req.body.CreadoPor;
     if (
@@ -32,7 +36,7 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarMandato('${NumeroMandato}', '${FechaMandato}', '${Mandatario}', '${MunicipioOrganismoMandante}', '${TipoEntePublicoObligado}',  '${MecanismoPago}', '${TipoMovimiento}', '${AcumuladoEstado}', '${AcumuladoMunicipios}', '${AcumuladoOrganismos}', '${SoporteDocumental}' , '${CreadoPor}'  )`,
+        `CALL sp_AgregarMandato('${NumeroMandato}', '${FechaMandato}', '${Mandatario}', '${MunicipioOrganismoMandante}', '${TipoEntePublicoObligado}',  '${MecanismoPago}', '${TipoMovimiento}', '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}' , '${CreadoPor}'  )`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
@@ -91,9 +95,12 @@ module.exports = {
     const MunicipioOrganismoMandante = req.body.MunicipioOrganismoMandante;
     // const TipoEntePublicoObligado = req.body.TipoEntePublicoObligado;
     const TipoMovimiento = req.body.TipoMovimiento;
-    const AcumuladoEstado = req.body.AcumuladoEstado;
-    const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
-    const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
+    const SumAfectadoTotalIngreso = req.body.SumAfectadoTotalIngreso;
+    const SumEquivalenciaCorrespondienteMunicipios = req.body.SumEquivalenciaCorrespondienteMunicipios;
+
+    // const AcumuladoEstado = req.body.AcumuladoEstado;
+    // const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
+    // const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
     const SoporteDocumental = req.body.SoporteDocumental;
 
     if (IdMandato == null || /^[\s]*$/.test(IdMandato)) {
@@ -108,7 +115,8 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_ModificaMandato('${IdMandato}', '${IdUsuario}', '${FechaMandato}', '${Mandatario}', '${MunicipioOrganismoMandante}', '${TipoMovimiento}','${AcumuladoEstado}','${AcumuladoMunicipios}','${AcumuladoOrganismos}','${SoporteDocumental}')`,
+        `CALL sp_ModificaMandato('${IdMandato}', '${IdUsuario}', '${FechaMandato}', '${Mandatario}', '${MunicipioOrganismoMandante}', 
+        '${TipoMovimiento}', '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}','${SoporteDocumental}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({

@@ -124,7 +124,9 @@ const {
 } = require("../controllers/Notificaciones.js");
 const {
   addPathDocSol,
+  addPathDocCancelacion,
   getDetailPathDocSol,
+  getDetailPathDocAcuses,
   addPathDocAut,
   getDetailPathDocAut,
   addPathDocFideicomiso,
@@ -134,6 +136,7 @@ const {
   addPathDocInstruccion,
   getDetailPathDocInstruccion,
   deletePathDocSol,
+  getDetailPathDocCancelacion,
 } = require("../controllers/PathDocSol.js");
 const {
   getAutorizaciones,
@@ -324,6 +327,20 @@ const {
   modifyClaseTitulo,
   deleteClaseTitulo,
 } = require("../controllers/ClaseTitulo.js");
+
+const {
+  createTiposSolicitudes,
+  getTiposSolicitudes,
+  //getDetailDestino,
+  modifyTiposSolicitudes,
+  deleteTiposSolicitudes,
+} = require("../controllers/TiposSolicitudes.js");
+
+
+const {
+  createPorcentajeAcumulado,
+  DetallePorcentajeAcumulado,
+} = require("../controllers/PorcentajesAcumulados.js");
 
 
 //#region Instituciones Financieras
@@ -869,8 +886,22 @@ router.post("/create-addPathDocSol", verifyToken.verifyJWT, (req, res) => {
   addPathDocSol(req, res);
 });
 
+router.post("/create-addPathDocCancelacion", verifyToken.verifyJWT, (req, res) => {
+  addPathDocCancelacion(req, res);
+});
+
+
 router.get("/get-DetailPathDocSol", verifyToken.verifyJWT, (req, res) => {
   getDetailPathDocSol(req, res);
+});
+
+router.get("/get-DetailPathDocCancelacion", verifyToken.verifyJWT, (req, res) => {
+  getDetailPathDocCancelacion(req, res);
+});
+
+
+router.get("/get-DetailPathDocAcuses", verifyToken.verifyJWT, (req, res) => {
+  getDetailPathDocAcuses(req, res);
 });
 
 router.post("/create-addPathDocAut", verifyToken.verifyJWT, (req, res) => {
@@ -1693,4 +1724,37 @@ router.delete("/delete-ClaseTitulo", verifyToken.verifyJWT, (req, res) => {
 });
 // #endregion
 
+
+//#region Destinos
+router.post("/create-TiposSolicitudes", verifyToken.verifyJWT, (req, res, express) => {
+  createTiposSolicitudes(req, res);
+});
+
+router.get("/get-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  getTiposSolicitudes(req, res);
+});
+
+// router.get("/detail-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+//   getDetailTiposSolicitudes(req, res);
+// });
+
+router.put("/modify-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  modifyTiposSolicitudes(req, res);
+});
+
+router.delete("/delete-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  deleteTiposSolicitudes(req, res);
+});
+
+//#region PorcentajeAcumulados
+router.post("/create-PorcentajeAcumulados", verifyToken.verifyJWT, (req, res, express) => {
+  createPorcentajeAcumulado(req, res);
+});
+
+router.get("/get-PorcentajesAcumulados", verifyToken.verifyJWT, (req, res) => {
+  DetallePorcentajeAcumulado(req, res);
+});
+
+
+// #endregion
 module.exports = router;

@@ -20,12 +20,11 @@ const templateAcuseCancelacion =
   "controllers/templates/template_acuse_envio_respuesta.html";
 const templateAcuse = "controllers/templates/template_acuse.html";
 const templateConstanciaReestructura =
-  "controllers/templates/template_constancia_reestructuracion.html";
+  "controllers/templates/template_constancia_reestructuracion.html"; //#requerimiento reestructura
 const templateContestacionReestructura =
   "controllers/templates/template_contestacion_reestructura.html";
-const templateInscripcionReestructura = 
+const templateInscripcionReestructura =
   "controllers/templates/template_inscripcion_reestructura.html";
-
 
 //#region HEADER
 
@@ -91,52 +90,55 @@ footerImg("controllers/stylessheet/images/logoLeon.png");
 //#endregion
 
 module.exports = {
-
   createPdfSolicitudInscripcionReestructura: async (req, res) => {
     callHeader();
-    const htmlTemplate = fs.readFileSync(templateInscripcionReestructura, "utf8");
+    const htmlTemplate = fs.readFileSync(
+      templateInscripcionReestructura,
+      "utf8"
+    );
 
     const {
       oficioNum, // YAA
-      directorGeneral,// YAA
-      cargoDirectorGeneral,// YAA
-      servidorPublico,// YAA
-      cargoServidorPublico,// YAA
-      organismoServidorPublico,// YAA
+      directorGeneral, // YAA
+      cargoDirectorGeneral, // YAA
+      servidorPublico, // YAA
+      cargoServidorPublico, // YAA
+      organismoServidorPublico, // YAA
       claveInscripcion,
-      institucionFinanciera,// YAA
-      fechaContratacionSolicitud,// YAA
-      fechaContratacionReestructura,// YAA
-      montoOriginalContratado,// YAA
+      institucionFinanciera, // YAA
+      fechaContratacionSolicitud, // YAA
+      fechaContratacionReestructura, // YAA
+      montoOriginalContratado, // YAA
+      montoOriginalPalabras,
       obligadoSolidarioAval,
       entePublicoObligado,
-      destino,// YAA
-      plazo,// YAA
-      periodoFinanciamiento,// YAA
-      periodoAdministracion,// YAA
-      saldoVigente,// YAA
-      tasaInteres,// YAA
-      comisiones,// YAA
-      gastosAdicionales,// YAA
-      tasaEfectiva,// YAA
-      fuentePago,// YAA
-      anexosClausulas, //YAA
-      // anexoOriginal,// SE UNIRAN
-      // anexoModificada,// SE UNIRAN
-      // modificacion,// UNIRAN
+      destino, // YAA
+      plazo, // YAA
+      periodoFinanciamiento, // YAA res
+      periodoAdministracion, // YAA res
+      saldoVigente, // YAA res
+      saldoVigenteLetra,
+      tasaInteres, // YAA
+      comisiones, // YAA
+      gastosAdicionales, // YAA
+      tasaEfectiva, // YAA
+      fuentePago, // YAA
+      anexosClausulas, //YAA res
       reglas,
       documentos,
     } = req.body;
 
-
-
-    const rowsAnexosClausulas = JSON.parse(anexosClausulas).map(record => `
+    const rowsAnexosClausulas = JSON.parse(anexosClausulas)
+      .map(
+        (record) => `
       <tr>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaOriginal.Descripcion}</th>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaModificada.Descripcion}</th>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.Modificacion}</th>
       </tr>
-    `).join('');
+    `
+      )
+      .join("");
 
     const declaratorias =
       '<p style=" font-family: Arial; font-size: 12px; font-weight: 100; text-align: justify; letter-spacing: 1px; ">' +
@@ -162,8 +164,12 @@ module.exports = {
       .replaceAll("{{claveInscripcion}}", claveInscripcion)
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{fechaContratacionSolicitud}}", fechaContratacionSolicitud)
-      .replaceAll("{{fechaContratacionReestructura}}", fechaContratacionReestructura)
+      .replaceAll(
+        "{{fechaContratacionReestructura}}",
+        fechaContratacionReestructura
+      )
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
       .replaceAll("{{obligadoSolidarioAval}}", obligadoSolidarioAval)
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
       .replaceAll("{{destino}}", destino)
@@ -171,6 +177,7 @@ module.exports = {
       .replaceAll("{{periodoFinanciamiento}}", periodoFinanciamiento)
       .replaceAll("{{periodoAdministracion}}", periodoAdministracion)
       .replaceAll("{{saldoVigente}}", saldoVigente)
+      .replaceAll("{{saldoVigenteLetra}}", saldoVigenteLetra)
       .replaceAll("{{tasaInteres}}", tasaInteres)
       .replaceAll("{{comisiones}}", comisiones || "")
       .replaceAll("{{gastosAdicionales}}", gastosAdicionales)
@@ -232,7 +239,6 @@ module.exports = {
     res.send(pdfBuffer);
   },
 
-
   createPdfSolicitudCorto: async (req, res) => {
     callHeader();
     const htmlTemplate = fs.readFileSync(templateSolicitudCorto, "utf8");
@@ -247,6 +253,7 @@ module.exports = {
       institucionFinanciera,
       fechaContratacion,
       montoOriginalContratado,
+      montoOriginalPalabras,
       entePublicoObligado,
       destino,
       plazo,
@@ -284,7 +291,10 @@ module.exports = {
       .replaceAll("{{organismoServidorPublico}}", organismoServidorPublico)
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
+
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
+      
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
       .replaceAll("{{destino}}", destino)
@@ -351,8 +361,6 @@ module.exports = {
     res.send(pdfBuffer);
   },
 
-  
-
   createPdfRequerimientos: async (req, res) => {
     callHeader();
     const htmlTemplate = fs.readFileSync(templateRequerimientos, "utf8");
@@ -368,6 +376,7 @@ module.exports = {
       entePublicoObligado,
       institucionFinanciera,
       montoOriginalContratado,
+      montoOriginalPalabras,
       comentarios,
       directorGeneral,
       cargoDirectorGeneral,
@@ -396,7 +405,10 @@ module.exports = {
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
+
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras)
+
       .replaceAll("{{directorGeneral}}", directorGeneral)
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral)
       .replaceAll("{{comentarios}}", coments);
@@ -451,6 +463,7 @@ module.exports = {
       obligadoSolidarioAval,
       institucionFinanciera,
       montoOriginalContratado,
+      montoOriginalPalabras,
       destino,
       plazo,
       amortizaciones,
@@ -464,6 +477,8 @@ module.exports = {
       directorGeneral,
       cargoDirectorGeneral,
     } = req.body;
+
+    console.log("req", req)
 
     const html = htmlTemplate
       .replaceAll("{{oficioConstancia}}", oficioConstancia)
@@ -480,6 +495,8 @@ module.exports = {
       .replaceAll("{{obligadoSolidarioAval}}", obligadoSolidarioAval)
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
+
       .replaceAll("{{destino}}", destino)
       .replaceAll("{{plazo}}", plazo)
       .replaceAll("{{amortizaciones}}", amortizaciones)
@@ -568,17 +585,19 @@ module.exports = {
 
   createPdfFormatoReesctructura: async (req, res) => {
     callHeader();
-    const htmlTemplate = fs.readFileSync(templateAcuseProvisionalReestructura, "utf8");
+    const htmlTemplate = fs.readFileSync(
+      templateAcuseProvisionalReestructura,
+      "utf8"
+    );
 
-    const { tipoSolicitud, oficioConstancia, fecha, hora } =
-      req.body;
+    const { tipoSolicitud, oficioConstancia, fecha, hora } = req.body;
 
     const html = htmlTemplate
       .replaceAll("{{tipoSolicitud}}", tipoSolicitud || "'Tipo de solicitud'")
       .replaceAll("{{oficioConstancia}}", oficioConstancia || "'No. Oficio'")
       .replaceAll("{{fecha}}", fecha || "'fecha de entrega'")
-      .replaceAll("{{hora}}", hora || "'hora de entrega'")
-     // .replaceAll("{{fraccionTexto}}", fraccionTexto || "");
+      .replaceAll("{{hora}}", hora || "'hora de entrega'");
+    // .replaceAll("{{fraccionTexto}}", fraccionTexto || "");
     const browser = await puppeteer.launch({
       headless: "false",
       args: ["--no-sandbox"],
@@ -731,12 +750,14 @@ module.exports = {
 
     await browser.close();
 
+    const safeFilename = encodeURIComponent(
+      `${oficio}-${new Date().toLocaleDateString("es-MX")}.pdf`
+    );
+
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficio}-${
-        new Date().toLocaleString("es-MX").split(" ")[0]
-      }.pdf`
+      `attachment; filename="${safeFilename}"`
     );
     res.send(pdfBuffer);
   },
@@ -807,6 +828,7 @@ module.exports = {
       entePublicoObligado,
       institucionFinanciera,
       montoOriginalContratado,
+      montoOriginalPalabras,
       fechaContratacion,
       causaCancelacion,
       documentoAcreditacionCancelacion,
@@ -825,6 +847,8 @@ module.exports = {
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
+
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
       .replaceAll("{{causaCancelacion}}", causaCancelacion)
       .replaceAll(
@@ -905,6 +929,7 @@ module.exports = {
       entePublicoObligado,
       institucionFinanciera,
       montoOriginalContratado,
+      montoOriginalPalabras,
       fechaContratacion,
       causaAnulacion,
     } = req.body;
@@ -921,6 +946,8 @@ module.exports = {
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
+
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
       .replaceAll("{{causaAnulacion}}", causaAnulacion);
 
@@ -965,30 +992,50 @@ module.exports = {
     const {
       oficioNum, //CONSTANCIA YA
       servidorPublico,//YA
-
+      claseTitulo,
       cargo,//YA
       organismo,//YA
-      oficioSolicitud,//YA 
+      oficioSolicitud,//YA
       fechaSolicitud,//YA
 
       tipoDocumento, //YA
       fechaContratacion,//YA
       claveInscripcion,//YA
       fechaClave,//YA
-      
+
       fechaReestructuracion,//YA
       entePublicoObligado, //YA
       institucionFinanciera, //YA
       obligadoSolidarioAval,
-      
+
       montoOriginalContratado,//YA
+      montoOriginalPalabras,
+
       saldoVigente,//ya
+      saldoVigenteLetra,
       mecanismoVehiculoDePago,//ya
       fuentePago,//ya
+      plazo,
+      autoriazcionReestructura,
+      periodicidad,
+      comentarios,
       directorGeneral,//ya
       cargoDirectorGeneral,//ya
       modificaciones,
     } = req.body;
+
+    const tablaComentarios = comentarios
+  ? '<table style="border-collapse: collapse; width: 100%; font-family: Arial; font-size: 12px; text-align: left;">' +
+    Object.keys(JSON.parse(comentarios)).map((key) => {
+      return (
+        '<tr style="border-bottom: 1px solid transparent;">' +
+        '<td style="width: 40%; padding: 10px 0; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100;">' + key + '</td>' +
+        '<td style="width: 60%; padding: 10px 0; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100;">' + JSON.parse(comentarios)[key] + '</td>' +
+        '</tr>'
+      );
+    }).join('') +
+    '</table>'
+  : '';
 
     const tablaModificaciones = modificaciones
       ? '<table id="data-table" style=" border-collapse: collapse; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100; letter-spacing: 1px;"><tbody>' +
@@ -1007,6 +1054,9 @@ module.exports = {
     const html = htmlTemplate
       .replaceAll("{{oficioNum}}", oficioNum || "")
       .replaceAll("{{servidorPublico}}", servidorPublico || "")
+
+      .replaceAll("{{claseTitulo}}", claseTitulo || "")
+
       .replaceAll("{{cargo}}", cargo || "")
       .replaceAll("{{organismo}}", organismo || "")
       .replaceAll("{{oficioSolicitud}}", oficioSolicitud || "")
@@ -1019,10 +1069,19 @@ module.exports = {
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado || "")
       .replaceAll("{{obligadoSolidarioAval}}", obligadoSolidarioAval || "")
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera || "")
+
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado || "")
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
+
       .replaceAll("{{saldoVigente}}", saldoVigente || "")
+      .replaceAll("{{saldoVigenteLetra}}", saldoVigenteLetra || "")
+
       .replaceAll("{{mecanismoVehiculoDePago}}", mecanismoVehiculoDePago || "")
       .replaceAll("{{fuentePago}}", fuentePago || "")
+      .replaceAll("{{plazo}}", plazo || "")
+      .replaceAll("{{autoriazcionReestructura}}", autoriazcionReestructura || "")
+      .replaceAll("{{periodicidad}}", periodicidad || "")
+      .replaceAll("{{comentarios}}", tablaComentarios || "")
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "")
       .replaceAll("{{tablaModificaciones}}", tablaModificaciones || "");
@@ -1058,6 +1117,7 @@ module.exports = {
     res.send(pdfBuffer);
   },
 
+
   createPdfContestacionReestructura: async (req, res) => {
     callHeader();
     const htmlTemplate = fs.readFileSync(
@@ -1077,19 +1137,26 @@ module.exports = {
       acreditado,
       acreditante,
       monto,
+      montoOriginalPalabras,
       // modificaciones,
       directorGeneral,
       cargoDirectorGeneral,
+      mecanismoVehiculoDePago,
+      fuentePago,
       anexosClausulas,
     } = req.body;
 
-    const rowsAnexosClausulas = JSON.parse(anexosClausulas).map(record => `
+    const rowsAnexosClausulas = JSON.parse(anexosClausulas)
+      .map(
+        (record) => `
       <tr>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaOriginal.Descripcion}</th>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaModificada.Descripcion}</th>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.Modificacion}</th>
       </tr>
-    `).join('');
+    `
+      )
+      .join("");
 
     const html = htmlTemplate
       .replaceAll("{{servidorPublico}}", servidorPublico || "")
@@ -1102,10 +1169,12 @@ module.exports = {
       .replaceAll("{{acreditado}}", acreditado || "")
       .replaceAll("{{acreditante}}", acreditante || "")
       .replaceAll("{{monto}}", monto || "")
+      .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "")
+      .replaceAll("{{mecanismoVehiculoDePago}}", mecanismoVehiculoDePago || "")
+      .replaceAll("{{fuentePago}}", fuentePago || "")
       .replaceAll("{{anexosClausulas}}", rowsAnexosClausulas || "");
-
 
     const browser = await puppeteer.launch({
       headless: "false",

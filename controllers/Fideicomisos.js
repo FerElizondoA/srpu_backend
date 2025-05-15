@@ -7,11 +7,18 @@ module.exports = {
     const FechaFideicomiso = req.body.FechaFideicomiso;
     const TipoFideicomiso = req.body.TipoFideicomiso;
     const Fiduciario = req.body.Fiduciario;
+
     const Fideicomisario = req.body.Fideicomisario;
     const TipoMovimiento = req.body.TipoMovimiento;
-    const AcumuladoEstado = req.body.AcumuladoEstado;
-    const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
-    const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
+
+    const SumAfectadoTotalIngreso = req.body.SumAfectadoTotalIngreso;
+    const SumEquivalenciaCorrespondienteMunicipios = req.body.SumEquivalenciaCorrespondienteMunicipios;
+   
+
+    // const AcumuladoEstado = req.body.AcumuladoEstado;
+    // const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
+    // const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
+
     const SoporteDocumental = req.body.SoporteDocumental;
     const CreadoPor = req.body.CreadoPor;
 
@@ -33,7 +40,7 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarFideicomiso('${NumeroFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${AcumuladoEstado}', '${AcumuladoMunicipios}', '${AcumuladoOrganismos}', '${SoporteDocumental}','${CreadoPor}' )`,
+        `CALL sp_AgregarFideicomiso('${NumeroFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}',  '${SoporteDocumental}', '${CreadoPor}' )`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
@@ -126,11 +133,13 @@ module.exports = {
     const Fiduciario = req.body.Fiduciario;
     const Fideicomisario = req.body.Fideicomisario;
     const TipoMovimiento = req.body.TipoMovimiento;
-    const AcumuladoEstado = req.body.AcumuladoEstado;
-    const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
-    const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
+    const SumAfectadoTotalIngreso = req.body.SumAfectadoTotalIngreso;
+    const SumEquivalenciaCorrespondienteMunicipios = req.body.SumEquivalenciaCorrespondienteMunicipios;
+    // const AcumuladoEstado = req.body.AcumuladoEstado;
+    // const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
+    // const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
     const SoporteDocumental = req.body.SoporteDocumental;
-    const CreadoPor = req.body.CreadoPor;
+    const ModificadoPor = req.body.ModificadoPor;
 
     if (IdFideicomiso == null || /^[\s]*$/.test(IdFideicomiso)) {
       return res.status(409).send({
@@ -138,13 +147,13 @@ module.exports = {
       });
     }
 
-    if (CreadoPor == null || /^[\s]*$/.test(CreadoPor)) {
+    if (ModificadoPor == null || /^[\s]*$/.test(ModificadoPor)) {
       return res.status(409).send({
         error: "Ingrese Id usuario modificador",
       });
     } else {
       db.query(
-        `CALL sp_ModificaFideicomiso('${IdFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${AcumuladoEstado}', '${AcumuladoMunicipios}', '${AcumuladoOrganismos}', '${SoporteDocumental}','${CreadoPor}')`,
+        `CALL sp_ModificaFideicomiso('${IdFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}','${ModificadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
