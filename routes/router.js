@@ -337,6 +337,12 @@ const {
 } = require("../controllers/TiposSolicitudes.js");
 
 
+const {
+  createPorcentajeAcumulado,
+  DetallePorcentajeAcumulado,
+} = require("../controllers/PorcentajesAcumulados.js");
+
+
 //#region Instituciones Financieras
 router.post(
   "/create-institucionesFinancieras",
@@ -1740,4 +1746,15 @@ router.delete("/delete-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
   deleteTiposSolicitudes(req, res);
 });
 
+//#region PorcentajeAcumulados
+router.post("/create-PorcentajeAcumulados", verifyToken.verifyJWT, (req, res, express) => {
+  createPorcentajeAcumulado(req, res);
+});
+
+router.get("/get-PorcentajesAcumulados", verifyToken.verifyJWT, (req, res) => {
+  DetallePorcentajeAcumulado(req, res);
+});
+
+
+// #endregion
 module.exports = router;
