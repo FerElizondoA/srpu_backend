@@ -336,10 +336,11 @@ const {
   deleteTiposSolicitudes,
 } = require("../controllers/TiposSolicitudes.js");
 
-
 const {
-  createPorcentajeAcumulado,
-  DetallePorcentajeAcumulado,
+  createPorcentajesAcumulados,
+  modificaPorcentajesAcumulados,
+  DetallePorcentajesAcumulados,
+  DetallePorcentajesAcumuladosMultiples,
 } = require("../controllers/PorcentajesAcumulados.js");
 
 
@@ -1747,12 +1748,20 @@ router.delete("/delete-TiposSolicitudes", verifyToken.verifyJWT, (req, res) => {
 });
 
 //#region PorcentajeAcumulados
-router.post("/create-PorcentajeAcumulados", verifyToken.verifyJWT, (req, res, express) => {
-  createPorcentajeAcumulado(req, res);
+router.post("/create-PorcentajesAcumulados", verifyToken.verifyJWT, (req, res, express) => {
+  createPorcentajesAcumulados(req, res);
+});
+
+router.put("/modifica-PorcentajesAcumulados", verifyToken.verifyJWT, (req, res) => {
+  modificaPorcentajesAcumulados(req, res);
 });
 
 router.get("/get-PorcentajesAcumulados", verifyToken.verifyJWT, (req, res) => {
-  DetallePorcentajeAcumulado(req, res);
+  DetallePorcentajesAcumulados(req, res);
+});
+
+router.post("/get-PorcentajesAcumuladosMultiples", verifyToken.verifyJWT, (req, res) => {
+  DetallePorcentajesAcumuladosMultiples(req, res);
 });
 
 
