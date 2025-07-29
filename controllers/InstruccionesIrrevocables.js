@@ -11,9 +11,6 @@ module.exports = {
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
-
-      SumAfectadoTotalIngreso,
-      SumEquivalenciaCorrespondienteMunicipios,
       SoporteDocumental,
       CreadoPor, 
     } = req.body;
@@ -35,10 +32,11 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
-       '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${Banco}', '${FechaInstruccion}', 
+        '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
+            console.log(err)
             return res.status(500).send({
               error: "Error",
             });
@@ -72,11 +70,6 @@ module.exports = {
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
-      SumAfectadoTotalIngreso,
-      SumEquivalenciaCorrespondienteMunicipios,
-      // AcumuladoEstado,
-      // AcumuladoMunicipios,
-      // AcumuladoOrganismos,
       SoporteDocumental,
       CreadoPor,
     } = req.body;
@@ -87,8 +80,9 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
-        '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${Banco}', '${FechaInstruccion}', 
+        '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
+        '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
@@ -148,6 +142,7 @@ module.exports = {
   getInstrucciones: (req, res) => {
     db.query(`CALL sp_ListadoInstruccionesIrrevocables()`, (err, result) => {
       if (err) {
+        console.log("Error", err)
         return res.status(500).send({
           error: "Error",
         });

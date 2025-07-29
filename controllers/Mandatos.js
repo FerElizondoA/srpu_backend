@@ -67,6 +67,8 @@ module.exports = {
   getMandatos: (req, res) => {
     db.query(`CALL sp_ListadoMandatos()`, (err, result) => {
       if (err) {
+              console.log("Error get mandatos",err)
+
         return res.status(500).send({
           error: "Error",
         });
