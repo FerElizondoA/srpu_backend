@@ -3,31 +3,48 @@ const db = require("../config/db.js");
 module.exports = {
   //CREAR
   createAsignacionTipoMovSolicitudes: (req, res) => {
-
-    const IdSolicitud = req.body.IdSolicitud;
+    //const IdSolicitud = req.body.IdSolicitud;
+    const IdSolicitud = req.body.IdSolicitud; //TE QUEDASTE AQUI
     const IdFuentePago = req.body.IdFuentePago;
     const TipoMovRelacionado = req.body.TipoMovRelacionado;
+    const NombreTipoFuentePago = req.body.NombreTipoFuentePago;
+    const IdEntePublicoObligado = req.body.IdEntePublicoObligado;
+    const IdFondoIngreso = req.body.IdFondoIngreso;
     const PorcentajeOriginalIngreso = req.body.PorcentajeOriginalIngreso;
-    const PorcentajeOriginalEquivalencia = req.body.PorcentajeOriginalEquivalencia;
+    const PorcentajeOriginalEquivalencia =
+      req.body.PorcentajeOriginalEquivalencia;
     const PorcentajeUtilizadoIngreso = req.body.PorcentajeUtilizadoIngreso;
-    const PorcentajeUtilizadoEquivalencia = req.body.PorcentajeUtilizadoEquivalencia;
+    const PorcentajeUtilizadoEquivalencia =
+      req.body.PorcentajeUtilizadoEquivalencia;
 
     if (
       (IdSolicitud == null || /^[\s]*$/.test(IdSolicitud)) &&
-      IdSolicitud.length() <= 36
+      IdSolicitud.length <= 36
     ) {
       return res.status(409).send({
         error: "Ingrese Id usuario válido.",
       });
     } else {
       db.query(
-        `CALL sp_AgregarAsignacionTipoMovSolicitudes('
-        ${IdSolicitud}', '${IdFuentePago}', '${TipoMovRelacionado}' , '${PorcentajeOriginalIngreso}',
-         '${PorcentajeOriginalEquivalencia}' , '${PorcentajeUtilizadoIngreso}' , '${PorcentajeUtilizadoEquivalencia}' )`,
+        `CALL sp_AgregarAsignacionTipoMovSolicitudes(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          IdSolicitud.trim(),
+          IdFuentePago.trim(),
+          TipoMovRelacionado,
+          NombreTipoFuentePago,
+          IdEntePublicoObligado,
+          IdFondoIngreso,
+          PorcentajeOriginalIngreso,
+          PorcentajeOriginalEquivalencia,
+          PorcentajeUtilizadoIngreso,
+          PorcentajeUtilizadoEquivalencia,
+        ],
+        // `CALL sp_AgregarAsignacionTipoMovSolicitudes('${IdSolicitud}', '${IdFuentePago}', '${TipoMovRelacionado}', '${PorcentajeOriginalIngreso}', '${PorcentajeOriginalEquivalencia}', '${PorcentajeUtilizadoIngreso}', '${PorcentajeUtilizadoEquivalencia}')`,
         (err, result) => {
           if (err) {
+            console.error("ERROR SP:", err);
             return res.status(500).send({
-              error: "Error",
+              error: "Error" + err,
             });
           }
           if (result.length) {
@@ -71,37 +88,46 @@ module.exports = {
       }
     });
   },
-
   // DETALLE POR ID
-  getDetailAutorizacion: (req, res) => {
-    const IdDescripcion = req.query.IdDescripcion;
-    if (IdDescripcion == null || /^[\s]*$/.test(IdDescripcion)) {
+  getDetalleAsignacionTipoMovi: (req, res) => {
+    const IdFuentePago = req.query.IdFuentePago;
+
+    if (IdFuentePago == null || /^[\s]*$/.test(IdFuentePago)) {
       return res.status(409).send({
-        error: "Ingrese IdDescripcion.",
+        error: "Ingrese el Id de la Fuente de Pago.",
       });
     }
 
     db.query(
-      `CALL sp_DetalleAutorizacion('${IdDescripcion}')`,
+      `CALL sp_DetalleAsignacionTipoMovSolicitudes('${IdFuentePago}')`,
       (err, result) => {
         if (err) {
           return res.status(500).send({
-            error: "Error",
+            error: "Error en el SP",
           });
         }
-        if (result.length) {
-          const data = result[0][0];
-          if (data.error) {
+
+        // Verificar que result[0] y result[0][0] existen
+        if (result && result[0] && result[0].length > 0) {
+          const data = result[0];
+
+          // Si lo que viene es un mensaje, lo mandamos como error
+          if (data[0].Mensaje) {
             return res.status(409).send({
-              result: data,
+              mensaje: data[0].Mensaje,
             });
           }
+
+          // Si son registros, los enviamos
           return res.status(200).send({
             data,
           });
         } else {
-          return res.status(409).send({
-            error: "¡Sin Información!",
+          // Haz esto:
+          return res.status(200).send({
+            data: [],
+            message:
+              "La fuente de pago seleccionada no tiene asignacion a ninguna solicitud!",
           });
         }
       }

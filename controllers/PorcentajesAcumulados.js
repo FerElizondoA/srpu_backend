@@ -163,29 +163,4 @@ module.exports = {
     );
   },
 
-  // DetallePorcentajesAcumulados: (req, res) => {
-  //   const IdEntePublicoObligado = req.query.IdEntePublicoObligado;
-
-  //   db.query(
-  //     `CALL sp_DetallePorcentajeAcumulado('${IdEntePublicoObligado}')`,
-  //     (err, result) => {
-  //       console.log("ERROR OBTENER PORCENTAJE ACUMULADOS:  ", err);
-
-  //       if (err) {
-  //         return res.status(500).send({
-  //           error: "Error",
-  //         });
-  //       }
-
-  //       if (result.length && result[0].length > 0) {
-  //         const data = result[0];
-  //         return res.status(200).send({ data });
-  //       } else {
-  //         return res.status(409).send({
-  //           error: "¡Sin Información!",
-  //         });
-  //       }
-  //     }
-  //   );
-  // },
 };

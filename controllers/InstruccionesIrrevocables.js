@@ -6,7 +6,8 @@ module.exports = {
     const {
       NumeroCuenta,
       CLABE,
-      Banco,
+      IdBanco,
+      NombreBanco,
       FechaInstruccion,
       TipoEntePublicoObligado,
       EntePublicoObligado,
@@ -32,8 +33,7 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${Banco}', '${FechaInstruccion}', 
-        '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${IdBanco}', '${NombreBanco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
             console.log(err)
@@ -65,24 +65,25 @@ module.exports = {
     const {
       Id,
       CLABE,
-      Banco,
+      IdBanco,
+      BancoNombre,
       FechaInstruccion,
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
       SoporteDocumental,
-      CreadoPor,
+      ModificadoPor,
     } = req.body;
 
-    if (CreadoPor == null || /^[\s]*$/.test(CreadoPor)) {
+    if (ModificadoPor == null || /^[\s]*$/.test(ModificadoPor)) {
       return res.status(409).send({
         error: "Ingrese Nuevo Clave de inscripcion",
       });
     } else {
       db.query(
-        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${Banco}', '${FechaInstruccion}', 
+        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${IdBanco}', '${BancoNombre}', '${FechaInstruccion}', 
         '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
-        '${SoporteDocumental}', '${CreadoPor}')`,
+        '${SoporteDocumental}', '${ModificadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
@@ -142,7 +143,6 @@ module.exports = {
   getInstrucciones: (req, res) => {
     db.query(`CALL sp_ListadoInstruccionesIrrevocables()`, (err, result) => {
       if (err) {
-        console.log("Error", err)
         return res.status(500).send({
           error: "Error",
         });

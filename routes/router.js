@@ -343,6 +343,11 @@ const {
   DetallePorcentajesAcumuladosMultiples,
 } = require("../controllers/PorcentajesAcumulados.js");
 
+const {
+  createAsignacionTipoMovSolicitudes,
+  getDetalleAsignacionTipoMovi
+} = require("../controllers/AsingacionTipoMovSolicitudes.js");
+
 
 //#region Instituciones Financieras
 router.post(
@@ -1764,6 +1769,19 @@ router.post("/get-PorcentajesAcumuladosMultiples", verifyToken.verifyJWT, (req, 
   DetallePorcentajesAcumuladosMultiples(req, res);
 });
 
-
 // #endregion
+
+router.post("/create-AsignacionTipoMovSolicitudes", verifyToken.verifyJWT, (req, res, express) => {
+  createAsignacionTipoMovSolicitudes(req, res);
+});
+
+
+router.get("/detail-DetalleAsignacionTipoMovSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  getDetalleAsignacionTipoMovi(req, res);
+});
+
+
+
+
+
 module.exports = router;
