@@ -134,7 +134,10 @@ module.exports = {
     );
   },
 
-  //MODIFICA POR ID
+//hay que crear un sp para modificar las asignaciones en las columans de porcentajes en utilizacion 
+//de todos los registros que tengan la misma fuente de pago en las demas solicitudes asignadas
+
+  //MODIFICA POR ID 
   modifyAutorizacion: (req, res) => {
     const IdAutorizacion = req.body.IdAutorizacion;
     const Entidad = req.body.Entidad;
