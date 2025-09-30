@@ -6,14 +6,12 @@ module.exports = {
     const {
       NumeroCuenta,
       CLABE,
-      Banco,
+      IdBanco,
+      NombreBanco,
       FechaInstruccion,
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
-
-      SumAfectadoTotalIngreso,
-      SumEquivalenciaCorrespondienteMunicipios,
       SoporteDocumental,
       CreadoPor, 
     } = req.body;
@@ -35,10 +33,10 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
-       '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${IdBanco}', '${NombreBanco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
+            console.log(err)
             return res.status(500).send({
               error: "Error",
             });
@@ -67,28 +65,25 @@ module.exports = {
     const {
       Id,
       CLABE,
-      Banco,
+      IdBanco,
+      BancoNombre,
       FechaInstruccion,
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
-      SumAfectadoTotalIngreso,
-      SumEquivalenciaCorrespondienteMunicipios,
-      // AcumuladoEstado,
-      // AcumuladoMunicipios,
-      // AcumuladoOrganismos,
       SoporteDocumental,
-      CreadoPor,
+      ModificadoPor,
     } = req.body;
 
-    if (CreadoPor == null || /^[\s]*$/.test(CreadoPor)) {
+    if (ModificadoPor == null || /^[\s]*$/.test(ModificadoPor)) {
       return res.status(409).send({
         error: "Ingrese Nuevo Clave de inscripcion",
       });
     } else {
       db.query(
-        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${Banco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
-        '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${IdBanco}', '${BancoNombre}', '${FechaInstruccion}', 
+        '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
+        '${SoporteDocumental}', '${ModificadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({

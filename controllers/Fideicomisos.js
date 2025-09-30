@@ -11,14 +11,6 @@ module.exports = {
     const Fideicomisario = req.body.Fideicomisario;
     const TipoMovimiento = req.body.TipoMovimiento;
 
-    const SumAfectadoTotalIngreso = req.body.SumAfectadoTotalIngreso;
-    const SumEquivalenciaCorrespondienteMunicipios = req.body.SumEquivalenciaCorrespondienteMunicipios;
-   
-
-    // const AcumuladoEstado = req.body.AcumuladoEstado;
-    // const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
-    // const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
-
     const SoporteDocumental = req.body.SoporteDocumental;
     const CreadoPor = req.body.CreadoPor;
 
@@ -40,7 +32,7 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarFideicomiso('${NumeroFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}',  '${SoporteDocumental}', '${CreadoPor}' )`,
+        `CALL sp_AgregarFideicomiso('${NumeroFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}' )`,
         (err, result) => {
           if (err) {
             return res.status(500).send({
@@ -133,11 +125,6 @@ module.exports = {
     const Fiduciario = req.body.Fiduciario;
     const Fideicomisario = req.body.Fideicomisario;
     const TipoMovimiento = req.body.TipoMovimiento;
-    const SumAfectadoTotalIngreso = req.body.SumAfectadoTotalIngreso;
-    const SumEquivalenciaCorrespondienteMunicipios = req.body.SumEquivalenciaCorrespondienteMunicipios;
-    // const AcumuladoEstado = req.body.AcumuladoEstado;
-    // const AcumuladoMunicipios = req.body.AcumuladoMunicipios;
-    // const AcumuladoOrganismos = req.body.AcumuladoOrganismos;
     const SoporteDocumental = req.body.SoporteDocumental;
     const ModificadoPor = req.body.ModificadoPor;
 
@@ -153,7 +140,7 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_ModificaFideicomiso('${IdFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${SumAfectadoTotalIngreso}', '${SumEquivalenciaCorrespondienteMunicipios}', '${SoporteDocumental}','${ModificadoPor}')`,
+        `CALL sp_ModificaFideicomiso('${IdFideicomiso}', '${FechaFideicomiso}', '${TipoFideicomiso}', '${Fiduciario}', '${Fideicomisario}', '${TipoMovimiento}', '${SoporteDocumental}','${ModificadoPor}')`,
         (err, result) => {
           if (err) {
             return res.status(500).send({

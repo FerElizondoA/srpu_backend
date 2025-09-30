@@ -9,6 +9,7 @@ module.exports = {
       `CALL sp_AddPathDocSol(?,?,?,?,?)`, [IdSolicitud, Ruta, NombreIdentificador, NombreArchivo, TpoDoc],
       (err, result) => {
         if (err) {
+          console.log("ERR", err)
           return res.status(500).send({
             error: err,
           });

@@ -478,8 +478,6 @@ module.exports = {
       cargoDirectorGeneral,
     } = req.body;
 
-    console.log("req", req)
-
     const html = htmlTemplate
       .replaceAll("{{oficioConstancia}}", oficioConstancia)
       .replaceAll("{{servidorPublico}}", servidorPublico)
