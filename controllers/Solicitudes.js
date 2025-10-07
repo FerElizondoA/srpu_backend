@@ -269,6 +269,7 @@ module.exports = {
     const Solicitud = req.body.Solicitud;
     const IdEditor = req.body.IdEditor;
     const IdUsuario = req.body.IdUsuario;
+    const guardadoBorrador = req.body.guardadoBorrador;
 
     if (IdSolicitud == null || /^[\s]*$/.test(IdSolicitud)) {
       return res.status(409).send({
@@ -342,9 +343,14 @@ module.exports = {
         error: "Ingrese IdUsuario",
       });
     }
+    if (guardadoBorrador == null) {
+      return res.status(409).send({
+        error: "Ingrese valor del filtro de modificación de solicitud",
+      });
+    }
 
     db.query(
-      `CALL sp_ModificaSolicitud( '${IdSolicitud}','${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}', '${TipoCredito}','${IdInstitucionFinanciera}','${Estatus}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${IdUsuario}' )`,
+      `CALL sp_ModificaSolicitud( '${IdSolicitud}','${IdEntePublico}','${IdTipoEntePublico}', '${TipoSolicitud}', '${TipoCredito}','${IdInstitucionFinanciera}','${Estatus}', '${MontoOriginalContratado}', '${FechaContratacion}', '${Solicitud}','${IdEditor}', '${IdUsuario}', '${guardadoBorrador}')`,
       (err, result) => {
         if (err) {
           return res.status(500).send({
