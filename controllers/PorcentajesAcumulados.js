@@ -2,6 +2,48 @@ const db = require("../config/db.js");
 
 module.exports = {
   //CREAR
+  // createPorcentajesAcumulados: (req, res) => {
+  //   const {
+  //     IdTipoEntePublicoObligado,
+  //     IdEntePublicoObligado,
+  //     NombreEntePublico,
+  //     IdFondoOIngreso,
+  //     NombreFondoOIngreso,
+  //     AfectadoTotalIngreso,
+  //     EquivalenciaCorrespondienteMunicipios,
+  //   } = req.body;
+
+  //   db.query(
+  //     `CALL sp_AgregarPorcentajesAcumulados(?, ?, ?, ?, ?, ?, ?)`,
+  //     [
+  //       IdTipoEntePublicoObligado,
+  //       IdEntePublicoObligado,
+  //       NombreEntePublico,
+  //       IdFondoOIngreso,
+  //       NombreFondoOIngreso,
+  //       AfectadoTotalIngreso,
+  //       EquivalenciaCorrespondienteMunicipios,
+  //     ],
+  //     (err, result) => {
+  //       if (err) {
+  //         console.error("ERROR SP:", err);
+  //         return res.status(409).send({
+  //           error: err.sqlMessage || "Ocurrió un error al ejecutar el SP.",
+  //         });
+  //       }
+
+  //       if (result.length && result[0].length > 0) {
+  //         const data = result[0][0]; // contiene { Mensaje: '...' }
+  //         return res.status(200).send({ data });
+  //       } else {
+  //         return res.status(409).send({
+  //           error: "¡Sin Información!",
+  //         });
+  //       }
+  //     }
+  //   );
+  // },
+
   createPorcentajesAcumulados: (req, res) => {
     const {
       IdTipoEntePublicoObligado,
@@ -11,10 +53,11 @@ module.exports = {
       NombreFondoOIngreso,
       AfectadoTotalIngreso,
       EquivalenciaCorrespondienteMunicipios,
+      boo_Sumar, // parámetro que llega del front ( 1 true SUMA  o 0 false RESTA
     } = req.body;
 
     db.query(
-      `CALL sp_AgregarPorcentajesAcumulados(?, ?, ?, ?, ?, ?, ?)`,
+      `CALL sp_AgregarPorcentajesAcumulados(?, ?, ?, ?, ?, ?, ?, ?)`, 
       [
         IdTipoEntePublicoObligado,
         IdEntePublicoObligado,
@@ -23,12 +66,13 @@ module.exports = {
         NombreFondoOIngreso,
         AfectadoTotalIngreso,
         EquivalenciaCorrespondienteMunicipios,
+        boo_Sumar, 
       ],
       (err, result) => {
         if (err) {
-          console.error("ERROR SP:", err);
+          console.error("ERROR SP PORCENTAJE ACUMULADO:", err);
           return res.status(409).send({
-            error: err.sqlMessage || "Ocurrió un error al ejecutar el SP.",
+            error: err.message || "Ocurrió un error al ejecutar el SP.",
           });
         }
 
@@ -76,7 +120,9 @@ module.exports = {
 
         if (result.length && result[0].length > 0) {
           const data = result[0][0]; // contiene { Mensaje: '...' }
-          return res.status(200).json({ mensaje: "Actualizado correctamente", data });
+          return res
+            .status(200)
+            .json({ mensaje: "Actualizado correctamente", data });
         } else {
           return res.status(409).send({
             error: "¡Sin Información!",
@@ -150,17 +196,17 @@ module.exports = {
             .send({ error: "Error del servidor al obtener porcentajes." });
         }
 
-        if (result && result[0]) {
+        // if (result && result[0]) {
+        //   return res.status(200).send({ data: result[0] });
+        // }
+        if (result && Array.isArray(result[0])) {
           return res.status(200).send({ data: result[0] });
         } else {
-          return res
-            .status(200)
-            .send({
-              mensaje: "Sin datos para las combinaciones proporcionadas.",
-            });
+          return res.status(200).send({
+            mensaje: "Sin datos para las combinaciones proporcionadas.",
+          });
         }
       }
     );
   },
-
 };

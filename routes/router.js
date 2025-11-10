@@ -345,7 +345,9 @@ const {
 
 const {
   createAsignacionTipoMovSolicitudes,
-  getDetalleAsignacionTipoMovi
+  getDetalleAsignacionTipoMovi,
+  modifyAsignacionOriginalTipoMovSolicitudes,
+  modifyAsignacionUtilizadoTipoMovSolicitudes
 } = require("../controllers/AsingacionTipoMovSolicitudes.js");
 
 
@@ -1771,14 +1773,24 @@ router.post("/get-PorcentajesAcumuladosMultiples", verifyToken.verifyJWT, (req, 
 
 // #endregion
 
+router.put("/modifica-AsignacionTipoMovUtilizadoSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  modifyAsignacionUtilizadoTipoMovSolicitudes(req, res);
+});
+
+router.put("/modifica-AsignacionTipoMovOriginalSolicitudes", verifyToken.verifyJWT, (req, res) => {
+  modifyAsignacionOriginalTipoMovSolicitudes(req, res);
+});
+
+
 router.post("/create-AsignacionTipoMovSolicitudes", verifyToken.verifyJWT, (req, res, express) => {
   createAsignacionTipoMovSolicitudes(req, res);
 });
 
-
 router.get("/detail-DetalleAsignacionTipoMovSolicitudes", verifyToken.verifyJWT, (req, res) => {
   getDetalleAsignacionTipoMovi(req, res);
 });
+
+
 
 
 
