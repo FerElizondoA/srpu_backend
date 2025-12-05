@@ -67,27 +67,203 @@ module.exports = {
     }
   },
 
-  //LISTADO COMPLETO
-  getAutorizaciones: (req, res) => {
-    db.query(`CALL sp_ListadoAutorizaciones()`, (err, result) => {
-      if (err) {
-        return res.status(500).send({
-          error: "Error",
-        });
-      }
+  modifyAsignacionUtilizadoTipoMovSolicitudes: (req, res) => {
+    const IdFuentePago = req.body.IdFuentePago;
+    const TipoMovRelacionado = req.body.TipoMovRelacionado;
+    const NombreTipoFuentePago = req.body.NombreTipoFuentePago;
+    //const IdEntePublicoObligado = req.body.IdEntePublicoObligado;
+    //const IdFondoIngreso = req.body.IdFondoIngreso;
+    const PorcentajeUtilizadoIngreso = req.body.PorcentajeUtilizadoIngreso;
+    const PorcentajeUtilizadoEquivalencia =
+      req.body.PorcentajeUtilizadoEquivalencia;
+    const bool_Suma = req.body.bool_Suma;
+    if (
+      (IdFuentePago == null || /^[\s]*$/.test(IdFuentePago)) &&
+      IdFuentePago.length <= 36
+    ) {
+      return res.status(409).send({
+        error: "Ingrese Id usuario válido.",
+      });
+    } else {
+      db.query(
+        `CALL sp_ModificaAsignacionUtilizadoTipoSolicitud(?, ?, ?, ?, ?,?)`,
+        [
+          IdFuentePago,
+          TipoMovRelacionado,
+          NombreTipoFuentePago,
+          //IdEntePublicoObligado,
+          //IdFondoIngreso,
+          PorcentajeUtilizadoIngreso,
+          PorcentajeUtilizadoEquivalencia,
+          bool_Suma,
+        ],
+        (err, result) => {
+          if (err) {
+            console.error(" ASIGNACION ERROR SP:", err);
+            return res.status(500).send({
+              error: "Error" + err,
+            });
+          }
+          if (result.length) {
+            const data = result[0][0];
+            if (data.error) {
+              return res.status(409).send({
+                result: data,
+              });
+            }
+            return res.status(200).send({
+              data,
+            });
+          } else {
+            return res.status(409).send({
+              error: "¡Sin Información!",
+            });
+          }
+        }
+      );
+    }
+  },
+  modifyAsignacionOriginalTipoMovSolicitudes: (req, res) => {
+    const {
+      IdFuentePago,
+      TipoMovRelacionado,
+      NombreTipoFuentePago,
+      PorcentajeOriginalIngreso,
+      PorcentajeOriginalEquivalencia,
+    } = req.body;
 
-      if (result.length) {
+    // Validación de entrada
+    if (
+      !IdFuentePago ||
+      IdFuentePago.trim() === "" ||
+      IdFuentePago.length > 36
+    ) {
+      return res.status(409).send({
+        error: "Ingrese IdFuentePago válido.",
+      });
+    }
+
+    db.query(
+      `CALL sp_ModificaAsignacionOriginalTipoSolicitud(?, ?, ?, ?, ?)`,
+      [
+        IdFuentePago,
+        TipoMovRelacionado,
+        NombreTipoFuentePago,
+        PorcentajeOriginalIngreso,
+        PorcentajeOriginalEquivalencia,
+      ],
+      (err, result) => {
+        console.log("--- Parámetros SP ---");
+        console.log(
+          IdFuentePago,
+          TipoMovRelacionado,
+          NombreTipoFuentePago,
+          PorcentajeOriginalIngreso,
+          PorcentajeOriginalEquivalencia
+        );
+
+        if (err) {
+          console.error("❌ ERROR SQL:", err.message);
+          return res.status(409).send({
+            error: err.message || "Error en el procedimiento almacenado.",
+          });
+        }
+
+        console.log("✅ RESULTADO SP:", JSON.stringify(result, null, 2));
+
+        // Verificamos que el SP haya devuelto filas
+        // if (!result || !Array.isArray(result) || !result[0] || result[0].length === 0) {
+        //   return res.status(404).send({
+        //     error: "No se encontraron registros modificados.",
+        //   });
+        // }
+
+        if (!result || !Array.isArray(result) || !result[0]) {
+          return res.status(200).send({
+            message: "Sin registros modificados (no se encontró coincidencia).",
+            data: [],
+          });
+        }
+
         const data = result[0];
+
+        // Si viene 'NO_MATCH', simplemente indicamos que no hubo actualización
+        if (data.length === 1 && data[0].Resultado === "NO_MATCH") {
+          return res.status(200).send({
+            message: "Registro no existente, omitido correctamente.",
+            data: [],
+          });
+        }
+
         return res.status(200).send({
+          message: "Registro(s) modificado(s) correctamente.",
           data,
         });
-      } else {
-        return res.status(409).send({
-          error: "¡Sin Información!",
-        });
+
+        // const data = result[0];
+        // return res.status(200).send({
+        //   message: "Registro(s) modificado(s) correctamente.",
+        //   data,
+        // });
       }
-    });
+    );
   },
+
+  //   modifyAsignacionOriginalTipoMovSolicitudes: (req, res) => {
+  //   const IdFuentePago = req.body.IdFuentePago;
+  //   const TipoMovRelacionado = req.body.TipoMovRelacionado;
+  //   const NombreTipoFuentePago = req.body.NombreTipoFuentePago;
+  //   //const IdEntePublicoObligado = req.body.IdEntePublicoObligado;
+  //   //const IdFondoIngreso = req.body.IdFondoIngreso;
+  //   const PorcentajeOriginalIngreso = req.body.PorcentajeOriginalIngreso;
+  //   const PorcentajeOriginalEquivalencia = req.body.PorcentajeOriginalEquivalencia;
+  //   if (
+  //     (IdFuentePago == null || /^[\s]*$/.test(IdFuentePago)) && IdFuentePago.length <= 36
+  //   ) {
+  //     return res.status(409).send({
+  //       error: "Ingrese Id usuario válido.",
+  //     });
+  //   } else {
+  //     db.query(
+  //       `CALL sp_ModificaAsignacionOriginalTipoSolicitud(?, ?, ?, ?, ?)`,
+  //       [
+  //         IdFuentePago,
+  //         TipoMovRelacionado,
+  //         NombreTipoFuentePago,
+  //         // IdEntePublicoObligado,
+  //         // IdFondoIngreso,
+  //         PorcentajeOriginalIngreso,
+  //         PorcentajeOriginalEquivalencia,
+  //       ],
+  //       (err, result) => {
+
+  //         console.log("---", IdFuentePago, TipoMovRelacionado, NombreTipoFuentePago, PorcentajeOriginalIngreso, PorcentajeOriginalEquivalencia);
+  //         if (err) {
+  //           console.error("ERROR SP:", err);
+  //           return res.status(500).send({
+  //             error: "Error" + err,
+  //           });
+  //         }
+  //         if (result.length) {
+  //           const data = result[0][0];
+  //           if (data.error) {
+  //             return res.status(409).send({
+  //               result: data,
+  //             });
+  //           }
+  //           return res.status(200).send({
+  //             data,
+  //           });
+  //         } else {
+  //           return res.status(409).send({
+  //             error: "¡Sin Información!",
+  //           });
+  //         }
+  //       }
+  //     );
+  //   }
+  // },
+
   // DETALLE POR ID
   getDetalleAsignacionTipoMovi: (req, res) => {
     const IdFuentePago = req.query.IdFuentePago;
@@ -134,10 +310,10 @@ module.exports = {
     );
   },
 
-//hay que crear un sp para modificar las asignaciones en las columans de porcentajes en utilizacion 
-//de todos los registros que tengan la misma fuente de pago en las demas solicitudes asignadas
+  //hay que crear un sp para modificar las asignaciones en las columans de porcentajes en utilizacion
+  //de todos los registros que tengan la misma fuente de pago en las demas solicitudes asignadas
 
-  //MODIFICA POR ID 
+  //MODIFICA POR ID
   modifyAutorizacion: (req, res) => {
     const IdAutorizacion = req.body.IdAutorizacion;
     const Entidad = req.body.Entidad;
