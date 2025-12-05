@@ -106,6 +106,7 @@ const {
   cambiaEstatus,
   getSolicitudesAdministrador,
   eliminaComentario,
+  BajaLogicaDocumentosCancelacion
 } = require("../controllers/Solicitudes.js");
 const {
   createTipoDeDocumento,
@@ -804,6 +805,10 @@ router.get("/lista-usuarios", verifyToken.verifyJWT, (req, res) => {
 router.get("/detail-usuario", verifyToken.verifyJWT, (req, res) => {
   getDetailUsuario(req, res);
 });
+
+router.get("/detail-usuario", verifyToken.verifyJWT, (req, res) => {
+  getDetailInfoUsuario(req, res);
+});
 //#endregion
 
 //#region Solicitudes
@@ -834,6 +839,7 @@ router.get(
 router.put("/modify-solicitud", verifyToken.verifyJWT, (req, res) => {
   modifySolicitud(req, res);
 });
+
 router.delete("/delete-solicitud", verifyToken.verifyJWT, (req, res) => {
   deleteSolicitud(req, res);
 });
@@ -844,6 +850,10 @@ router.post("/cambiaEstatus", verifyToken.verifyJWT, (req, res) => {
 
 router.get("/get-solicitudesAdmin", verifyToken.verifyJWT, (req, res) => {
   getSolicitudesAdministrador(req, res);
+});
+
+router.delete("/delete-DocumentosCancelacion", (req, res) => {
+  BajaLogicaDocumentosCancelacion(req, res);
 });
 
 //#endregion
