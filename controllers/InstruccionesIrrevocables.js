@@ -4,26 +4,39 @@ module.exports = {
   //CAMBIA VARIABLES
   createInstruccion: (req, res) => {
     const {
-      NumeroCuenta,
-      CLABE,
-      IdBanco,
-      NombreBanco,
+      // NumeroCuenta,
+      // CLABE,
+      // IdBanco,
+      // NombreBanco,
+      IdGiraInstruccion,
+      NombreGiraInstruccion,
+      IdVaDirigidaA,
+      NombreVaDirigidaA,
+
+      IdBeneficiario,
+      NombreBeneficiario,
+
+      IdTipoFuente,
+      NombreTipoFuente,
+      IdFondoIngreso,
+      NombreFondoIngreso,
+
       FechaInstruccion,
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
       SoporteDocumental,
-      CreadoPor, 
+      CreadoPor,
     } = req.body;
 
-    if (
-      (NumeroCuenta == null || /^[\s]*$/.test(NumeroCuenta)) &&
-      NumeroCuenta.length() <= 255
-    ) {
-      return res.status(409).send({
-        error: "Ingrese Descripcion válida.",
-      });
-    }
+    // if (
+    //   (NumeroCuenta == null || /^[\s]*$/.test(NumeroCuenta)) &&
+    //   NumeroCuenta.length() <= 255
+    // ) {
+    //   return res.status(409).send({
+    //     error: "Ingrese Descripcion válida.",
+    //   });
+    // }
     if (
       (CreadoPor == null || /^[\s]*$/.test(CreadoPor)) &&
       CreadoPor.length() <= 36
@@ -33,10 +46,10 @@ module.exports = {
       });
     } else {
       db.query(
-        `CALL sp_AgregarInstruccionIrrevocable( '${NumeroCuenta}' , '${CLABE}', '${IdBanco}', '${NombreBanco}', '${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}')`,
+        `CALL sp_AgregarInstruccionIrrevocable( '${IdGiraInstruccion}' , '${NombreGiraInstruccion}', '${IdVaDirigidaA}', '${NombreVaDirigidaA}', '${IdBeneficiario}', '${NombreBeneficiario}', '${IdTipoFuente}', '${NombreTipoFuente}', '${IdFondoIngreso}', '${NombreFondoIngreso}','${FechaInstruccion}', '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${CreadoPor}')`,
         (err, result) => {
           if (err) {
-            console.log(err)
+            console.log(err);
             return res.status(500).send({
               error: "Error",
             });

@@ -1,6 +1,6 @@
 const db = require("../config/db.js");
 const { sendEmail } = require("./mail/sendMail.js");
-
+const path = require("path");
 module.exports = {
   //Crear
   createNotificacion: (req, res) => {
@@ -10,6 +10,7 @@ module.exports = {
     const Mensaje = req.body.Mensaje;
     const IdUsuarioCreador = req.body.IdUsuarioCreador;
     const ListadoUsuarios = req.body.ListadoUsuarios;
+    const NumRegistroSolicitud = req.body.NumRegistroSolicitud;
 
     if (Titulo == null || /^[\s]*$/.test(Titulo)) {
       return res.status(409).send({
@@ -43,13 +44,28 @@ module.exports = {
         error: "Ingrese ControlInterno",
       });
     }
+
+    if (NumRegistroSolicitud === null) {
+      return res.status(409).send({
+        error: "Ingrese Numero  de Registro de la Solicitud",
+      });
+    }
     const Usuarios = JSON.stringify({ Usuarios: ListadoUsuarios });
 
     db.query(
       `CALL sp_AgregarNotificacion('${IdSolicitud}','${ControlInterno}','${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}')`,
       (err, result) => {
- console.log('error',err);
- console.log('result',result);
+        console.log("error", err);
+        console.log("result", result);
+
+        console.log("ListadoUsuarios", ListadoUsuarios);
+        console.log("Titulo", Titulo);
+        console.log("Mensaje", Mensaje);
+        console.log("NumRegistroSolicitud", NumRegistroSolicitud);
+        console.log(
+          "process.env.LOGIN_B_APP_FRONT",
+          process.env.LOGIN_B_APP_FRONT
+        );
         if (err) {
           return res.status(500).send({
             error: err,
@@ -62,12 +78,39 @@ module.exports = {
               result: data,
             });
           }
+          // sendEmail({
+          //   usuarios: ListadoUsuarios,
+          //   titulo: Titulo,
+          //   asunto: Mensaje,
+          //   plantilla: "sgcm-1",
+          //   nombre: "Nombre del usuario",
+          //   mensaje: Mensaje,
+          //   usuario: "Usuario",
+          //   NumRegistroSolicitud: "Número de Registro",
+          // });
+          console.log(path.join(__dirname, "../controllers/mail/templates/image/Palacio.png"));
           sendEmail({
             usuarios: ListadoUsuarios,
-            titulo: Titulo,
-            asunto: Mensaje,
-            plantilla: "sgcm-1",
+            template: "template_New_Correo",
+            subject: Titulo,
+            attachments: [
+              {
+                filename: "Palacio.png",
+                path: path.join(__dirname, "../controllers/mail/templates/image/Palacio.png"),
+                cid: "Palacio",
+              },
+            ],
+            data: {
+              Titulo: Titulo,
+              Nombre: "Hola Nombre",
+              Mensaje: Mensaje,
+              Usuario: "Usuario Hola",
+              NumRegistroSolicitud: NumRegistroSolicitud,
+              LoginUrl: process.env.LOGIN_B_APP_FRONT,
+            },
           });
+          console.log("Mensaje enviado", Mensaje);
+
           return res.status(200).send({
             data,
           });
@@ -86,7 +129,7 @@ module.exports = {
     db.query(
       `CALL sp_ListadoNotificacionesUsuario('${IdUsuario}')`,
       (err, result) => {
-      //  console.log("result: ",result);
+        //  console.log("result: ",result);
         if (err) {
           return res.status(500).send({
             error: err,
