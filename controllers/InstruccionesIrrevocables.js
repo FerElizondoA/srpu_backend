@@ -77,10 +77,23 @@ module.exports = {
   modifyInstruccion: (req, res) => {
     const {
       Id,
-      CLABE,
-      IdBanco,
-      BancoNombre,
-      FechaInstruccion,
+     // CLABE,
+     // IdBanco,
+     // BancoNombre,
+      IdGiraInstruccion,
+      NombreGiraInstruccion,
+      IdVaDirigidaA,
+      NombreVaDirigidaA,
+
+      IdBeneficiario,
+      NombreBeneficiario,
+
+      IdTipoFuente,
+      NombreTipoFuente,
+      IdFondoIngreso,
+      NombreFondoIngreso,
+
+      //FechaInstruccion,
       TipoEntePublicoObligado,
       EntePublicoObligado,
       TipoMovimiento,
@@ -88,16 +101,17 @@ module.exports = {
       ModificadoPor,
     } = req.body;
 
+    console.log("IdBeneficiario", IdBeneficiario)
+
     if (ModificadoPor == null || /^[\s]*$/.test(ModificadoPor)) {
       return res.status(409).send({
         error: "Ingrese Nuevo Clave de inscripcion",
       });
     } else {
       db.query(
-        `CALL sp_ModificaInstruccionIrrevocable('${Id}', '${CLABE}', '${IdBanco}', '${BancoNombre}', '${FechaInstruccion}', 
-        '${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', 
-        '${SoporteDocumental}', '${ModificadoPor}')`,
+        `CALL sp_ModificaInstruccionIrrevocable( '${Id}' ,'${IdGiraInstruccion}' , '${NombreGiraInstruccion}', '${IdVaDirigidaA}', '${NombreVaDirigidaA}', '${IdBeneficiario}', '${NombreBeneficiario}', '${IdTipoFuente}', '${NombreTipoFuente}', '${IdFondoIngreso}', '${NombreFondoIngreso}','${TipoEntePublicoObligado}', '${EntePublicoObligado}', '${TipoMovimiento}', '${SoporteDocumental}', '${ModificadoPor}')`,
         (err, result) => {
+          console.log("HOLA ERROR",err)
           if (err) {
             return res.status(500).send({
               error: "Error",

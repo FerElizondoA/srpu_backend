@@ -3,42 +3,94 @@ const db = require("../../config/db.js");
 const renderTemplate = require("./renderTemplate"); // ✅ IMPORTANTE
 
 module.exports = {
-  sendEmail: async (payload) => {
-    const { usuarios, template, subject, data } = payload;
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SRPU_B_APP_EMAIL_HOST,
-      port: process.env.SRPU_B_APP_EMAIL_PORT,
-      secure: true,
-      auth: {
-        user: process.env.SRPU_B_APP_EMAIL_USERNAME,
-        pass: process.env.SRPU_B_APP_EMAIL_PASSWORD,
-      },
-      tls: {
-        rejectUnauthorized: false,
-      },
-    });
+sendEmail: async (payload) => {
+  const { usuarios, template, subject, data } = payload;
 
-    const [rows] = await db
-      .promise()
-      .query(
-        `SELECT CorreoElectronico FROM TiCentral.Usuarios WHERE FIND_IN_SET(Id, ?)`,
-        [usuarios]
-      );
+  // if (!usuarios || !Array.isArray(usuarios) || usuarios.length === 0) {
+  //   console.log("No hay usuarios para enviar correo");
+  //   return;
+  // }
 
-    const emails = rows.map((r) => r.CorreoElectronico).join(";");
+  const transporter = nodemailer.createTransport({
+    host: process.env.SRPU_B_APP_EMAIL_HOST,
+    port: process.env.SRPU_B_APP_EMAIL_PORT,
+    secure: true,
+    auth: {
+      user: process.env.SRPU_B_APP_EMAIL_USERNAME,
+      pass: process.env.SRPU_B_APP_EMAIL_PASSWORD,
+    },
+    tls: {
+      rejectUnauthorized: false,
+    },
+  });
 
-    // ✅ aquí ya funciona
-    const html = renderTemplate(template, data);
+  // 🔥 Generamos placeholders dinámicos (?, ?, ?)
+  const placeholders = usuarios.map(() => "?").join(",");
 
-    await transporter.sendMail({
-      from: process.env.SRPU_B_APP_EMAIL_ADDRESS,
-      to: emails,
-      subject,
-      html,
-    });
-  },
-};
+  const query = `
+    SELECT CorreoElectronico 
+    FROM TiCentral.Usuarios 
+    WHERE Id IN (${placeholders})
+  `;
+
+  const [rows] = await db.promise().query(query, usuarios);
+
+  if (!rows.length) {
+    console.log("No se encontraron correos electrónicos");
+    return;
+  }
+
+  const emails = rows.map((r) => r.CorreoElectronico).join(",");
+
+  const html = renderTemplate(template, data);
+
+  await transporter.sendMail({
+    from: process.env.SRPU_B_APP_EMAIL_ADDRESS,
+    to: emails,
+    subject,
+    html,
+  });
+
+  console.log("Correo enviado correctamente a:", emails);
+},
+}
+  // sendEmail: async (payload) => {
+  //   const { usuarios, template, subject, data } = payload;
+
+  //   const transporter = nodemailer.createTransport({
+  //     host: process.env.SRPU_B_APP_EMAIL_HOST,
+  //     port: process.env.SRPU_B_APP_EMAIL_PORT,
+  //     secure: true,
+  //     auth: {
+  //       user: process.env.SRPU_B_APP_EMAIL_USERNAME,
+  //       pass: process.env.SRPU_B_APP_EMAIL_PASSWORD,
+  //     },
+  //     tls: {
+  //       rejectUnauthorized: false,
+  //     },
+  //   });
+
+  //   const [rows] = await db
+  //     .promise()
+  //     .query(
+  //       `SELECT CorreoElectronico FROM TiCentral.Usuarios WHERE FIND_IN_SET(Id, ?)`,
+  //       [usuarios]
+  //     );
+
+  //   const emails = rows.map((r) => r.CorreoElectronico).join(";");
+
+  //   // ✅ aquí ya funciona
+  //   const html = renderTemplate(template, data);
+
+  //   await transporter.sendMail({
+  //     from: process.env.SRPU_B_APP_EMAIL_ADDRESS,
+  //     to: emails,
+  //     subject,
+  //     html,
+  //   });
+  // },
+
 
 // var nodemailer = require("nodemailer");
 

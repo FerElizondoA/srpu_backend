@@ -55,17 +55,17 @@ module.exports = {
     db.query(
       `CALL sp_AgregarNotificacion('${IdSolicitud}','${ControlInterno}','${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}')`,
       (err, result) => {
-        console.log("error", err);
-        console.log("result", result);
+        // console.log("error", err);
+        // console.log("result", result);
 
-        console.log("ListadoUsuarios", ListadoUsuarios);
-        console.log("Titulo", Titulo);
-        console.log("Mensaje", Mensaje);
-        console.log("NumRegistroSolicitud", NumRegistroSolicitud);
-        console.log(
-          "process.env.LOGIN_B_APP_FRONT",
-          process.env.LOGIN_B_APP_FRONT
-        );
+        // console.log("ListadoUsuarios", ListadoUsuarios);
+        // console.log("Titulo", Titulo);
+        // console.log("Mensaje", Mensaje);
+        // console.log("NumRegistroSolicitud", NumRegistroSolicitud);
+        // console.log(
+        //   "process.env.LOGIN_B_APP_FRONT",
+        //   process.env.LOGIN_B_APP_FRONT
+        // );
         if (err) {
           return res.status(500).send({
             error: err,
