@@ -314,6 +314,7 @@ const {
 const { getDetailUsuario, getUsuarios } = require("../controllers/Usuarios.js");
 const {
   getTrazabilidadSolicitud,
+  getPrimerUsuarioEstatus2,
 } = require("../controllers/TrazabilidadSolicitud.js");
 
 const {
@@ -1706,6 +1707,12 @@ router.get("/listaMecanismosDePago", verifyToken.verifyJWT, (req, res) => {
 router.get("/get-TrazabilidadSolicitud", verifyToken.verifyJWT, (req, res) => {
   getTrazabilidadSolicitud(req, res);
 });
+
+router.get("/get-PrimerUsuarioEstatus2",(req, res) => {
+  getPrimerUsuarioEstatus2(req, res);
+});
+  
+
 
 // #region Reestructura
 router.post("/create-SolicitudReestructura", verifyToken.verifyJWT, (req, res) => {
