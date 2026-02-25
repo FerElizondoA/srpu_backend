@@ -4,10 +4,6 @@ module.exports = {
   //CAMBIA VARIABLES
   createInstruccion: (req, res) => {
     const {
-      // NumeroCuenta,
-      // CLABE,
-      // IdBanco,
-      // NombreBanco,
       IdGiraInstruccion,
       NombreGiraInstruccion,
       IdVaDirigidaA,
@@ -28,15 +24,6 @@ module.exports = {
       SoporteDocumental,
       CreadoPor,
     } = req.body;
-
-    // if (
-    //   (NumeroCuenta == null || /^[\s]*$/.test(NumeroCuenta)) &&
-    //   NumeroCuenta.length() <= 255
-    // ) {
-    //   return res.status(409).send({
-    //     error: "Ingrese Descripcion válida.",
-    //   });
-    // }
     if (
       (CreadoPor == null || /^[\s]*$/.test(CreadoPor)) &&
       CreadoPor.length() <= 36
@@ -77,9 +64,6 @@ module.exports = {
   modifyInstruccion: (req, res) => {
     const {
       Id,
-     // CLABE,
-     // IdBanco,
-     // BancoNombre,
       IdGiraInstruccion,
       NombreGiraInstruccion,
       IdVaDirigidaA,
