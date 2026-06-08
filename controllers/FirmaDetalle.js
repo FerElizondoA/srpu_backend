@@ -14,9 +14,12 @@ module.exports = {
     const FechaDoc = req.body.FechaDoc;
     const PathDoc = req.body.PathDoc;
     const CreadoPor = req.body.CreadoPor;
-
+    
+    //Info para mostrar los datos de una solicitud en el detalle de la firma
+    const CancelacionInciadoPor = req.body.CancelacionInciadoPor;
+    const NoEstatus = req.body.NoEstatus;
     db.query(
-      `CALL sp_AgregarFirmaDetalle('${IdPathDoc}', '${IdFirma}',  '${IdSolicitud}', '${NumeroOficio}', '${TipoFirma}', '${Asunto}', '${Rfc}', '${SerialCertificado}', '${FechaFirma}', '${FechaDoc}', '${PathDoc}', '${CreadoPor}' )`,
+      `CALL sp_AgregarFirmaDetalle('${IdPathDoc}', '${IdFirma}',  '${IdSolicitud}', '${NumeroOficio}', '${TipoFirma}', '${Asunto}', '${Rfc}', '${SerialCertificado}', '${FechaFirma}', '${FechaDoc}', '${PathDoc}', '${CreadoPor}', '${CancelacionInciadoPor}', '${NoEstatus}' )`,
       (err, result) => {
         if (err) {
           return res.status(500).send({

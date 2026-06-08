@@ -184,6 +184,8 @@ module.exports = {
     );
   },
 
+
+
   getSolicitudesReestructura: (req, res) => {
     const IdUsuario = req.query.IdUsuario;
 

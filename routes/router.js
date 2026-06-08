@@ -311,7 +311,10 @@ const {
   sumaPorcentajeAcumulado,
   listaMecanismosDePago,
 } = require("../controllers/Consultas.js");
-const { getDetailUsuario, getUsuarios } = require("../controllers/Usuarios.js");
+const { 
+   getDetailInfoUsuario,
+  // getDetailUsuario, 
+  getUsuarios } = require("../controllers/Usuarios.js");
 const {
   getTrazabilidadSolicitud,
   getPrimerUsuarioEstatus2,
@@ -795,17 +798,17 @@ router.delete(
 //#endregion
 
 //#region Usuario
-router.get("/usuario", verifyToken.verifyJWT, (req, res) => {
-  getDetailUsuario(req, res);
-});
+// router.get("/usuario", verifyToken.verifyJWT, (req, res) => {
+//   getDetailUsuario(req, res);
+// });
 
 router.get("/lista-usuarios", verifyToken.verifyJWT, (req, res) => {
   getUsuarios(req, res);
 });
 
-router.get("/detail-usuario", verifyToken.verifyJWT, (req, res) => {
-  getDetailUsuario(req, res);
-});
+// router.get("/detail-usuario", verifyToken.verifyJWT, (req, res) => {
+//   getDetailUsuario(req, res);
+// });
 
 router.get("/detail-usuario", verifyToken.verifyJWT, (req, res) => {
   getDetailInfoUsuario(req, res);

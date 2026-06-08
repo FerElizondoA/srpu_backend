@@ -37,7 +37,7 @@ module.exports = {
       }
 
       if (result && result.length > 0) {
-        const data = Array.isArray(result[0]) ? result[0] : result; // 🔧 aplanado automático
+        const data = Array.isArray(result[0]) ? result[0] : result; 
 
         if (data.length === 0) {
           return res.status(404).send({ error: "¡Sin Información!" });
