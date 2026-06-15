@@ -257,6 +257,9 @@ module.exports = {
       entePublicoObligado,
       destino,
       plazo,
+
+      periodoGracia,
+
       tasaInteres,
       comisiones,
       gastosAdicionales,
@@ -299,6 +302,9 @@ module.exports = {
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
       .replaceAll("{{destino}}", destino)
       .replaceAll("{{plazo}}", plazo)
+
+      .replaceAll("{{periodoGracia}}", periodoGracia)
+      
       .replaceAll("{{tasaInteres}}", tasaInteres)
       .replaceAll("{{comisiones}}", comisiones || "")
       .replaceAll("{{gastosAdicionales}}", gastosAdicionales)
