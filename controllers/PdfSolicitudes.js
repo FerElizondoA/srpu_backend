@@ -47,8 +47,8 @@ function callHeader() {
             .extname(logoTesoreria)
             .split(".")
             .pop()};base64,${Buffer.from(resLogoTesoreria, "binary").toString(
-            "base64"
-          )}`
+            "base64",
+          )}`,
         )
         .replaceAll(
           "{{escudo}}",
@@ -56,14 +56,14 @@ function callHeader() {
             .extname(escudo)
             .split(".")
             .pop()};base64,${Buffer.from(resEescudo, "binary").toString(
-            "base64"
-          )}`
+            "base64",
+          )}`,
         );
     };
 
     headerImg(
       "controllers/stylessheet/images/logoTesoreria.png",
-      "controllers/stylessheet/images/escudo.png"
+      "controllers/stylessheet/images/escudo.png",
     );
   });
 }
@@ -81,8 +81,8 @@ const footerImg = (logoLeon) => {
     "{{logoLeon}}",
     `data:image/${path.extname(logoLeon).split(".").pop()};base64,${Buffer.from(
       resLogoLeon,
-      "binary"
-    ).toString("base64")}`
+      "binary",
+    ).toString("base64")}`,
   );
 };
 
@@ -94,7 +94,7 @@ module.exports = {
     callHeader();
     const htmlTemplate = fs.readFileSync(
       templateInscripcionReestructura,
-      "utf8"
+      "utf8",
     );
 
     const {
@@ -136,7 +136,7 @@ module.exports = {
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaModificada.Descripcion}</th>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.Modificacion}</th>
       </tr>
-    `
+    `,
       )
       .join("");
 
@@ -166,7 +166,7 @@ module.exports = {
       .replaceAll("{{fechaContratacionSolicitud}}", fechaContratacionSolicitud)
       .replaceAll(
         "{{fechaContratacionReestructura}}",
-        fechaContratacionReestructura
+        fechaContratacionReestructura,
       )
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
       .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
@@ -234,7 +234,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioNum}-${fechaContratacionReestructura}.pdf`
+      `attachment; filename = ${oficioNum}-${fechaContratacionReestructura}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -285,6 +285,7 @@ module.exports = {
       }) +
       "</p>";
 
+    console.log("periodoGracia : ", periodoGracia);
     const html = htmlTemplate
       .replaceAll("{{oficioNum}}", oficioNum)
       .replaceAll("{{directorGeneral}}", directorGeneral)
@@ -297,14 +298,19 @@ module.exports = {
 
       .replaceAll("{{montoOriginalContratado}}", montoOriginalContratado)
       .replaceAll("{{montoOriginalPalabras}}", montoOriginalPalabras || "")
-      
+
       .replaceAll("{{entePublicoObligado}}", entePublicoObligado)
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
       .replaceAll("{{destino}}", destino)
       .replaceAll("{{plazo}}", plazo)
 
-      .replaceAll("{{periodoGracia}}", periodoGracia)
-      
+      .replaceAll(
+        "{{periodoGracia}}",
+        periodoGracia > 0
+          ? "La presente operación cuenta con Periodo de Gracia."
+          : "",
+      )
+
       .replaceAll("{{tasaInteres}}", tasaInteres)
       .replaceAll("{{comisiones}}", comisiones || "")
       .replaceAll("{{gastosAdicionales}}", gastosAdicionales)
@@ -362,7 +368,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`
+      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -445,7 +451,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioRequerimiento - fechaContratacion}.pdf`
+      `attachment; filename = ${oficioRequerimiento - fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -466,7 +472,9 @@ module.exports = {
       claveInscripcion,
       fechaClave,
       entePublicoObligado,
+      
       obligadoSolidarioAval,
+
       institucionFinanciera,
       montoOriginalContratado,
       montoOriginalPalabras,
@@ -483,6 +491,15 @@ module.exports = {
       directorGeneral,
       cargoDirectorGeneral,
     } = req.body;
+
+    // console.log(
+    //   "Tipo de Documento: ",
+    //   tipoDocumento ? tipoDocumento : "No hay nada",
+    // );
+    // console.log("ClaveInscripcion: ", claveInscripcion);
+    // console.log("Obligado Solidario Aval: ", obligadoSolidarioAval);
+    // console.log("tasa efectiva", tasaEfectiva);
+    // console.log("fuente de pago", fuentePago);
 
     const html = htmlTemplate
       .replaceAll("{{oficioConstancia}}", oficioConstancia)
@@ -512,7 +529,7 @@ module.exports = {
       .replaceAll("{{instrumentoDerivado}}", instrumentoDerivado)
       .replaceAll(
         "{{financiamientosARefinanciar}}",
-        financiamientosARefinanciar
+        financiamientosARefinanciar,
       )
       .replaceAll("{{directorGeneral}}", directorGeneral)
       .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral);
@@ -543,7 +560,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioConstancia}-${fechaContratacion}.pdf`
+      `attachment; filename = ${oficioConstancia}-${fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -582,7 +599,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`
+      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -591,7 +608,7 @@ module.exports = {
     callHeader();
     const htmlTemplate = fs.readFileSync(
       templateAcuseProvisionalReestructura,
-      "utf8"
+      "utf8",
     );
 
     const { tipoSolicitud, oficioConstancia, fecha, hora } = req.body;
@@ -628,7 +645,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`
+      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -672,7 +689,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`
+      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -716,7 +733,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`
+      `attachment; filename = ${oficioConstancia}-${fecha}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -755,13 +772,13 @@ module.exports = {
     await browser.close();
 
     const safeFilename = encodeURIComponent(
-      `${oficio}-${new Date().toLocaleDateString("es-MX")}.pdf`
+      `${oficio}-${new Date().toLocaleDateString("es-MX")}.pdf`,
     );
 
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename="${safeFilename}"`
+      `attachment; filename="${safeFilename}"`,
     );
     res.send(pdfBuffer);
   },
@@ -810,8 +827,8 @@ module.exports = {
           .extname(logoLeon)
           .split(".")
           .pop()};base64,${Buffer.from(resLogoLeon, "binary").toString(
-          "base64"
-        )}`
+          "base64",
+        )}`,
       );
     };
 
@@ -857,11 +874,11 @@ module.exports = {
       .replaceAll("{{causaCancelacion}}", causaCancelacion)
       .replaceAll(
         "{{documentoAcreditacionCancelacion}}",
-        documentoAcreditacionCancelacion
+        documentoAcreditacionCancelacion,
       )
       .replaceAll(
         "{{documentoBajaCreditoFederal}}",
-        documentoBajaCreditoFederal
+        documentoBajaCreditoFederal,
       );
 
     const browser = await puppeteer.launch({
@@ -890,7 +907,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${numeroSolicitud}-${fechaContratacion}.pdf`
+      `attachment; filename = ${numeroSolicitud}-${fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -911,8 +928,8 @@ module.exports = {
           .extname(logoLeon)
           .split(".")
           .pop()};base64,${Buffer.from(resLogoLeon, "binary").toString(
-          "base64"
-        )}`
+          "base64",
+        )}`,
       );
     };
 
@@ -981,7 +998,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${numeroSolicitud}-${fechaContratacion}.pdf`
+      `attachment; filename = ${numeroSolicitud}-${fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },
@@ -990,56 +1007,62 @@ module.exports = {
     callHeader();
     const htmlTemplate = fs.readFileSync(
       templateConstanciaReestructura,
-      "utf8"
+      "utf8",
     );
 
     const {
       oficioNum, //CONSTANCIA YA
-      servidorPublico,//YA
+      servidorPublico, //YA
       claseTitulo,
-      cargo,//YA
-      organismo,//YA
-      oficioSolicitud,//YA
-      fechaSolicitud,//YA
+      cargo, //YA
+      organismo, //YA
+      oficioSolicitud, //YA
+      fechaSolicitud, //YA
 
       tipoDocumento, //YA
-      fechaContratacion,//YA
-      claveInscripcion,//YA
-      fechaClave,//YA
+      fechaContratacion, //YA
+      claveInscripcion, //YA
+      fechaClave, //YA
 
-      fechaReestructuracion,//YA
+      fechaReestructuracion, //YA
       entePublicoObligado, //YA
       institucionFinanciera, //YA
       obligadoSolidarioAval,
 
-      montoOriginalContratado,//YA
+      montoOriginalContratado, //YA
       montoOriginalPalabras,
 
-      saldoVigente,//ya
+      saldoVigente, //ya
       saldoVigenteLetra,
-      mecanismoVehiculoDePago,//ya
-      fuentePago,//ya
+      mecanismoVehiculoDePago, //ya
+      fuentePago, //ya
       plazo,
       autoriazcionReestructura,
       periodicidad,
       comentarios,
-      directorGeneral,//ya
-      cargoDirectorGeneral,//ya
+      directorGeneral, //ya
+      cargoDirectorGeneral, //ya
       modificaciones,
     } = req.body;
 
     const tablaComentarios = comentarios
-  ? '<table style="border-collapse: collapse; width: 100%; font-family: Arial; font-size: 12px; text-align: left;">' +
-    Object.keys(JSON.parse(comentarios)).map((key) => {
-      return (
-        '<tr style="border-bottom: 1px solid transparent;">' +
-        '<td style="width: 40%; padding: 10px 0; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100;">' + key + '</td>' +
-        '<td style="width: 60%; padding: 10px 0; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100;">' + JSON.parse(comentarios)[key] + '</td>' +
-        '</tr>'
-      );
-    }).join('') +
-    '</table>'
-  : '';
+      ? '<table style="border-collapse: collapse; width: 100%; font-family: Arial; font-size: 12px; text-align: left;">' +
+        Object.keys(JSON.parse(comentarios))
+          .map((key) => {
+            return (
+              '<tr style="border-bottom: 1px solid transparent;">' +
+              '<td style="width: 40%; padding: 10px 0; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100;">' +
+              key +
+              "</td>" +
+              '<td style="width: 60%; padding: 10px 0; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100;">' +
+              JSON.parse(comentarios)[key] +
+              "</td>" +
+              "</tr>"
+            );
+          })
+          .join("") +
+        "</table>"
+      : "";
 
     const tablaModificaciones = modificaciones
       ? '<table id="data-table" style=" border-collapse: collapse; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100; letter-spacing: 1px;"><tbody>' +
@@ -1083,7 +1106,10 @@ module.exports = {
       .replaceAll("{{mecanismoVehiculoDePago}}", mecanismoVehiculoDePago || "")
       .replaceAll("{{fuentePago}}", fuentePago || "")
       .replaceAll("{{plazo}}", plazo || "")
-      .replaceAll("{{autoriazcionReestructura}}", autoriazcionReestructura || "")
+      .replaceAll(
+        "{{autoriazcionReestructura}}",
+        autoriazcionReestructura || "",
+      )
       .replaceAll("{{periodicidad}}", periodicidad || "")
       .replaceAll("{{comentarios}}", tablaComentarios || "")
       .replaceAll("{{directorGeneral}}", directorGeneral || "")
@@ -1116,17 +1142,16 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`
+      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },
-
 
   createPdfContestacionReestructura: async (req, res) => {
     callHeader();
     const htmlTemplate = fs.readFileSync(
       templateContestacionReestructura,
-      "utf8"
+      "utf8",
     );
 
     const {
@@ -1158,7 +1183,7 @@ module.exports = {
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.ClausulaModificada.Descripcion}</th>
         <th style="font-family: Arial; font-size: 12px; border: 1px solid black; text-align: center;">${record.Modificacion}</th>
       </tr>
-    `
+    `,
       )
       .join("");
 
@@ -1206,7 +1231,7 @@ module.exports = {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`
+      `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`,
     );
     res.send(pdfBuffer);
   },

@@ -61,7 +61,19 @@
     letter-spacing: 1px;
   "
 >
-  El/La suscrito(a) {{servidorPublico}} en mi carácter de
+El/La suscrito(a) {{servidorPublico}} en mi carácter de {{cargoServidorPublico}} del {{organismoServidorPublico}}, Nuevo León,
+por medio de la presente solicito la inscripción del [Instrumento], celebrado en fecha {{fechaContratacion}},
+entre el {{organismoServidorPublico}} y {{institucionFinanciera}}, por la cantidad de hasta {{montoOriginalContratado}} ({{montoOriginalPalabras}}), 
+en el Registro de Obligaciones y Empréstitos del Estado de Nuevo León, a cargo de la 
+Dirección de Deuda Pública y Planeación Financiera de la Subsecretaria de Egresos y Planeación Financiera del 
+Estado de Nuevo León, de conformidad con los artículos 8, fracción XXI y 13 fracción XIV, del Reglamento Interior 
+de la Secretaria de Finanzas y Tesorería General del Estado; artículo 128, fracción IX, de la Ley de Administración
+Financiera para el Estado de Nuevo León, Capítulo I, del Título Tercero de la Ley de Disciplina Financiera de las 
+Entidades Federativas y los Municipios (en lo sucesivo la Ley), y artículos 25 y 28, del Reglamento del Registro Público Único
+de Financiamientos y Obligaciones de Entidades Federativas y Municipios (en lo sucesivo el Reglamento).
+
+
+  <!-- El/La suscrito(a) {{servidorPublico}} en mi carácter de
   {{cargoServidorPublico}}, del {{organismoServidorPublico}}, con fundamento en
   los artículos 25°, 26,30, 31, 32, 48 y 53 de la Ley de Disciplina Financiera
   de las Entidades Federativas y los Municipios (LDF) y el artículo 15 y 28 del
@@ -72,7 +84,9 @@
   de Crédito Simple Sin Garantía, celebrado con {{institucionFinanciera}} el
   pasado {{fechaContratacion}} por la cantidad de hasta
   {{montoOriginalContratado}} para destinarlo a cubrir necesidades de corto
-  plazo, tales como insuficiencias de liquidez de carácter temporal.
+  plazo, tales como insuficiencias de liquidez de carácter temporal. -->
+
+
   <!-- mismo que acredito mediante la presentación de copia
   certificada de(la) {{documentosIdentificacion}} emitido(a) por el (la)
   Secretaría de Relaciones Exteriores, por medio de la presente solicito la
@@ -257,7 +271,7 @@
             border-collapse: collapse;
           "
         >
-          Plazo HOLA
+          Plazo
         </td>
         <td
           style="
@@ -440,10 +454,11 @@
       margin-bottom: 0;
     "
   >
-    Periodo de Gracia
+    <!-- La presente operación cuenta con Periodo de Gracia.  -->
+    {{periodoGracia}}
   </h3>
 
-<p
+<!-- <p
   style="
     text-align: justify;
     font-family: Arial;
@@ -451,12 +466,12 @@
     font-size: 12px;
   "
 >
-  Actualmente la cantidad de registros de Condiciones Financieras que cuentan con periodo de gracia son: {{periodoGracia}}
-  <!-- De conformidad con lo dispuesto por el artículo 25 del Reglamento RPU, se
+  Actualmente la cantidad de registros de Condiciones Financieras que cuentan con periodo de gracia son: 
+  De conformidad con lo dispuesto por el artículo 25 del Reglamento RPU, se
   informa que el periodo de gracia del crédito es de {{periodoGracia}} meses,
   contados a partir de la fecha de contratación del crédito, durante los cuales
-  el acreditado no estará obligado al pago de capital ni intereses. -->
-</p>
+  el acreditado no estará obligado al pago de capital ni intereses.
+</p> -->
 
  
 
