@@ -250,6 +250,9 @@ module.exports = {
       servidorPublico,
       cargoServidorPublico,
       organismoServidorPublico,
+
+      tipoCredito,
+
       institucionFinanciera,
       fechaContratacion,
       montoOriginalContratado,
@@ -257,6 +260,8 @@ module.exports = {
       entePublicoObligado,
       destino,
       plazo,
+
+
 
       periodoGracia,
 
@@ -293,6 +298,10 @@ module.exports = {
       .replaceAll("{{servidorPublico}}", servidorPublico)
       .replaceAll("{{cargoServidorPublico}}", cargoServidorPublico)
       .replaceAll("{{organismoServidorPublico}}", organismoServidorPublico)
+      .replaceAll("{{tipoCredito}}", tipoCredito)
+
+
+      
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
 
