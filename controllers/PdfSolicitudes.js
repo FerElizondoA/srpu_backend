@@ -261,8 +261,6 @@ module.exports = {
       destino,
       plazo,
 
-
-
       periodoGracia,
 
       tasaInteres,
@@ -300,8 +298,6 @@ module.exports = {
       .replaceAll("{{organismoServidorPublico}}", organismoServidorPublico)
       .replaceAll("{{tipoCredito}}", tipoCredito)
 
-
-      
       .replaceAll("{{institucionFinanciera}}", institucionFinanciera)
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
 
@@ -391,6 +387,9 @@ module.exports = {
       servidorPublico,
       cargo,
       organismo,
+
+      tipoCredito,
+      
       oficioSolicitud,
       fechaSolicitud,
       fechaContratacion,
@@ -421,6 +420,8 @@ module.exports = {
       .replaceAll("{{servidorPublico}}", servidorPublico)
       .replaceAll("{{cargo}}", cargo)
       .replaceAll("{{organismo}}", organismo)
+      .replaceAll("{{tipoCredito}}", tipoCredito)
+
       .replaceAll("{{oficioSolicitud}}", oficioSolicitud)
       .replaceAll("{{fechaSolicitud}}", fechaSolicitud)
       .replaceAll("{{fechaContratacion}}", fechaContratacion)
@@ -481,7 +482,7 @@ module.exports = {
       claveInscripcion,
       fechaClave,
       entePublicoObligado,
-      
+
       obligadoSolidarioAval,
 
       institucionFinanciera,
