@@ -102,6 +102,7 @@ const {
   modifySolicitud,
   deleteSolicitud,
   createComentario,
+  actualizarComentarios,
   getComentarios,
   cambiaEstatus,
   getSolicitudesAdministrador,
@@ -865,6 +866,9 @@ router.delete("/delete-DocumentosCancelacion", (req, res) => {
 //#region Comentarios
 router.post("/create-comentario", verifyToken.verifyJWT, (req, res) => {
   createComentario(req, res);
+});
+router.post("/actualizar-comentarios", verifyToken.verifyJWT, (req, res) => {
+  actualizarComentarios(req, res);
 });
 
 router.get("/get-comentarios", verifyToken.verifyJWT, (req, res) => {

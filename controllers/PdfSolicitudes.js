@@ -4,6 +4,8 @@ const path = require("path");
 const db = require("../config/db.js");
 const headerFolder = "controllers/templates/header.html";
 const footerFolder = "controllers/templates/footer.html";
+const footerSoliInscripcion = "controllers/templates/footerSoliInscripcion.html";
+
 const templateSolicitudCorto = "controllers/templates/template_corto.html";
 const templateRequerimientos =
   "controllers/templates/template_requerimientos.html";
@@ -69,6 +71,22 @@ function callHeader() {
 }
 //#endregion
 
+//#region HEADER
+
+const headerTemplateSoliInsc = fs.readFileSync(headerFolder, "utf8");
+var headerSoliIns = headerTemplateSoliInsc;
+
+function callHeaderSoliInsc() {
+  db.query(`CALL sp_DetalleHeader()`, (err, result) => {
+    const data = result[0][0];
+    const headerImg = (logoTesoreria, escudo) => {
+      headerSoliIns = headerTemplateSoliInsc
+        .replaceAll("")
+    };
+  });
+}
+//#endregion
+
 //#region FOOTER
 
 const footerTemplate = fs.readFileSync(footerFolder, "utf8");
@@ -87,6 +105,26 @@ const footerImg = (logoLeon) => {
 };
 
 footerImg("controllers/stylessheet/images/logoLeon.png");
+//#endregion
+
+//#region FOOTER SOLICITUD INSCRIPCION
+
+const footerTemplateSoliInscripcion = fs.readFileSync(footerFolder, "utf8");
+
+var footerSoliIns = footerTemplateSoliInscripcion;
+
+const footerImgSoliInsc = (logoLeon) => {
+  const resLogoLeon = fs.readFileSync(logoLeon);
+  footerSoliIns = footerTemplateSoliInscripcion.replaceAll(
+    "{{logoLeon}}",
+    `data:image/${path.extname(logoLeon).split(".").pop()};base64,${Buffer.from(
+      resLogoLeon,
+      "binary",
+    ).toString("base64")}`,
+  );
+};
+
+footerImgSoliInsc("controllers/stylessheet/images/logoLeon.png");
 //#endregion
 
 module.exports = {
@@ -240,7 +278,7 @@ module.exports = {
   },
 
   createPdfSolicitudCorto: async (req, res) => {
-    callHeader();
+    callHeaderSoliInsc();
     const htmlTemplate = fs.readFileSync(templateSolicitudCorto, "utf8");
 
     const {
@@ -356,9 +394,9 @@ module.exports = {
 
     const pdfBuffer = await page.pdf({
       format: "A4",
-      displayHeaderFooter: true,
-      headerTemplate: header,
-      footerTemplate: footer,
+      displayHeaderFooter: false,
+      //headerSoliIns: header,
+      //footerSoliIns: footer,
       margin: {
         top: "1in",
         bottom: "1in",

@@ -44,8 +44,6 @@ module.exports = {
       });
     }
 
-
-
     if (
       IdInstitucionFinanciera == null ||
       /^[\s]*$/.test(IdInstitucionFinanciera)
@@ -114,7 +112,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -147,7 +145,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -180,11 +178,9 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
-
-
 
   getSolicitudesReestructura: (req, res) => {
     const IdUsuario = req.query.IdUsuario;
@@ -214,7 +210,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -253,7 +249,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -374,7 +370,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -417,7 +413,7 @@ module.exports = {
         } else {
           return res.status(409).send({ error: "¡Sin Información!" });
         }
-      }
+      },
     );
   },
 
@@ -471,7 +467,28 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
+    );
+  },
+
+  actualizarComentarios: (req, res) => {
+    const registros = req.body.Registros;
+    const ModificadoPor = req.body.ModificadoPor;
+    db.query(
+      `CALL sp_ModificaComentarios(?, ?)`,
+      [JSON.stringify(registros), ModificadoPor],
+      (err, result) => {
+        console.log(result);
+        if (err) {
+          return res.status(500).send({
+            error: err,
+          });
+        }
+
+        return res.status(200).send({
+          ok: true,
+        });
+      },
     );
   },
 
@@ -498,7 +515,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -525,7 +542,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 
@@ -554,7 +571,7 @@ module.exports = {
             error: "¡Sin Información!",
           });
         }
-      }
+      },
     );
   },
 };
