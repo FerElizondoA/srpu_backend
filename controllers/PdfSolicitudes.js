@@ -64,8 +64,8 @@ function callHeader() {
     };
 
     headerImg(
-      "controllers/stylessheet/images/logoTesoreria.png",
-      "controllers/stylessheet/images/escudo.png",
+      "controllers/stylessheet/images/logo_tesoreria_nuevo.png",
+      "controllers/stylessheet/images/logo_estado_Escudo_Nuevo.png",
     );
   });
 }
@@ -104,7 +104,7 @@ const footerImg = (logoLeon) => {
   );
 };
 
-footerImg("controllers/stylessheet/images/logoLeon.png");
+footerImg("controllers/stylessheet/images/logo_Leon_Nuevo.png");
 //#endregion
 
 //#region FOOTER SOLICITUD INSCRIPCION

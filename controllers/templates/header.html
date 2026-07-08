@@ -2,28 +2,38 @@
   style="
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     width: 100%;
+    padding: 10px 60px;
+    box-sizing: border-box;
+    gap: 25px; 
   "
 >
-  <img src="{{logoTesoreria}}" style="width: 20%" />
+  <!-- Contenedor Logo Tesorería (Bajado a 20%) -->
+  <div style="width: 20%; display: flex; justify-content: flex-start; flex-shrink: 0;">
+    <img src="{{logoTesoreria}}" style="height: 65px; width: auto; object-fit: contain;" />
+  </div>
 
-  <div style="width: 50%; display: flex; justify-content: center">
+  <!-- Contenedor Texto Central (Subido a 60% para dar más espacio al título) -->
+  <div style="width: 60%; display: flex; justify-content: center;">
     <div
       style="
         letter-spacing: 1px;
-        font-family: Arial;
+        font-family: Arial, sans-serif;
         font-size: 10px;
-        font-weight: 100;
-        width: 55%;
+        font-weight: bold;
         text-align: center;
         word-wrap: break-word;
-        white-space: pre-wrap;
+        white-space: normal; /* Cambiado a normal para obligar al texto largo a saltar de línea correctamente */
+        line-height: 1.5;
       "
     >
       {{headerText}}
     </div>
   </div>
 
-  <img src="{{escudo}}" style="width: 8%" />
+  <!-- Contenedor Escudo (Bajado a 20%) -->
+  <div style="width: 20%; display: flex; justify-content: flex-end; flex-shrink: 0; margin-right: 10px;">
+    <img src="{{escudo}}" style="height: 55px; width: auto; object-fit: contain; transform: scale(1.2);" />
+  </div>
 </div>
