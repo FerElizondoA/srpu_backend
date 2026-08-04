@@ -27,6 +27,8 @@ const templateContestacionReestructura =
   "controllers/templates/template_contestacion_reestructura.html";
 const templateInscripcionReestructura =
   "controllers/templates/template_inscripcion_reestructura.html";
+const templateDesechamiento =
+  "controllers/templates/template_desechamiento.html";
 
 //#region HEADER
 
@@ -440,18 +442,24 @@ module.exports = {
       cargoDirectorGeneral,
     } = req.body;
 
-    const coments =
-      '<table id="data-table" style=" border-collapse: collapse; font-family: Arial; font-size: 12px; text-align: justify; font-weight: 100; letter-spacing: 1px;"><tbody>' +
-      Object.keys(JSON.parse(comentarios)).map((val) => {
-        return (
-          '<tr> <td style="width: 15%; vertical-align: -webkit-baseline-middle">' +
-          val +
-          '</td> <td style="width: 5%; vertical-align: -webkit-baseline-middle"></td><td style="width: 40%; vertical-align: -webkit-baseline-middle">' +
-          JSON.parse(comentarios)[val] +
-          "</td> </tr>"
-        );
-      }) +
-      "</tbody> </table>";
+    const comentariosObj = typeof comentarios === 'string' ? JSON.parse(comentarios) : comentarios;
+      
+    const coments = `
+      <table id="data-table" style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 12px; text-align: justify; font-weight: normal; letter-spacing: 0.5px;">
+        <tbody>
+          ${Object.entries(comentariosObj).map(([campo, comentario]) => `
+            <tr>
+              <td style="width: 35%; padding: 8px 10px 8px 0; vertical-align: top; font-weight: bold; color: #333333;">
+                ${campo}
+              </td>
+              <td style="width: 65%; padding: 8px 0 8px 10px; vertical-align: top; color: #444444;">
+                ${comentario}
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
 
     const html = htmlTemplate
       .replaceAll("{{oficioRequerimiento}}", oficioRequerimiento)
@@ -1280,6 +1288,143 @@ module.exports = {
     res.setHeader(
       "Content-Disposition",
       `attachment; filename = ${oficioNum}-${fechaContratacion}.pdf`,
+    );
+    res.send(pdfBuffer);
+  },
+
+  createPdfDesechamiento: async (req, res) => {
+    callHeader();
+    const htmlTemplate = fs.readFileSync(templateDesechamiento, "utf8");
+
+    const {
+      oficioConstancia,
+      servidorPublico,
+      cargo,
+      organismo,
+      oficioSolicitud,
+      fechaSolicitud,
+      fechaActual,
+      NombreOrganismo,
+      InstitucionFinanciera,
+      fechaContratacion,
+      MontoOriginal,
+      MontoLetras,
+      Requerimientos,
+      FechaPrevencion,
+      FechaSiguientePrevencion,
+      Fecha10Prevencion,
+      ObseervacionesNoResueltas,
+      FechaInscripcion,
+      FechaRespuestaPrevencion,
+      TipoEntePublico,
+      directorGeneral,
+      cargoDirectorGeneral,
+    } = req.body;
+
+    // Determinar el texto según el tipo de ente público
+    const tipoEntePublicoTexto = TipoEntePublico === "MUNICIPIO" 
+      ? `Municipio de ${NombreOrganismo}` 
+      : `Organismo denominado ${NombreOrganismo}`;
+
+    const tablaRequerimientos = Requerimientos
+      ? '<div style="margin-top: 10px;"><table id="data-table" style="width: 100%; border: 1px solid black; border-collapse: collapse;">' +
+        '<tbody style="letter-spacing: 1px; font-family: Arial; font-size: 12px; font-weight: 100;">' +
+        '<tr>' +
+        '<td style="width: 30%; border: 1px solid black; border-collapse: collapse; font-weight: 900; text-align: center;">Apartado</td>' +
+        '<td style="width: 70%; border: 1px solid black; border-collapse: collapse; font-weight: 900; text-align: center;">Comentario</td>' +
+        '</tr>' +
+        JSON.parse(Requerimientos)
+          .map((item) => {
+            return (
+              '<tr>' +
+              '<td style="width: 30%; border: 1px solid black; border-collapse: collapse; padding: 5px; vertical-align: top;">' +
+              (item.apartado || "") +
+              "</td>" +
+              '<td style="width: 70%; border: 1px solid black; border-collapse: collapse; padding: 5px; vertical-align: top;">' +
+              (item.comentario || "") +
+              "</td>" +
+              "</tr>"
+            );
+          })
+          .join("") +
+        "</tbody></table></div>"
+      : "";
+
+    const tablaObservacionesNoResueltas = ObseervacionesNoResueltas
+      ? '<div style="margin-top: 10px;"><table id="data-table" style="width: 100%; border: 1px solid black; border-collapse: collapse;">' +
+        '<tbody style="letter-spacing: 1px; font-family: Arial; font-size: 12px; font-weight: 100;">' +
+        '<tr>' +
+        '<td style="width: 30%; border: 1px solid black; border-collapse: collapse; font-weight: 900; text-align: center;">Apartado</td>' +
+        '<td style="width: 70%; border: 1px solid black; border-collapse: collapse; font-weight: 900; text-align: center;">Observación</td>' +
+        '</tr>' +
+        JSON.parse(ObseervacionesNoResueltas)
+          .map((item) => {
+            return (
+              '<tr>' +
+              '<td style="width: 30%; border: 1px solid black; border-collapse: collapse; padding: 5px; vertical-align: top;">' +
+              (item.apartado || "") +
+              "</td>" +
+              '<td style="width: 70%; border: 1px solid black; border-collapse: collapse; padding: 5px; vertical-align: top;">' +
+              (item.observacion || item.comentario || "") +
+              "</td>" +
+              "</tr>"
+            );
+          })
+          .join("") +
+        "</tbody></table></div>"
+      : "";
+
+    const html = htmlTemplate
+      .replaceAll("{{oficioConstancia}}", oficioConstancia || "")
+      .replaceAll("{{servidorPublico}}", servidorPublico || "")
+      .replaceAll("{{cargo}}", cargo || "")
+      .replaceAll("{{organismo}}", organismo || "")
+      .replaceAll("{{oficioSolicitud}}", oficioSolicitud || "")
+      .replaceAll("{{fechaSolicitud}}", fechaSolicitud || "")
+      .replaceAll("{{fechaActual}}", fechaActual || "")
+      .replaceAll("{{NombreOrganismo}}", NombreOrganismo || "")
+      .replaceAll("{{InstitucionFinanciera}}", InstitucionFinanciera || "")
+      .replaceAll("{{fechaContratacion}}", fechaContratacion || "")
+      .replaceAll("{{MontoOriginal}}", MontoOriginal || "")
+      .replaceAll("{{MontoLetras}}", MontoLetras || "")
+      .replaceAll("{{Requerimientos}}", tablaRequerimientos || "")
+      .replaceAll("{{FechaPrevencion}}", FechaPrevencion || "")
+      .replaceAll("{{FechaSiguientePrevencion}}", FechaSiguientePrevencion || "")
+      .replaceAll("{{Fecha10Prevencion}}", Fecha10Prevencion || "")
+      .replaceAll("{{ObseervacionesNoResueltas}}", tablaObservacionesNoResueltas || "")
+      .replaceAll("{{FechaInscripcion}}", FechaInscripcion || "")
+      .replaceAll("{{FechaRespuestaPrevencion}}", FechaRespuestaPrevencion || "")
+      .replaceAll("{{TipoEntePublicoTexto}}", tipoEntePublicoTexto)
+      .replaceAll("{{directorGeneral}}", directorGeneral || "")
+      .replaceAll("{{cargoDirectorGeneral}}", cargoDirectorGeneral || "");
+
+    const browser = await puppeteer.launch({
+      headless: "false",
+      args: ["--no-sandbox"],
+    });
+    const page = await browser.newPage();
+
+    await page.setContent(html);
+
+    const pdfBuffer = await page.pdf({
+      format: "A4",
+      displayHeaderFooter: true,
+      headerTemplate: header,
+      footerTemplate: footer,
+      margin: {
+        top: "1in",
+        bottom: "1in",
+        right: "0.50in",
+        left: "0.50in",
+      },
+    });
+
+    await browser.close();
+
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename = ${oficioConstancia}-${fechaSolicitud}.pdf`,
     );
     res.send(pdfBuffer);
   },

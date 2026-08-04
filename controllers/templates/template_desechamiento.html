@@ -1,0 +1,174 @@
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+ <h4
+    style="
+      text-align: right;
+      font-family: Arial;
+      font-size: 12px;
+      font-weight: 100;
+      font-weight: 100;
+      letter-spacing: 1px;
+    "
+    class="header"
+  >
+    Oficio No. DDPYPF-OR-{{oficioConstancia}}/2023
+    <div id="current_date">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.min.js"></script>
+      <script>
+        moment.locale("es");
+        const formattedDate = moment().format("LL");
+        document.getElementById("current_date").innerHTML =
+          "Monterrey, a " + formattedDate;
+      </script>
+    </div>
+  </h4>
+
+<!-- SERVIDOR PÚBLICO -->
+<h3
+  style="
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: justify;
+    letter-spacing: 1px;
+  "
+>
+  {{servidorPublico}} <br />
+  {{cargo}} <br />
+  {{organismo}}
+</h3>
+
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+  
+Me refiero al oficio {{oficioConstancia}}, recibido a través del Sistema de Registro de Obligaciones y 
+Empréstitos del Estado de Nuevo León el {{FechaInscripcion}}, mediante el cual solicita la inscripción 
+en el Registro de Obligaciones y Empréstitos del Estado de Nuevo León (Registro Estatal) 
+de una Obligación a corto plazo, celebrado entre el {{TipoEntePublicoTexto}} y(e) {{InstitucionFinanciera}} el día {{fechaContratacion}}, 
+hasta por la cantidad de {{MontoOriginal}} ({{MontoLetras}}).
+</p>
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+  
+Sobre el particular, me permito informarle que una vez realizado el análisis al oficio de mérito 
+y a la documentación que anexó al mismo, recayó el oficio No.{{oficioConstancia}} de fecha {{FechaActual}}, mismo que fue notificado
+ en términos del artículo 10 del Reglamento del Registro Público Único de Financiamientos y Obligaciones 
+ de Entidades Federativas y Municipios (Reglamento) al personal autorizado por ese Ente Público el día {{FechaPrevencion}}.
+</p>
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+En el referido oficio se hicieron de su conocimiento las omisiones y/o inconsistencias que fueron detectadas en el trámite de inscripción,
+ por lo que se requirió que fueran subsanadas en un plazo de 10 días hábiles contados a partir del día hábil siguiente en que se realizó la
+  notificación de dicho oficio, mismo que corrió del {{FechaSiguientePrevencion}} al {{Fecha10Prevencion}}.
+</p>
+
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+    margin-bottom: 5px;
+  "
+>
+En el oficio de prevención, se requirió subsanar entre otros puntos lo siguiente:
+</p>
+{{Requerimientos}}
+
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  "
+>
+En este sentido, con fecha {{FechaRespuestaPrevencion}}, se dio respuesta a las observaciones antes mencionadas; 
+sin embargo, dichas observaciones no lograron ser solventadas toda vez que:
+</p>
+{{ObseervacionesNoResueltas}}
+
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+    margin-top: 15px;
+  "
+>
+En virtud de que no solventó el punto antes señalado, procede el desechamiento del trámite de 
+inscripción en términos del artículo 17 fracción II del Reglamento, el cual señala lo siguiente:
+
+"Artículo 17. El Registro Público Único podrá desechar la solicitud del trámite a que se refiere 
+el artículo anterior, en los casos siguientes:
+
+…"
+
+</p>
+
+<p
+  style="
+    text-align: justify;
+    font-family: Arial;
+    letter-spacing: 1px;
+    font-size: 12px;
+  "
+>
+Asimismo, con fundamento en el último párrafo del artículo 17 del Reglamento del Registro Público Único 
+de Financiamientos y Obligaciones de Entidades Federativas y Municipios, se dejan a salvo los derechos del 
+solicitante autorizado para presentar una nueva solicitud.
+
+Lo anterior, se hace de su conocimiento de conformidad con lo establecido en el artículo Octavo transitorio 
+de la Ley de Ingresos para el Estado de Nuevo León vigente y aplicable para el ejercicio fiscal 2026, 
+artículos 49 y 50 de la Ley de Disciplina Financiera de las Entidades Federativas y los Municipios; 3, 7, 16 y 17 
+del Reglamento del Registro Público Único de Financiamientos y Obligaciones de Entidades Federativas y Municipios, y artículo 
+13, fracciones XIV y XX, del Reglamento Interior de la Secretaría de Finanzas y Tesorería General del Estado de Nuevo León.
+</p>
+
+<h3
+  style="
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 1px;
+  "
+  class="atte"
+>
+  Atentamente <br />
+  {{cargoDirectorGeneral}} <br />
+  <br />
+  {{directorGeneral}} <br />
+</h3>

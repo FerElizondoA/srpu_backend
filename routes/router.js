@@ -289,6 +289,7 @@ const {
   createPdfConstanciaReestructura,
   createPdfContestacionReestructura,
   createPdfAcuse,
+  createPdfDesechamiento,
 } = require("../controllers/PdfSolicitudes.js");
 const {
   createPreguntaFrecuente,
@@ -319,6 +320,7 @@ const {
 const {
   getTrazabilidadSolicitud,
   getPrimerUsuarioEstatus2,
+  getFechasFirmaVerificador,
 } = require("../controllers/TrazabilidadSolicitud.js");
 
 const {
@@ -1678,6 +1680,20 @@ router.post(
     createPdfContestacionReestructura(req, res);
   }
 );
+router.post(
+  "/create-pdf-contestacion-reestructura",
+  verifyToken.verifyJWT,
+  (req, res) => {
+    createPdfContestacionReestructura(req, res);
+  }
+);
+router.post(
+  "/create-pdf-desechamiento",
+  verifyToken.verifyJWT,
+  (req, res) => {
+    createPdfDesechamiento(req, res);
+  }
+);
 //#endregion
 
 // #region Ayudas
@@ -1717,6 +1733,10 @@ router.get("/get-TrazabilidadSolicitud", verifyToken.verifyJWT, (req, res) => {
 
 router.get("/get-PrimerUsuarioEstatus2",(req, res) => {
   getPrimerUsuarioEstatus2(req, res);
+});
+
+router.get("/get-FechasFirmaVerificador/:IdSolicitud", verifyToken.verifyJWT, (req, res) => {
+  getFechasFirmaVerificador(req, res);
 });
   
 

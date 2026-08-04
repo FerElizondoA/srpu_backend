@@ -11,6 +11,7 @@ module.exports = {
     const IdUsuarioCreador = req.body.IdUsuarioCreador;
     const ListadoUsuarios = req.body.ListadoUsuarios;
     const NumRegistroSolicitud = req.body.NumRegistroSolicitud;
+    const FechaNotificacion = req.body.FechaNotificacion; // Nueva fecha opcional
 
     if (Titulo == null || /^[\s]*$/.test(Titulo)) {
       return res.status(409).send({
@@ -52,8 +53,11 @@ module.exports = {
     }
     const Usuarios = JSON.stringify({ Usuarios: ListadoUsuarios });
 
+    // Formatear la fecha si se proporciona
+    const fechaFormateada = FechaNotificacion ? new Date(FechaNotificacion).toISOString().slice(0, 19).replace('T', ' ') : null;
+
     db.query(
-      `CALL sp_AgregarNotificacion('${IdSolicitud}','${ControlInterno}','${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}')`,
+      `CALL sp_AgregarNotificacion('${IdSolicitud}','${ControlInterno}','${Titulo}','${Mensaje}','${IdUsuarioCreador}', '${Usuarios}', ${fechaFormateada ? `'${fechaFormateada}'` : 'NULL'})`,
       (err, result) => {
         // console.log("error", err);
         // console.log("result", result);

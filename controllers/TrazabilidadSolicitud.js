@@ -62,4 +62,37 @@ module.exports = {
       },
     );
   },
+
+  getFechasFirmaVerificador: (req, res) => {
+    const IdSolicitud = req.params.IdSolicitud;
+    if (IdSolicitud == null || /^[\s]*$/.test(IdSolicitud)) {
+      return res.status(409).send({
+        error: "Ingrese IdSolicitud",
+      });
+    }
+    db.query(
+      `CALL sp_ObtenerFechasFirmaVerificador(?)`,
+      [IdSolicitud],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).send({
+            error: "Error",
+          });
+        }
+
+        if (result.length && result[0].length) {
+          const data = result[0][0];
+          return res.status(200).send({
+            fechaInscripcion: data.FechaInscripcion,
+            fechaRespuestaPrevencion: data.FechaRespuestaPrevencion,
+          });
+        } else {
+          return res.status(409).send({
+            error: "¡Sin Información!",
+          });
+        }
+      },
+    );
+  },
 };
